@@ -24,14 +24,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/jyc300564.png" width="200px">
 
 [[github](http://github.com/jyc300564)]
+
+* Role: Developer
+
 ### Teh Ming Wei
 
 <img src="images/tehmiw.png" width="200px">
 
 [[github](http://github.com/tehmiw)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
 
 ### Gao Ze
 
@@ -41,16 +43,6 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/gaoze24.md)]
 
 * Role: Developer
-
-### Jean Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/gaoze24.md)]
-
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
 
 ### Zhang Qixiang
 
