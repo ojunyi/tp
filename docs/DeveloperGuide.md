@@ -262,37 +262,62 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* university tutors or teaching assistants managing one or more tutorial groups
-* needs to track student participation, attendance, and grading progress across recurring weekly assessments
-* prefers desktop apps over web-based platforms like Canvas due to speed
-* can type fast and prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* University tutors or teaching assistants (TA) managing one or more tutorial groups
+* TA who needs to track student participation, attendance, and grading progress across recurring weekly assessments
+* TA who prefers local desktop apps over web-based platforms like Canvas
+* Who can type fast and prefers typing to mouse interactions
+* Who is reasonably comfortable using CLI apps
 
-**Value proposition**: a single hub that reduces teaching admin overhead by keeping student group organization, grading progress, and participation records in one place, so TAs can run sessions consistently and grade faster than using web-based tools like Canvas
+**Value proposition**: a single hub that reduces teaching admin overhead by keeping student group organization, 
+grading progress, and participation records in one place, so TAs can run sessions consistently and grade faster than using web-based tools like Canvas
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​ | So that I can…​ |
-| -------- | ------- | ------------ | --------------- |
-| `* * *`  | new user | see usage instructions | refer to instructions when I forget how to use the App |
-| `* * *`  | tutor | add a student with their details | keep track of all students in my tutorial groups |
-| `* * *`  | tutor | delete a student | remove students who have dropped the course |
-| `* * *`  | tutor | find a student by name | locate a student's details without scrolling through the entire list |
-| `* * *`  | tutor | list all students | see an overview of all students I am managing |
-| `* * *`  | tutor | mark a student's attendance for a tutorial session | track which students attended each session |
-| `* * *`  | tutor | record a student's grade for an assessment | keep track of grading progress |
-| `* *`    | tutor | create tutorial groups | organize students by their assigned tutorial slots |
-| `* *`    | tutor | create assessments | track grading progress for each assignment or exam |
-| `* *`    | tutor | edit a student's details | update information when it changes |
-| `* *`    | tutor | view a student's attendance history | identify students with poor attendance |
-| `* *`    | tutor | set deadlines for assessments | be reminded of upcoming grading deadlines |
-| `* *`    | tutor | see which assessments are due soon | prioritize my grading work |
-| `*`      | tutor | sort students by name | locate a student easily |
-| `*`      | tutor | export student data | share records with other teaching staff |
-| `*`      | tutor managing many groups | filter students by tutorial group | focus on one group at a time |
+| Priority | Role  | Feature                                                  | Benefit |
+|---|-------|----------------------------------------------------------|---|
+| * * * | Tutor | Ask for help when using the product                      | I can refer to instructions when I forget how to use the App |
+| * * * | Tutor | Add a student to the address book                        | I can keep track of all my students in one place |
+| * * * | Tutor | Delete a student from the address book                   | I can remove students who are no longer relevant |
+| * * * | Tutor | List all student contacts                                | I can quickly view all students stored in the system |
+| * * * | Tutor | Edit existing student records                            | I can keep student information accurate and up to date |
+| * * * | Tutor | Find a student record                                    | I can quickly find a specific student's detail |
+| * * | Tutor | Clear all existing student record                        | I can reset the system when the data is no longer needed |
+| * * * | Tutor | Exit the program                                         | I can safely close the application after use |
+| * * | Tutor | Archive the program data                                 | I do not have to repopulate all the data again |
+| * * | Tutor | Check student contact details                            | I can contact students when needed |
+| * * | Tutor | View a tutorial                                          | I can check the contents of the tutorial |
+| * * * | Tutor | List all tutorials                                       | I can check all the tutorials offered |
+| * * * | Tutor | Assign students to certain tutorial slots                | I can organize students into the correct tutorials |
+| * * * | Tutor | View which students are assigned to which tutorial slots | I can understand the distribution of students across tutorials |
+| * * | Tutor | Assign tutorial slots to teach in                        | I can manage which tutorials I am responsible for |
+| * * | Tutor | View which tutors are assigned to which tutorial slots   | I can know who is responsible for each tutorial |
+| * * * | Tutor | Filter available tutorial slots                          | I can easily find tutorial slots that match my conditions |
+| * * | Tutor | Edit tutorial slots                                      | I can update tutorial arrangements |
+| * | Tutor | Add tutorial resources                                   | I can share useful materials with students |
+| * | Tutor | Delete tutorial resources                                | I can remove outdated or unnecessary materials |
+| * | Tutor | Edit tutorial resources                                  | I can replace or reupload outdated materials |
+| * * | Tutor | Track tutorial of each student                           | I can monitor each student's tutorial participation |
+| * | Tutor | Add assessments                                          | I can manage student evaluations and grading components |
+| * | Tutor | Delete assessments                                       | I can remove assessments that are no longer required |
+| * | Tutor | Edit assessments                                         | I can update assessment details when necessary |
+| * | Tutor | Grade assessments                                        | I can evaluate student performance |
+| * | Tutor | Track assessments                                        | I can monitor students' assessments and results |
+| * | Tutor | Comment on student's work                                | I can provide constructive feedback to improve their learning |
+| * * * | Tutor | Mark student attendance                                  | I can record who attended each tutorial |
+| * * | Tutor | Unmark student attendance                                | I can correct attendance records if mistakes occur |
+| * * | Tutor | Edit student attendance                                  | I can update attendance records when needed |
+| * * | Tutor | Track attendance                                         | I can monitor student participation over time |
+| * | Tutor | Create groups                                            | I can organize students for collaborative activities |
+| * | Tutor | Send student private message                             | I can communicate directly with a specific student |
+| * | Tutor | Send student group message                               | I can communicate important information to multiple students at once |
+| * * | Tutor | Provide feedback to students                             | I can help students improve their learning |
+| * * | Tutor | Add deadlines                                            | I can remind myself of important dates |
+| * * | Tutor | Delete deadlines                                         | I can remove deadlines that are no longer relevant |
+| * * | Tutor | Edit deadlines                                           | I can update deadlines if schedules change |
+| * * | Tutor | Be reminded of deadlines                                 | I do not miss any important deadlines |
 
 ### Use cases
 
