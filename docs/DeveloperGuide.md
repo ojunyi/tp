@@ -338,13 +338,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 1a1. CoursePilot shows an error message indicating required fields.
 
-      Use case resumes at step 1.
+      Use case ends.
 
 * 1b. A student with the same email already exists.
 
     * 1b1. CoursePilot shows an error message indicating duplicate entry.
 
-      Use case resumes at step 1.
+      Use case ends.
 
 **Use case: UC02 - Delete a student**
 
@@ -362,11 +362,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 2b. The given index is invalid.
 
-    * 3a1. CoursePilot shows an error message.
+    * 2b1. CoursePilot shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 
 **Use case: UC03 - Mark attendance**
 
@@ -384,13 +384,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 3a1. CoursePilot shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 
 * 3b. The specified tutorial session does not exist.
 
     * 3b1. CoursePilot shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 
 **Use case: UC04 - Record a grade**
 
@@ -407,19 +407,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 1a1. CoursePilot shows an error message.
 
-      Use case resumes at step 1.
+      Use case ends.
 
 * 1b. The specified assessment does not exist.
 
     * 1b1. CoursePilot shows an error message.
 
-      Use case resumes at step 1.
+      Use case ends.
 
 * 1c. The grade value is out of the valid range.
 
     * 1c1. CoursePilot shows an error message.
 
-      Use case resumes at step 1.
+      Use case ends.
 
 **Use case: UC05 - Ask for help**
 
@@ -443,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  Tutor enters the command to add a student with the tutorial's module, day of the week, 
+1.  Tutor enters the command to add a tutorial with the tutorial's module, day of the week, 
 timing, and students.
 2.  CoursePilot adds the tutorial and displays a confirmation message.
 
@@ -455,7 +455,7 @@ timing, and students.
 
     * 1a1. CoursePilot shows an error message indicating required fields.
 
-      Use case resumes at step 1.
+      Use case ends.
 
 **Use case: UC08 - Delete a tutorial**
 
@@ -473,11 +473,11 @@ timing, and students.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 2b. The given index is invalid.
 
-    * 3a1. CoursePilot shows an error message.
+    * 2b1. CoursePilot shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 
 **Use case: UC09 - List tutorials**
 
