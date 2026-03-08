@@ -350,10 +350,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  Tutor requests to list students.
-2.  CoursePilot shows a list of students.
-3.  Tutor requests to delete a specific student in the list.
-4.  CoursePilot deletes the student and displays a confirmation message.
+1.  Tutor requests to <u>list students (UC06)</u>.
+2.  Tutor requests to delete a specific student in the list. 
+3.  CoursePilot deletes the student and displays a confirmation message.
 
     Use case ends.
 
@@ -373,10 +372,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  Tutor requests to list students.
-2.  CoursePilot shows a list of students.
-3.  Tutor enters the command to mark a student's attendance for a specific tutorial session.
-4.  CoursePilot records the attendance and displays a confirmation message.
+1.  Tutor requests to <u>list students (UC06)</u>.
+2.  Tutor enters the command to mark a student's attendance for a specific tutorial session.
+3.  CoursePilot records the attendance and displays a confirmation message.
 
     Use case ends.
 
@@ -422,6 +420,107 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1c1. CoursePilot shows an error message.
 
       Use case resumes at step 1.
+
+**Use case: UC05 - Ask for help**
+
+**MSS**
+
+1.  Tutor requests for help.
+2.  CoursePilot shows the details of possible user commands.
+
+    Use case ends.
+
+**Use case: UC06 - List students**
+
+**MSS**
+
+1.  Tutor requests to list students.
+2.  CoursePilot shows a list of students.
+
+    Use case ends.
+
+**Use case: UC07 - Add a tutorial**
+
+**MSS**
+
+1.  Tutor enters the command to add a student with the tutorial's module, day of the week, 
+timing, and students.
+2.  CoursePilot adds the tutorial and displays a confirmation message.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The tutorial's field(s) is/are missing.
+
+    * 1a1. CoursePilot shows an error message indicating required fields.
+
+      Use case resumes at step 1.
+
+**Use case: UC08 - Delete a tutorial**
+
+**MSS**
+
+1.  Tutor requests to <u>list tutorials (UC09)</u>.
+2.  Tutor requests to delete a specific tutorial in the list.
+3.  CoursePilot deletes the tutorial and displays a confirmation message.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. CoursePilot shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: UC09 - List tutorials**
+
+**MSS**
+
+1.  Tutor requests to list tutorials.
+2.  CoursePilot shows a list of tutorials.
+
+    Use case ends.
+
+**Use case: UC10 - Find student**
+
+**MSS**
+
+1.  Tutor requests to find a student and specifies details to be searched.
+2.  CoursePilot shows details of student.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No such student is found.
+
+    * 1a1. CoursePilot shows no such student is found.
+
+  Use case ends.
+
+**Use case: UC11 - Find tutorial**
+
+**MSS**
+
+1.  Tutor requests to find a tutorial and specifies details to be searched.
+2.  CoursePilot shows details of tutorial.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No such tutorial is found.
+
+    * 1a1. CoursePilot shows no such tutorial is found.
+
+  Use case ends.
 
 ### Non-Functional Requirements
 
