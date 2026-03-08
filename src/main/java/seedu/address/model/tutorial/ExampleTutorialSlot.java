@@ -8,11 +8,23 @@ public class ExampleTutorialSlot extends Tutorial {
 
     private String slotName;
 
+    /**
+     * Creates an example tutorial slot with the given slot name, time slot, and capacity.
+     *
+     * @param slotName
+     * @param timeSlot
+     * @param capacity
+     */
     public ExampleTutorialSlot(String slotName, String timeSlot, int capacity) {
         super(timeSlot, capacity);
         this.slotName = slotName;
     }
 
+    /**
+     * Returns the type of the tutorial.
+     *
+     * @return the tutorial type
+     */
     @Override
     public String getTutorialType() {
         return slotName;
