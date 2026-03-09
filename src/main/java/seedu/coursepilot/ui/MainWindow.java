@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private TutorialListPanel tutorialListPanel;
+    private TutorialDetailsPanel tutorialDetailsPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -114,11 +115,16 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        tutorialListPanel = new TutorialListPanel();
+        tutorialListPanel = new TutorialListPanel(logic.getTutorialList());
         tutorialListPanelPlaceholder.getChildren().add(tutorialListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        tutorialDetailsPanel = new TutorialDetailsPanel(logic.getTutorialList());
+        tutorialDetailsPanel.getRoot().setVisible(false);
+        tutorialDetailsPanel.getRoot().setManaged(false);
+        personListPanelPlaceholder.getChildren().add(tutorialDetailsPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -174,6 +180,21 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
+    private void updateCenterPanel(String commandText) {
+        String trimmedCommand = commandText.trim();
+        if (trimmedCommand.equals("list -tutorial")) {
+            personListPanel.getRoot().setVisible(false);
+            personListPanel.getRoot().setManaged(false);
+            tutorialDetailsPanel.getRoot().setVisible(true);
+            tutorialDetailsPanel.getRoot().setManaged(true);
+        } else if (trimmedCommand.equals("list -student")) {
+            tutorialDetailsPanel.getRoot().setVisible(false);
+            tutorialDetailsPanel.getRoot().setManaged(false);
+            personListPanel.getRoot().setVisible(true);
+            personListPanel.getRoot().setManaged(true);
+        }
+    }
+
     /**
      * Executes the command and returns the result.
      *
@@ -192,6 +213,8 @@ public class MainWindow extends UiPart<Stage> {
             if (commandResult.isExit()) {
                 handleExit();
             }
+
+            updateCenterPanel(commandText);
 
             return commandResult;
         } catch (CommandException | ParseException e) {

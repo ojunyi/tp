@@ -38,11 +38,13 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredStudents = new FilteredList<>(this.addressBook.getPersonList());
-        tutorialList = FXCollections.observableArrayList(
-                new Tutorial("CS2103T-W13", "Monday", "10:00-11:00", 25),
-                new Tutorial("CS2103T-W14", "Wednesday", "12:00-13:00", 25),
-                new Tutorial("CS2103T-W15", "Friday", "14:00-15:00", 25)
+        this.filteredStudents = new FilteredList<>(this.addressBook.getPersonList());
+
+        // Dummy data, need to connect to storage
+        this.tutorialList = FXCollections.observableArrayList(
+                new Tutorial("CS2103T-W13", "Monday", "10:00-11:00", 20),
+                new Tutorial("CS2103T-W14", "Wednesday", "12:00-13:00", 20),
+                new Tutorial("CS2103T-W15", "Friday", "14:00-15:00", 20)
         );
         currentOperatingTutorial = null;
     }
@@ -122,17 +124,7 @@ public class ModelManager implements Model {
         addressBook.setPerson(target, editedStudent);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-    @Override
-    public ObservableList<Student> getFilteredPersonList() {
-        return filteredStudents;
-    }
-
+    //=========== CoursePilot ================================================================================
     @Override
     public ObservableList<Tutorial> getTutorialList() {
         return FXCollections.unmodifiableObservableList(tutorialList);
@@ -153,6 +145,18 @@ public class ModelManager implements Model {
     public void clearCurrentOperatingTutorial() {
         currentOperatingTutorial = null;
     }
+
+    //=========== Filtered Person List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Student> getFilteredPersonList() {
+        return filteredStudents;
+    }
+
 
     @Override
     public void updateFilteredPersonList(Predicate<Student> predicate) {
