@@ -11,6 +11,7 @@ import seedu.coursepilot.commons.util.StringUtil;
 import seedu.coursepilot.logic.parser.exceptions.ParseException;
 import seedu.coursepilot.model.person.Address;
 import seedu.coursepilot.model.person.Email;
+import seedu.coursepilot.model.person.MatricNumber;
 import seedu.coursepilot.model.person.Name;
 import seedu.coursepilot.model.person.Phone;
 import seedu.coursepilot.model.tag.Tag;
@@ -93,6 +94,21 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String matricNumber} into a {@code MatricNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code matricNumber} is invalid.
+     */
+    public static MatricNumber parseMatricNumber(String matricNumber) throws ParseException {
+        requireNonNull(matricNumber);
+        String trimmedMatricNumber = matricNumber.trim();
+        if (!MatricNumber.isValidMatricNumber(trimmedMatricNumber)) {
+            throw new ParseException(MatricNumber.MESSAGE_CONSTRAINTS);
+        }
+        return new MatricNumber(trimmedMatricNumber);
     }
 
     /**

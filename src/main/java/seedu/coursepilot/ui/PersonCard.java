@@ -50,7 +50,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(student.getName().fullName);
         phone.setText(student.getPhone().value);
-        matriculationNumber.setText(student.getMatriculationNumber());
+        matriculationNumber.setText(student.getMatriculationNumber().matricNumber);
         email.setText(student.getEmail().value);
         student.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

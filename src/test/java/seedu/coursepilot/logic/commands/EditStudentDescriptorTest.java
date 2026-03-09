@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.coursepilot.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.coursepilot.logic.commands.CommandTestUtil.VALID_MATRIC_BOB;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -49,7 +49,7 @@ public class EditStudentDescriptorTest {
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different address -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withMatriculationNumber(VALID_MATRIC_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
@@ -63,8 +63,8 @@ public class EditStudentDescriptorTest {
         String expected = EditPersonDescriptor.class.getCanonicalName() + "{name="
                 + editPersonDescriptor.getName().orElse(null) + ", phone="
                 + editPersonDescriptor.getPhone().orElse(null) + ", email="
-                + editPersonDescriptor.getEmail().orElse(null) + ", address="
-                + editPersonDescriptor.getAddress().orElse(null) + ", tags="
+                + editPersonDescriptor.getEmail().orElse(null) + ", matriculationNumber="
+                + editPersonDescriptor.getMatriculationNumber().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }

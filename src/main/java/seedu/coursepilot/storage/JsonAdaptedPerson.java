@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.coursepilot.commons.exceptions.IllegalValueException;
 import seedu.coursepilot.model.person.Address;
 import seedu.coursepilot.model.person.Email;
+import seedu.coursepilot.model.person.MatricNumber;
 import seedu.coursepilot.model.person.Name;
 import seedu.coursepilot.model.person.Student;
 import seedu.coursepilot.model.person.Phone;
@@ -53,7 +54,7 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        matriculationNumber = source.getMatriculationNumber();
+        matriculationNumber = source.getMatriculationNumber().matricNumber;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -97,9 +98,13 @@ class JsonAdaptedPerson {
         if (matriculationNumber == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "matriculationNumber"));
         }
+        if (!MatricNumber.isValidMatricNumber(matriculationNumber)) {
+            throw new IllegalValueException(MatricNumber.MESSAGE_CONSTRAINTS);
+        }
+        final MatricNumber modelMatriculationNumber = new MatricNumber(matriculationNumber);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Student(modelName, modelPhone, modelEmail, matriculationNumber, modelTags);
+        return new Student(modelName, modelPhone, modelEmail, modelMatriculationNumber, modelTags);
     }
 
 }

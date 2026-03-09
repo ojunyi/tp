@@ -14,6 +14,7 @@ import seedu.coursepilot.logic.commands.AddCommand;
 import seedu.coursepilot.logic.parser.exceptions.ParseException;
 import seedu.coursepilot.model.person.Address;
 import seedu.coursepilot.model.person.Email;
+import seedu.coursepilot.model.person.MatricNumber;
 import seedu.coursepilot.model.person.Name;
 import seedu.coursepilot.model.person.Student;
 import seedu.coursepilot.model.person.Phone;
@@ -42,7 +43,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        String matriculationNumber = argMultimap.getValue(PREFIX_MATRICNUMBER).get();
+        MatricNumber matriculationNumber = ParserUtil.parseMatricNumber(argMultimap.getValue(PREFIX_MATRICNUMBER).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Student student = new Student(name, phone, email, matriculationNumber, tagList);

@@ -20,7 +20,7 @@ public class Student {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final String matriculationNumber;
+    private final MatricNumber matriculationNumber;
 
     // Data fields
     private final Set<Tag> tags = new HashSet<>();
@@ -28,7 +28,7 @@ public class Student {
     /**
      * Every field must be present and not null.
      */
-    public Student(Name name, Phone phone, Email email, String matriculationNumber, Set<Tag> tags) {
+    public Student(Name name, Phone phone, Email email, MatricNumber matriculationNumber, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, matriculationNumber, tags);
         this.name = name;
         this.phone = phone;
@@ -49,7 +49,7 @@ public class Student {
         return email;
     }
 
-    public String getMatriculationNumber() {
+    public MatricNumber getMatriculationNumber() {
         return matriculationNumber;
     }
 

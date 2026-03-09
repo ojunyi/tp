@@ -3,7 +3,7 @@ package seedu.coursepilot.logic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.coursepilot.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.coursepilot.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.coursepilot.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.coursepilot.logic.commands.CommandTestUtil.MATRIC_DESC_AMY;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
@@ -166,7 +166,7 @@ public class LogicManagerTest {
 
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+                + EMAIL_DESC_AMY + MATRIC_DESC_AMY;
         Student expectedStudent = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedStudent);

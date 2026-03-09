@@ -32,7 +32,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(student.getName());
         descriptor.setPhone(student.getPhone());
         descriptor.setEmail(student.getEmail());
-        descriptor.setAddress(student.getAddress());
+        descriptor.setMatriculationNumber(student.getMatriculationNumber());
         descriptor.setTags(student.getTags());
     }
 
@@ -61,10 +61,10 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code MatricNumber} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
+    public EditPersonDescriptorBuilder withMatriculationNumber(String matriculationNumber) {
+        descriptor.setMatriculationNumber(new MatricNumber(matriculationNumber));
         return this;
     }
 

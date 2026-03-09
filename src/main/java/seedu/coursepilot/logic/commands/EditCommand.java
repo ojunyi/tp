@@ -95,7 +95,7 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(studentToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(studentToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(studentToEdit.getEmail());
-        String updatedMatricNumber = editPersonDescriptor.getMatriculationNumber().orElse(studentToEdit.getMatriculationNumber());
+        MatricNumber updatedMatricNumber = editPersonDescriptor.getMatriculationNumber().orElse(studentToEdit.getMatriculationNumber());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(studentToEdit.getTags());
 
         return new Student(updatedName, updatedPhone, updatedEmail, updatedMatricNumber, updatedTags);
@@ -133,7 +133,7 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private String matriculationNumber;
+        private MatricNumber matriculationNumber;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -181,11 +181,11 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setMatriculationNumber(String matriculationNumber) {
+        public void setMatriculationNumber(MatricNumber matriculationNumber) {
             this.matriculationNumber = matriculationNumber;
         }
 
-        public Optional<String> getMatriculationNumber() {
+        public Optional<MatricNumber> getMatriculationNumber() {
             return Optional.ofNullable(matriculationNumber);
         }
 
