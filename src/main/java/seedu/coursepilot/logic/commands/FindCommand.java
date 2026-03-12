@@ -39,7 +39,8 @@ public class FindCommand extends Command {
         // TODO: Move this section to a Select Command
         if (predicate instanceof TutorialKeywordPredicate) {
             TutorialKeywordPredicate tutorialPredicate = (TutorialKeywordPredicate) predicate;
-            String tutorialKeyword = tutorialPredicate.getKeywords().get(0);
+            String tutorialKeyword = tutorialPredicate.getKeywords().get(1);
+            System.out.println("Tutorial keyword: " + tutorialKeyword);
             Tutorial tutorial = model.getTutorialList().stream()
                 .filter(tut -> tut.getTutorialCode().contains(tutorialKeyword))
                 .findFirst()

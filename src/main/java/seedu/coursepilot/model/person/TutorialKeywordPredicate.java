@@ -19,9 +19,11 @@ public class TutorialKeywordPredicate implements Predicate<Student> {
         return this.keywords;
     }
 
+    // Temporary placeholder to make all tests false
+    // TODO: Update this according to select
     @Override
     public boolean test(Student student) {
-        return true;
+        return false;
     }
 
     @Override
