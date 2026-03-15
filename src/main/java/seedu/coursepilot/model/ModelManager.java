@@ -184,9 +184,6 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredStudents.equals(otherModelManager.filteredStudents)
-                && tutorialList.equals(otherModelManager.tutorialList)
-                && Optional.ofNullable(currentOperatingTutorial)
-                    .equals(Optional.ofNullable(otherModelManager.currentOperatingTutorial));
+                && tutorialList.equals(otherModelManager.tutorialList);
     }
-
 }
