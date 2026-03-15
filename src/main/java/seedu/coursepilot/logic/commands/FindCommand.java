@@ -92,7 +92,11 @@ public class FindCommand extends Command {
             throw new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
         }
 
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredPersonList(
+            student -> predicate.test(student)
+                    && model.getCurrentOperatingTutorial()
+                            .map(tutorial -> tutorial.hasStudent(student))
+                            .orElse(false));
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
