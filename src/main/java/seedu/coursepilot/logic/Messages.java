@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.coursepilot.logic.parser.Prefix;
 import seedu.coursepilot.model.person.Student;
-
+import seedu.coursepilot.model.tutorial.Tutorial;
 /**
  * Container for user visible messages.
  */
@@ -16,6 +16,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT_FLAG = "Invalid flag! \n%1$s";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
+    public static final String MESSAGE_INVALID_TUTORIAL_DISPLAYED_INDEX = "The tutorial index provided is invalid";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
@@ -46,6 +47,18 @@ public class Messages {
                 .append(student.getMatriculationNumber())
                 .append("; Tags: ");
         student.getTags().forEach(builder::append);
+        return builder.toString();
+    }
+    /**
+     * Formats the {@code tutorial} for display to the user.
+     */
+    public static String format(Tutorial tutorial) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Tutorial Code: ").append(tutorial.getTutorialCode())
+                .append("; Day: ").append(tutorial.getDay())
+                .append("; Time Slot: ").append(tutorial.getTimeSlot())
+                .append("; Capacity: ").append(tutorial.getCapacity());
+
         return builder.toString();
     }
 

@@ -42,10 +42,10 @@ public class ListCommandTest {
     @Test
     public void execute_listStudentWithCurrentOperatingTutorial_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        expectedModel.setCurrentOperatingTutorial(expectedModel.getTutorialList().get(0));
+        expectedModel.setCurrentOperatingTutorial(expectedModel.getFilteredTutorialList().get(0));
         expectedModel.updateFilteredPersonList(student ->
             expectedModel.getCurrentOperatingTutorial().get().hasStudent(student));
-        model.setCurrentOperatingTutorial(model.getTutorialList().get(0));
+        model.setCurrentOperatingTutorial(model.getFilteredTutorialList().get(0));
 
         assertCommandSuccess(new ListCommand(ListCommand.ListTarget.STUDENT),
             model, ListCommand.MESSAGE_SUCCESS_STUDENT, expectedModel);

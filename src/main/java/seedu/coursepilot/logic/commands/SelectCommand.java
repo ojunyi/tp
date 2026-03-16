@@ -32,7 +32,7 @@ public class SelectCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        Tutorial tutorial = model.getTutorialList().stream()
+        Tutorial tutorial = model.getFilteredTutorialList().stream()
                 .filter(tut -> tut.getTutorialCode().equalsIgnoreCase(tutorialKeyword))
                 .findFirst()
                 .orElse(null);

@@ -75,8 +75,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Tutorial> getTutorialList() {
-        return model.getTutorialList();
+    public ObservableList<Tutorial> getFilteredTutorialList() {
+        return model.getFilteredTutorialList();
     }
 
     @Override
@@ -88,6 +88,8 @@ public class LogicManager implements Logic {
     public ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty() {
         return model.getCurrentOperatingTutorialProperty();
     }
+
+
 
     @Override
     public Path getAddressBookFilePath() {

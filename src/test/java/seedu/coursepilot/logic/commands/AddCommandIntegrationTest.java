@@ -12,6 +12,7 @@ import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.ModelManager;
 import seedu.coursepilot.model.UserPrefs;
 import seedu.coursepilot.model.person.Student;
+import seedu.coursepilot.model.tutorial.Tutorial;
 import seedu.coursepilot.testutil.PersonBuilder;
 
 /**
@@ -30,18 +31,28 @@ public class AddCommandIntegrationTest {
     public void execute_newPerson_success() {
         Student validStudent = new PersonBuilder().build();
 
+        Tutorial currentTutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addTutorial(currentTutorial);
+        expectedModel.setCurrentOperatingTutorial(currentTutorial);
         expectedModel.addPerson(validStudent);
 
         assertCommandSuccess(new AddCommand(validStudent), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validStudent)),
+                String.format(AddCommand.MESSAGE_SUCCESS_STUDENT, Messages.format(validStudent)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Student studentInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(new AddCommand(studentInList), model,
+        Student validStudent = new PersonBuilder().build();
+
+        Tutorial currentTutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addTutorial(currentTutorial);
+        expectedModel.setCurrentOperatingTutorial(currentTutorial);
+        expectedModel.addPerson(validStudent);
+
+        assertCommandFailure(new AddCommand(validStudent), model,
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 

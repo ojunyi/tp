@@ -1,7 +1,6 @@
 package seedu.coursepilot.model.util;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,9 +55,9 @@ public class SampleDataUtil {
 
     public static ObservableList<Tutorial> getSampleTutorials() {
         return FXCollections.observableArrayList(
-                new Tutorial("CS2103T-W13", "Monday", "10:00-11:00", 20, List.of(getSamplePersons1())),
-                new Tutorial("CS2103T-W14", "Wednesday", "12:00-13:00", 15, List.of(getSamplePersons2())),
-                new Tutorial("CS2103T-W15", "Friday", "14:00-15:00", 10, List.of(getSamplePersons3()))
+                new Tutorial("CS2103T-W13", "Monday", "10:00-11:00", 20),
+                new Tutorial("CS2103T-W14", "Wednesday", "12:00-13:00", 15),
+                new Tutorial("CS2103T-W15", "Friday", "14:00-15:00", 10)
         );
     }
 

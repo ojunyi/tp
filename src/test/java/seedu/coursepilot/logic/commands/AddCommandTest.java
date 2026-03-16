@@ -33,7 +33,7 @@ public class AddCommandTest {
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddCommand(null));
+        assertThrows(NullPointerException.class, () -> new AddCommand((Student) null));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = new AddCommand(validStudent).execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validStudent)),
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_STUDENT, Messages.format(validStudent)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validStudent), modelStub.personsAdded);
     }
@@ -105,6 +105,11 @@ public class AddCommandTest {
     private class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setTutorial(Tutorial target, Tutorial editedTutorial) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -174,7 +179,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Tutorial> getTutorialList() {
+        public ObservableList<Tutorial> getFilteredTutorialList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -195,6 +200,25 @@ public class AddCommandTest {
 
         @Override
         public void clearCurrentOperatingTutorial() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredTutorialList(Predicate<Tutorial> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public boolean hasTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTutorial(Tutorial target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addTutorial(Tutorial tutorial) {
             throw new AssertionError("This method should not be called.");
         }
     }

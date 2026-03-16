@@ -17,6 +17,8 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Student> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    Predicate<Tutorial> PREDICATE_SHOW_ALL_TUTORIALS = unused -> true;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -59,38 +61,35 @@ public interface Model {
      * Returns true if a person with the same identity as {@code person} exists in the address book.
      */
     boolean hasPerson(Student student);
-
+    boolean hasTutorial(Tutorial tutorial);
     /**
      * Deletes the given person.
      * The person must exist in the address book.
      */
     void deletePerson(Student target);
-
+    void deleteTutorial(Tutorial target);
     /**
      * Adds the given person.
      * {@code person} must not already exist in the address book.
      */
     void addPerson(Student student);
-
+    void addTutorial(Tutorial tutorial);
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void setPerson(Student target, Student editedStudent);
-
+    void setTutorial(Tutorial target, Tutorial editedTutorial);
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Student> getFilteredPersonList();
-
+    ObservableList<Tutorial> getFilteredTutorialList();
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Student> predicate);
-
-    /** Returns an unmodifiable view of the tutorial list. */
-    ObservableList<Tutorial> getTutorialList();
-
+    void updateFilteredTutorialList(Predicate<Tutorial> predicate);
     /** Returns the current operating tutorial, if any. */
     Optional<Tutorial> getCurrentOperatingTutorial();
 

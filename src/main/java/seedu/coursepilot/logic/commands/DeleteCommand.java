@@ -10,6 +10,8 @@ import seedu.coursepilot.logic.Messages;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.person.Student;
+import seedu.coursepilot.model.tutorial.Tutorial;
+
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -21,28 +23,51 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the displayed person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " -student 1"
+            + "\nExample: " + COMMAND_WORD + " -tutorial 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_TUTORIAL_SUCCESS = "Deleted Tutorial: %1$s";
 
     private final Index targetIndex;
+    private String type;
 
-    public DeleteCommand(Index targetIndex) {
+    /**
+     * Creates an DeleteCommand to delete the specified entry
+     */
+    public DeleteCommand(Index targetIndex, String type) {
+
         this.targetIndex = targetIndex;
+        this.type = type;
+
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Student> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (this.type.equals("student")) {
+            List<Student> lastShownList = model.getFilteredPersonList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            Student studentToDelete = lastShownList.get(targetIndex.getZeroBased());
+            model.deletePerson(studentToDelete);
+            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(studentToDelete)));
+        } else if (this.type.equals("tutorial")) {
+            List<Tutorial> lastShownList = model.getFilteredTutorialList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TUTORIAL_DISPLAYED_INDEX);
+            }
+
+            Tutorial tutorialToDelete = lastShownList.get(targetIndex.getZeroBased());
+            model.deleteTutorial(tutorialToDelete);
+            return new CommandResult(String.format(MESSAGE_DELETE_TUTORIAL_SUCCESS, Messages.format(tutorialToDelete)));
         }
-
-        Student studentToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(studentToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(studentToDelete)));
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Override

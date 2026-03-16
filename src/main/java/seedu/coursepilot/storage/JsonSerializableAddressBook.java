@@ -12,6 +12,7 @@ import seedu.coursepilot.commons.exceptions.IllegalValueException;
 import seedu.coursepilot.model.AddressBook;
 import seedu.coursepilot.model.ReadOnlyAddressBook;
 import seedu.coursepilot.model.person.Student;
+import seedu.coursepilot.model.tutorial.Tutorial;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -20,15 +21,19 @@ import seedu.coursepilot.model.person.Student;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_TUTORIAL = "Tutorials list contains duplicate tutorial(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedTutorial> tutorials = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                       @JsonProperty("tutorials") List<JsonAdaptedTutorial> tutorials) {
         this.persons.addAll(persons);
+        this.tutorials.addAll(tutorials);
     }
 
     /**
@@ -38,6 +43,7 @@ class JsonSerializableAddressBook {
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        tutorials.addAll(source.getTutorialList().stream().map(JsonAdaptedTutorial::new).collect(Collectors.toList()));
     }
 
     /**
@@ -53,6 +59,13 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             addressBook.addPerson(student);
+        }
+        for (JsonAdaptedTutorial jsonAdaptedTutorial : tutorials) {
+            Tutorial tutorial = jsonAdaptedTutorial.toModelType();
+            if (addressBook.hasTutorial(tutorial)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_TUTORIAL);
+            }
+            addressBook.addTutorial(tutorial);
         }
         return addressBook;
     }
