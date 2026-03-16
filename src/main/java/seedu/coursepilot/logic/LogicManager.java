@@ -3,8 +3,10 @@ package seedu.coursepilot.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.coursepilot.commons.core.GuiSettings;
 import seedu.coursepilot.commons.core.LogsCenter;
@@ -78,8 +80,13 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Tutorial getCurrentOperatingTutorial() {
-        return model.getCurrentOperatingTutorial().orElse(null);
+    public Optional<Tutorial> getCurrentOperatingTutorial() {
+        return model.getCurrentOperatingTutorial();
+    }
+
+    @Override
+    public ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty() {
+        return model.getCurrentOperatingTutorialProperty();
     }
 
     @Override

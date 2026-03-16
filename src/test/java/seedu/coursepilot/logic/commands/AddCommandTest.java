@@ -16,6 +16,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.coursepilot.commons.core.GuiSettings;
 import seedu.coursepilot.logic.Messages;
@@ -179,6 +180,11 @@ public class AddCommandTest {
 
         @Override
         public Optional<Tutorial> getCurrentOperatingTutorial() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty() {
             throw new AssertionError("This method should not be called.");
         }
 

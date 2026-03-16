@@ -7,23 +7,19 @@ import seedu.coursepilot.commons.util.StringUtil;
 import seedu.coursepilot.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Student}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Student}'s {@code Phone} starts with any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<Student> {
+public class PhoneStartsWithKeywordsPredicate implements Predicate<Student> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public PhoneStartsWithKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
-    }
-
-    public List<String> getKeywords() {
-        return this.keywords;
     }
 
     @Override
     public boolean test(Student student) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(student.getName().fullName, keyword));
+                .anyMatch(keyword -> StringUtil.startsWithString(student.getPhone().toString(), keyword));
     }
 
     @Override
@@ -33,11 +29,11 @@ public class NameContainsKeywordsPredicate implements Predicate<Student> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof NameContainsKeywordsPredicate)) {
+        if (!(other instanceof PhoneStartsWithKeywordsPredicate)) {
             return false;
         }
 
-        NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (NameContainsKeywordsPredicate) other;
+        PhoneStartsWithKeywordsPredicate otherNameContainsKeywordsPredicate = (PhoneStartsWithKeywordsPredicate) other;
         return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
     }
 

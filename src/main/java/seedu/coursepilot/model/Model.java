@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.coursepilot.commons.core.GuiSettings;
 import seedu.coursepilot.model.person.Student;
@@ -92,6 +93,9 @@ public interface Model {
 
     /** Returns the current operating tutorial, if any. */
     Optional<Tutorial> getCurrentOperatingTutorial();
+
+    /** Returns the current operating tutorial, for JavaFX UI */
+    ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty();
 
     /** Sets the current operating tutorial. */
     void setCurrentOperatingTutorial(Tutorial tutorial);

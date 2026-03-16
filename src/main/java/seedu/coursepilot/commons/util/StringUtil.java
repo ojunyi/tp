@@ -39,6 +39,49 @@ public class StringUtil {
     }
 
     /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "abc") == true
+     *       containsWordIgnoreCase("ABc def", "DEF") == true
+     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       </pre>
+     * @param word cannot be null
+     * @param substring cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsPartWordIgnoreCase(String word, String substring) {
+        requireNonNull(word);
+        requireNonNull(substring);
+
+        String preppedWord = word.trim();
+        String preppedSubstring = substring.trim();
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(!preppedSubstring.isEmpty(), "Substring parameter cannot be empty");
+        checkArgument(preppedSubstring.split("\\s+").length == 1, "Substring parameter should be a single substring");
+
+        return preppedWord.contains(preppedSubstring);
+    }
+
+    /**
+     * Returns true if the {@code value} starts with {@code prefix}.
+     *   Ignores cases.
+     * @param word cannot be null
+     * @param prefix cannot be null, cannot be empty, must be a single prefix
+     */
+    public static boolean startsWithString(String word, String prefix) {
+        requireNonNull(word);
+        requireNonNull(prefix);
+
+        String preppedWord = word.trim();
+        String preppedPrefix = prefix.trim();
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(!preppedPrefix.isEmpty(), "Prefix parameter cannot be empty");
+        checkArgument(preppedPrefix.split("\\s+").length == 1, "Prefix parameter should be a single substring");
+
+        return preppedWord.startsWith(preppedPrefix);
+    }
+
+    /**
      * Returns a detailed message of the t, including the stack trace.
      */
     public static String getDetails(Throwable t) {

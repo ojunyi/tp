@@ -33,7 +33,7 @@ public class ListCommand extends Command {
         "Listed tutorial details";
 
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
-        "No current operating tutorial selected. Use find first.";
+        "No current operating tutorial selected. Use select first.";
 
     private final ListTarget listTarget;
 

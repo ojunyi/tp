@@ -7,23 +7,19 @@ import seedu.coursepilot.commons.util.StringUtil;
 import seedu.coursepilot.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Student}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Student}'s {@code Email} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<Student> {
+public class EmailContainsKeywordsPredicate implements Predicate<Student> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public EmailContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
-    }
-
-    public List<String> getKeywords() {
-        return this.keywords;
     }
 
     @Override
     public boolean test(Student student) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(student.getName().fullName, keyword));
+                .anyMatch(keyword -> StringUtil.containsPartWordIgnoreCase(student.getEmail().toString(), keyword));
     }
 
     @Override
@@ -33,11 +29,11 @@ public class NameContainsKeywordsPredicate implements Predicate<Student> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof NameContainsKeywordsPredicate)) {
+        if (!(other instanceof EmailContainsKeywordsPredicate)) {
             return false;
         }
 
-        NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (NameContainsKeywordsPredicate) other;
+        EmailContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (EmailContainsKeywordsPredicate) other;
         return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
     }
 
