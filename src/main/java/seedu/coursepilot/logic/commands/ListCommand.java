@@ -65,7 +65,7 @@ public class ListCommand extends Command {
         if (model.getCurrentOperatingTutorial().isEmpty()) {
             throw new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
         }
-        
+
         model.updateFilteredPersonList(
             student -> model.getCurrentOperatingTutorial().get().hasStudent(student)
         );
