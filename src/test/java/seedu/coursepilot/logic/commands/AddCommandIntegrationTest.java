@@ -25,15 +25,22 @@ public class AddCommandIntegrationTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        if (model.getFilteredTutorialList().isEmpty()) {
+            Tutorial currentTutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
+            model.addTutorial(currentTutorial);
+            model.setCurrentOperatingTutorial(currentTutorial);
+        } else {
+            model.setCurrentOperatingTutorial(model.getFilteredTutorialList().get(0));
+        }
     }
 
     @Test
     public void execute_newPerson_success() {
         Student validStudent = new PersonBuilder().build();
 
-        Tutorial currentTutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addTutorial(currentTutorial);
+        Tutorial currentTutorial = model.getCurrentOperatingTutorial().get();
+        // expectedModel already has currentTutorial because it's in model.getAddressBook()
         expectedModel.setCurrentOperatingTutorial(currentTutorial);
         expectedModel.addPerson(validStudent);
 
@@ -45,12 +52,8 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Student validStudent = new PersonBuilder().build();
-
-        Tutorial currentTutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addTutorial(currentTutorial);
-        expectedModel.setCurrentOperatingTutorial(currentTutorial);
-        expectedModel.addPerson(validStudent);
+        model.addPerson(validStudent);
+        model.getCurrentOperatingTutorial().get().addStudent(validStudent);
 
         assertCommandFailure(new AddCommand(validStudent), model,
                 AddCommand.MESSAGE_DUPLICATE_PERSON);

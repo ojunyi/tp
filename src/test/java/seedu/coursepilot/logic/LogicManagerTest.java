@@ -28,6 +28,7 @@ import seedu.coursepilot.model.ModelManager;
 import seedu.coursepilot.model.ReadOnlyAddressBook;
 import seedu.coursepilot.model.UserPrefs;
 import seedu.coursepilot.model.person.Student;
+import seedu.coursepilot.model.tutorial.Tutorial;
 import seedu.coursepilot.storage.JsonAddressBookStorage;
 import seedu.coursepilot.storage.JsonUserPrefsStorage;
 import seedu.coursepilot.storage.StorageManager;
@@ -60,7 +61,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete 9";
+        String deleteCommand = "delete -student 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -170,11 +171,18 @@ public class LogicManagerTest {
 
         logic = new LogicManager(model, storage);
 
+        // Setup tutorial in model
+        Tutorial currentTutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
+        model.addTutorial(currentTutorial);
+        model.setCurrentOperatingTutorial(currentTutorial);
+
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + " -student " + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + MATRIC_DESC_AMY;
         Student expectedStudent = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
+        expectedModel.addTutorial(currentTutorial);
+        expectedModel.setCurrentOperatingTutorial(currentTutorial);
         expectedModel.addPerson(expectedStudent);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }

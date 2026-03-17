@@ -48,12 +48,12 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ArgumentTokenizer.tokenize(remainingArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                             PREFIX_MATRICNUMBER, PREFIX_TAG);
 
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_MATRICNUMBER);
+
             if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MATRICNUMBER, PREFIX_PHONE, PREFIX_EMAIL)
                     || !argMultimap.getPreamble().isEmpty()) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
-
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_MATRICNUMBER);
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -69,12 +69,12 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ArgumentTokenizer.tokenize(remainingArgs,
                             PREFIX_TUTORIALCODE, PREFIX_DAY, PREFIX_TIMESLOT, PREFIX_CAPACITY);
 
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TUTORIALCODE, PREFIX_DAY, PREFIX_TIMESLOT, PREFIX_CAPACITY);
+
             if (!arePrefixesPresent(argMultimap, PREFIX_TUTORIALCODE, PREFIX_DAY, PREFIX_TIMESLOT, PREFIX_CAPACITY)
                     || !argMultimap.getPreamble().isEmpty()) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
-
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TUTORIALCODE, PREFIX_DAY, PREFIX_TIMESLOT, PREFIX_CAPACITY);
             String tutorialCode = argMultimap.getValue(PREFIX_TUTORIALCODE).get();
             String day = argMultimap.getValue(PREFIX_DAY).get();
             String timeslot = argMultimap.getValue(PREFIX_TIMESLOT).get();

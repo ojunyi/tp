@@ -17,6 +17,7 @@ import java.util.List;
 
 import seedu.coursepilot.model.AddressBook;
 import seedu.coursepilot.model.person.Student;
+import seedu.coursepilot.model.tutorial.Tutorial;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -60,13 +61,18 @@ public class TypicalPersons {
     private TypicalPersons() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical persons and a typical tutorial.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
         for (Student student : getTypicalPersons()) {
             ab.addPerson(student);
         }
+        Tutorial tutorial = new Tutorial("CS2103T-W13", "Wed", "1pm-2pm", 10);
+        for (Student student : getTypicalPersons()) {
+            tutorial.addStudent(student);
+        }
+        ab.addTutorial(tutorial);
         return ab;
     }
 
