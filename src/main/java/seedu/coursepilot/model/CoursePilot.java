@@ -104,7 +104,8 @@ public class CoursePilot implements ReadOnlyCoursePilot {
     /**
      * Replaces the given student {@code target} in the list with {@code editedStudent}.
      * {@code target} must exist in the course pilot.
-     * The student identity of {@code editedStudent} must not be the same as another existing student in the course pilot.
+     * The student identity of {@code editedStudent} must not be the same as
+     * another existing student in the course pilot.
      */
     public void setStudent(Student target, Student editedStudent) {
         requireNonNull(editedStudent);
