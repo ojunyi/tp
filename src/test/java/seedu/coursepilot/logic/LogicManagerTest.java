@@ -1,7 +1,6 @@
 package seedu.coursepilot.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.coursepilot.logic.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
 import static seedu.coursepilot.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.MATRIC_DESC_AMY;
@@ -20,6 +19,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import seedu.coursepilot.logic.commands.AddCommand;
 import seedu.coursepilot.logic.commands.CommandResult;
+import seedu.coursepilot.logic.commands.DeleteCommand;
 import seedu.coursepilot.logic.commands.ListCommand;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.logic.parser.exceptions.ParseException;
@@ -62,7 +62,7 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete -student 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        assertCommandException(deleteCommand, DeleteCommand.MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
     }
 
     @Test

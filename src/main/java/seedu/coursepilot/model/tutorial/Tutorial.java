@@ -87,6 +87,18 @@ public class Tutorial {
     public void addStudent(Student student) {
         this.students.add(student);
     }
+
+    /**
+     * Removes a student from this tutorial's student list.
+     * The student must exist in the tutorial.
+     *
+     * @param student the student to be removed
+     * @return true if the student was removed, false if not found
+     */
+    public boolean removeStudent(Student student) {
+        requireNonNull(student);
+        return students.removeIf(s -> s.isSameStudent(student));
+    }
     /**
      * Returns true if both students have the same tutorial code.
      * This defines a weaker notion of equality between two tutorials.
