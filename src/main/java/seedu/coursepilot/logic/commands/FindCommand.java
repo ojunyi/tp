@@ -102,8 +102,8 @@ public class FindCommand extends Command {
         }
 
         model.updateFilteredStudentList(
-            student -> predicate.test(student) &&
-                    model.getCurrentOperatingTutorial()
+            student -> predicate.test(student)
+                    && model.getCurrentOperatingTutorial()
                             .map(tutorial -> tutorial.hasStudent(student))
                             .orElse(false));
         assert model.getFilteredStudentList() != null;
