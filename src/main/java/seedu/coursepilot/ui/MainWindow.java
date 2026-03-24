@@ -188,13 +188,11 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    @FXML
     private void handleShowStudentList() {
         setTutorialDetailsPanelVisible(false);
         setStudentListPanelVisible(true);
     }
 
-    @FXML
     private void handleShowTutorialDetails() {
         setStudentListPanelVisible(false);
         setTutorialDetailsPanelVisible(true);
