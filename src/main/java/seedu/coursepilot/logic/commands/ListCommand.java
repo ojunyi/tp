@@ -2,7 +2,6 @@ package seedu.coursepilot.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
 
 /**
@@ -32,8 +31,8 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS_TUTORIAL =
         "Listed tutorial details";
 
-    public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
-        "No current operating tutorial selected. Use select first.";
+    public static final String MESSAGE_SUCCESS_ALL_STUDENTS =
+        "No current operating tutorial selected. Listed all students across tutorials.";
 
     private final ListTarget listTarget;
 
@@ -50,11 +49,9 @@ public class ListCommand extends Command {
     /**
      * Executes the list command.
      * Lists tutorials or filters students based on the current operating tutorial.
-     *
-     * @throws CommandException if no current operating tutorial is selected when listing students
      */
     @Override
-    public CommandResult execute(Model model) throws CommandException {
+    public CommandResult execute(Model model) {
         requireNonNull(model);
 
         if (listTarget == ListTarget.TUTORIAL) {
@@ -62,7 +59,11 @@ public class ListCommand extends Command {
         }
 
         if (model.getCurrentOperatingTutorial().isEmpty()) {
-            throw new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
+            model.updateFilteredStudentList(
+                student -> model.getCoursePilot().getTutorialList().stream()
+                        .anyMatch(tut -> tut.hasStudent(student))
+            );
+            return new CommandResult(MESSAGE_SUCCESS_ALL_STUDENTS);
         }
 
         model.updateFilteredStudentList(
