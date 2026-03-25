@@ -58,7 +58,6 @@ public class ListCommand extends Command {
         requireNonNull(model);
 
         if (listTarget == ListTarget.TUTORIAL) {
-            model.clearCurrentOperatingTutorial();
             return new CommandResult(MESSAGE_SUCCESS_TUTORIAL);
         }
 
