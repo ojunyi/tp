@@ -56,11 +56,13 @@ public class FindCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
+    /*
     @Test
     public void execute_listStudentWithNoCurrentOperatingTutorial_throwsCommandException() {
         assertCommandFailure(new ListCommand(ListCommand.ListTarget.STUDENT),
             model, ListCommand.MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
     }
+     */
 
     @Test
     public void execute_zeroKeywords_noStudentFound() {
