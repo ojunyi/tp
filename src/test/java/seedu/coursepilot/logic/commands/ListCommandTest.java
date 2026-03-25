@@ -8,6 +8,7 @@ import static seedu.coursepilot.testutil.TypicalStudents.getTypicalCoursePilot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.coursepilot.logic.commands.CommandResult.PanelSwitch;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.ModelManager;
 import seedu.coursepilot.model.UserPrefs;
@@ -28,32 +29,33 @@ public class ListCommandTest {
 
     @Test
     public void execute_listTutorial_success() {
-        assertCommandSuccess(new ListCommand(ListCommand.ListTarget.TUTORIAL),
-            model, ListCommand.MESSAGE_SUCCESS_TUTORIAL, expectedModel);
+        CommandResult expectedResult = new CommandResult(
+            ListCommand.MESSAGE_SUCCESS_TUTORIAL, PanelSwitch.SHOW_TUTORIAL_DETAILS);
+        assertCommandSuccess(new ListCommand(ListCommand.ListTarget.TUTORIAL), model, expectedResult, expectedModel);
     }
 
     @Test
     public void execute_listStudentWithNoCurrentOperatingTutorial() {
+        CommandResult expectedResult = new CommandResult(
+            ListCommand.MESSAGE_SUCCESS_ALL_STUDENTS, PanelSwitch.SHOW_STUDENT_LIST);
         expectedModel.updateFilteredStudentList(
             student -> expectedModel.getCoursePilot().getTutorialList().stream()
                     .anyMatch(tut -> tut.hasStudent(student))
         );
 
-        assertCommandSuccess(new ListCommand(ListCommand.ListTarget.STUDENT),
-            model,
-            ListCommand.MESSAGE_SUCCESS_ALL_STUDENTS,
-            expectedModel);
+        assertCommandSuccess(new ListCommand(ListCommand.ListTarget.STUDENT), model, expectedResult, expectedModel);
     }
 
     @Test
     public void execute_listStudentWithCurrentOperatingTutorial_success() {
+        CommandResult expectedResult = new CommandResult(
+            ListCommand.MESSAGE_SUCCESS_STUDENT, PanelSwitch.SHOW_STUDENT_LIST);
         showStudentAtIndex(model, INDEX_FIRST_STUDENT);
         expectedModel.setCurrentOperatingTutorial(expectedModel.getFilteredTutorialList().get(0));
         expectedModel.updateFilteredStudentList(student ->
             expectedModel.getCurrentOperatingTutorial().get().hasStudent(student));
         model.setCurrentOperatingTutorial(model.getFilteredTutorialList().get(0));
 
-        assertCommandSuccess(new ListCommand(ListCommand.ListTarget.STUDENT),
-            model, ListCommand.MESSAGE_SUCCESS_STUDENT, expectedModel);
+        assertCommandSuccess(new ListCommand(ListCommand.ListTarget.STUDENT), model, expectedResult, expectedModel);
     }
 }

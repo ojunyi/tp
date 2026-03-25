@@ -2,6 +2,7 @@ package seedu.coursepilot.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.coursepilot.logic.commands.CommandResult.PanelSwitch;
 import seedu.coursepilot.model.Model;
 
 /**
@@ -55,7 +56,7 @@ public class ListCommand extends Command {
         requireNonNull(model);
 
         if (listTarget == ListTarget.TUTORIAL) {
-            return new CommandResult(MESSAGE_SUCCESS_TUTORIAL);
+            return new CommandResult(MESSAGE_SUCCESS_TUTORIAL, PanelSwitch.SHOW_TUTORIAL_DETAILS);
         }
 
         if (model.getCurrentOperatingTutorial().isEmpty()) {
@@ -63,13 +64,13 @@ public class ListCommand extends Command {
                 student -> model.getCoursePilot().getTutorialList().stream()
                         .anyMatch(tut -> tut.hasStudent(student))
             );
-            return new CommandResult(MESSAGE_SUCCESS_ALL_STUDENTS);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_STUDENTS, PanelSwitch.SHOW_STUDENT_LIST);
         }
 
         model.updateFilteredStudentList(
             student -> model.getCurrentOperatingTutorial().get().hasStudent(student)
         );
-        return new CommandResult(MESSAGE_SUCCESS_STUDENT);
+        return new CommandResult(MESSAGE_SUCCESS_STUDENT, PanelSwitch.SHOW_STUDENT_LIST);
     }
 
     @Override

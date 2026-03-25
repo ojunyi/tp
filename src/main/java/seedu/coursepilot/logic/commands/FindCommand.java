@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import seedu.coursepilot.commons.util.ToStringBuilder;
 import seedu.coursepilot.logic.Messages;
+import seedu.coursepilot.logic.commands.CommandResult.PanelSwitch;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.student.Student;
@@ -78,6 +79,9 @@ public class FindCommand extends Command {
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
         "No current operating tutorial selected. Use select first.";
 
+    public static final String MESSAGE_SUCCESS_ALL_STUDENTS =
+        "No current operating tutorial selected. Finding from entire student list.";
+
     private final Predicate<Student> predicate;
 
     public FindCommand(Predicate<Student> predicate) {
@@ -87,9 +91,14 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        assert predicate != null;
 
         if (model.getCurrentOperatingTutorial().isEmpty()) {
-            throw new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
+            model.updateFilteredStudentList(predicate);
+            assert model.getFilteredStudentList() != null;
+            return new CommandResult(
+                String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
+                        model.getFilteredStudentList().size()), PanelSwitch.SHOW_STUDENT_LIST);
         }
 
         model.updateFilteredStudentList(
@@ -97,6 +106,7 @@ public class FindCommand extends Command {
                     && model.getCurrentOperatingTutorial()
                             .map(tutorial -> tutorial.hasStudent(student))
                             .orElse(false));
+        assert model.getFilteredStudentList() != null;
         return new CommandResult(
                 String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW, model.getFilteredStudentList().size()));
     }

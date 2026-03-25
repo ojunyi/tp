@@ -188,19 +188,14 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public StudentListPanel getStudentListPanel() {
-        return studentListPanel;
+    private void handleShowStudentList() {
+        setTutorialDetailsPanelVisible(false);
+        setStudentListPanelVisible(true);
     }
 
-    private void updateCenterPanel(String commandText) {
-        String trimmedCommand = commandText.trim();
-        if (trimmedCommand.equals("list -tutorial")) {
-            setStudentListPanelVisible(false);
-            setTutorialDetailsPanelVisible(true);
-        } else if (trimmedCommand.equals("list -student")) {
-            setTutorialDetailsPanelVisible(false);
-            setStudentListPanelVisible(true);
-        }
+    private void handleShowTutorialDetails() {
+        setStudentListPanelVisible(false);
+        setTutorialDetailsPanelVisible(true);
     }
 
     /**
@@ -222,7 +217,16 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            updateCenterPanel(commandText);
+            switch (commandResult.getPanelSwitch()) {
+            case SHOW_STUDENT_LIST:
+                handleShowStudentList();
+                break;
+            case SHOW_TUTORIAL_DETAILS:
+                handleShowTutorialDetails();
+                break;
+            default:
+                break;
+            }
 
             return commandResult;
         } catch (CommandException | ParseException e) {
