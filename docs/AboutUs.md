@@ -25,7 +25,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](http://github.com/jyc300564)]
 
-* Role: Developer
+* Role: Team Lead
+* Responsibilities: UI
 
 ### Teh Ming Wei
 
