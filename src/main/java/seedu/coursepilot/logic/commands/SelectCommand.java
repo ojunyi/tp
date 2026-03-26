@@ -13,6 +13,7 @@ import seedu.coursepilot.model.tutorial.Tutorial;
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
+    public static final String CLEAR_KEYWORD = "none";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Selects a tutorial whose code matches "
             + "the specified keywords (case-insensitive) exactly.\n"
@@ -21,6 +22,7 @@ public class SelectCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Selected tutorial: %1$s";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "No tutorial found with code: %1$s";
+    public static final String MESSAGE_CLEAR_TUTORIAL = "Cleared current operating tutorial.";
 
     private final String tutorialKeyword;
 
@@ -31,6 +33,11 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+
+        if (tutorialKeyword.equalsIgnoreCase(CLEAR_KEYWORD)) {
+            model.clearCurrentOperatingTutorial();
+            return new CommandResult(MESSAGE_CLEAR_TUTORIAL);
+        }
 
         Tutorial tutorial = model.getFilteredTutorialList().stream()
                 .filter(tut -> tut.getTutorialCode().equalsIgnoreCase(tutorialKeyword))
