@@ -31,7 +31,7 @@ public class AddCommandIntegrationTest {
         model = new ModelManager(getTypicalCoursePilot(), new UserPrefs());
         if (model.getFilteredTutorialList().isEmpty()) {
             Tutorial currentTutorial = new Tutorial(new TutorialCode("CS2103T-W13"), new Day("Wed"),
-                    new TimeSlot("1pm-2pm"), new Capacity(10));
+                    new TimeSlot("13:00-14:00"), new Capacity(10));
             model.addTutorial(currentTutorial);
             model.setCurrentOperatingTutorial(currentTutorial);
         } else {

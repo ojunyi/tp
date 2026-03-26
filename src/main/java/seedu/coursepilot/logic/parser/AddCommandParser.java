@@ -80,18 +80,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
 
-            TutorialCode tutorialCode = new TutorialCode(argMultimap.getValue(PREFIX_TUTORIALCODE).get());
-            Day day = new Day(argMultimap.getValue(PREFIX_DAY).get());
-            TimeSlot timeslot = new TimeSlot(argMultimap.getValue(PREFIX_TIMESLOT).get());
-
-            int capacityValue;
-            try {
-                capacityValue = Integer.parseInt(argMultimap.getValue(PREFIX_CAPACITY).get());
-            } catch (NumberFormatException e) {
-                throw new ParseException("Capacity must be a valid integer");
-            }
-
-            Capacity capacity = new Capacity(capacityValue);
+            TutorialCode tutorialCode = ParserUtil.parseCode(argMultimap.getValue(PREFIX_TUTORIALCODE).get());
+            Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get());
+            TimeSlot timeslot = ParserUtil.parseTimeSlot(argMultimap.getValue(PREFIX_TIMESLOT).get());
+            Capacity capacity = ParserUtil.parseCapacity(argMultimap.getValue(PREFIX_CAPACITY).get());
 
             Tutorial tutorial = new Tutorial(tutorialCode, day, timeslot, capacity);
             return new AddCommand(tutorial);

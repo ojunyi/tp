@@ -1,5 +1,6 @@
 package seedu.coursepilot.model.tutorial;
 
+import java.time.LocalTime;
 import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 
@@ -10,14 +11,15 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 public class TimeSlot {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Time slots should not be blank and should contain valid time representations. "
-            + "Common formats include '10:00-11:00', '1pm-2pm', '14:00-15:00', etc.";
+            "Time slots should be of the format XX:XX-XX:XX where X is a integer and following 24-hour format."
+            + "\n Start time should also be before end time. No spaces in between."
+            + " E.g '10:00-11:00', '14:00-15:00', etc.";
 
     /*
-     * Time slot must not be empty or only whitespace, and should contain
-     * alphanumeric characters, colons, hyphens, spaces, and common time indicators (am/pm).
+     * Time slot must not be empty or only whitespace, and should
+     * follow the format XX:XX-XX:XX
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}:;, -]+";
+    public static final String VALIDATION_REGEX = "([01]\\d|2[0-3]):[0-5]\\d-([01]\\d|2[0-3]):[0-5]\\d";
 
     public final String value;
 
@@ -37,7 +39,13 @@ public class TimeSlot {
      * Returns true if a given string is a valid time slot.
      */
     public static boolean isValidTimeSlot(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (!test.matches(VALIDATION_REGEX)) {
+            return false;
+        }
+        String[] parts = test.split("-");
+        LocalTime start = LocalTime.parse(parts[0]);
+        LocalTime end = LocalTime.parse(parts[1]);
+        return start.isBefore(end);
     }
 
     @Override

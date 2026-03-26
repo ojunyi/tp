@@ -46,7 +46,7 @@
   "tutorials" : [ {
     "tutorialCode" : "CS2103T-W13",
     "day" : "Wed",
-    "timeSlot" : "1pm-2pm",
+    "timeSlot" : "13:00-14:00",
     "capacity" : 10,
     "students" : [ {
       "name" : "Alice Pauline",

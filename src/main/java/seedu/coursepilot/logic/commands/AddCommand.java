@@ -48,7 +48,7 @@ public class AddCommand extends Command {
             + "\nExample: " + COMMAND_WORD + " -tutorial "
             + PREFIX_TUTORIALCODE + " CS2103T-W13 "
             + PREFIX_DAY + " Wed "
-            + PREFIX_TIMESLOT + " 1pm-2pm "
+            + PREFIX_TIMESLOT + " 13:00-14:00 "
             + PREFIX_CAPACITY + " 10 ";
 
     public static final String MESSAGE_SUCCESS_STUDENT = "New student added: %1$s";

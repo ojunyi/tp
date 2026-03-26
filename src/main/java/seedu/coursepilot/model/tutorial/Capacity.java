@@ -20,6 +20,17 @@ public class Capacity {
     /**
      * Constructs a {@code Capacity}.
      *
+     * @param capacity A valid capacity as a string.
+     */
+    public Capacity(String capacity) {
+        requireNonNull(capacity);
+        checkArgument(isValidCapacity(capacity), MESSAGE_CONSTRAINTS);
+        value = Integer.parseInt(capacity);
+    }
+
+    /**
+     * Constructs a {@code Capacity}.
+     *
      * @param capacity A valid capacity.
      */
     public Capacity(int capacity) {
@@ -31,6 +42,17 @@ public class Capacity {
     /**
      * Returns true if a given integer is a valid capacity.
      */
+    public static boolean isValidCapacity(String test) {
+
+            try {
+                Integer.parseInt(test);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            int testValue = Integer.parseInt(test);
+            return testValue >= MIN_CAPACITY && testValue <= MAX_CAPACITY;
+    }
+
     public static boolean isValidCapacity(int test) {
         return test >= MIN_CAPACITY && test <= MAX_CAPACITY;
     }

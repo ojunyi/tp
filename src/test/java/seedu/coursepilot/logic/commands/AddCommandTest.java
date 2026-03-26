@@ -45,7 +45,7 @@ public class AddCommandTest {
         ModelStubAcceptingStudentAdded modelStub = new ModelStubAcceptingStudentAdded();
         Student validStudent = new StudentBuilder().build();
         Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
-                new TimeSlot("1-2pm"), new Capacity(20));
+                new TimeSlot("13:00-14:00"), new Capacity(20));
         modelStub.setCurrentOperatingTutorial(tutorial);
 
         CommandResult commandResult = new AddCommand(validStudent).execute(modelStub);
@@ -61,7 +61,7 @@ public class AddCommandTest {
         AddCommand addCommand = new AddCommand(validStudent);
         ModelStubWithStudent modelStub = new ModelStubWithStudent(validStudent);
         Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
-                new TimeSlot("1-2pm"), new Capacity(20));
+                new TimeSlot("13:00-14:00"), new Capacity(20));
         tutorial.addStudent(validStudent);
         modelStub.setCurrentOperatingTutorial(tutorial);
 
@@ -76,7 +76,7 @@ public class AddCommandTest {
         AddCommand addCommand = new AddCommand(bobWithAliceMatric);
         ModelStubWithStudent modelStub = new ModelStubWithStudent(alice);
         Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
-                new TimeSlot("1-2pm"), new Capacity(20));
+                new TimeSlot("13:00-14:00"), new Capacity(20));
         tutorial.addStudent(alice);
         modelStub.setCurrentOperatingTutorial(tutorial);
 

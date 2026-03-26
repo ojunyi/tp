@@ -15,6 +15,10 @@ import seedu.coursepilot.model.student.MatricNumber;
 import seedu.coursepilot.model.student.Name;
 import seedu.coursepilot.model.student.Phone;
 import seedu.coursepilot.model.tag.Tag;
+import seedu.coursepilot.model.tutorial.Capacity;
+import seedu.coursepilot.model.tutorial.Day;
+import seedu.coursepilot.model.tutorial.TimeSlot;
+import seedu.coursepilot.model.tutorial.TutorialCode;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -136,5 +140,65 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String code} into a {@code TutorialCode}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code code} is invalid.
+     */
+    public static TutorialCode parseCode(String code) throws ParseException {
+        requireNonNull(code);
+        String trimmedCode = code.trim();
+        if (!TutorialCode.isValidTutorialCode(trimmedCode)) {
+            throw new ParseException(TutorialCode.MESSAGE_CONSTRAINTS);
+        }
+        return new TutorialCode(trimmedCode);
+    }
+
+    /**
+     * Parses a {@code String day} into a {@code Day}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code day} is invalid.
+     */
+    public static Day parseDay(String day) throws ParseException {
+        requireNonNull(day);
+        String trimmedDay = day.trim();
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new ParseException(Day.MESSAGE_CONSTRAINTS);
+        }
+        return new Day(trimmedDay);
+    }
+
+    /**
+     * Parses a {@code String timeSlot} into a {@code TimeSlot}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code timeSlot} is invalid.
+     */
+    public static TimeSlot parseTimeSlot(String timeSlot) throws ParseException {
+        requireNonNull(timeSlot);
+        String trimmedTimeSlot = timeSlot.trim();
+        if (!TimeSlot.isValidTimeSlot(trimmedTimeSlot)) {
+            throw new ParseException(TimeSlot.MESSAGE_CONSTRAINTS);
+        }
+        return new TimeSlot(trimmedTimeSlot);
+    }
+
+    /**
+     * Parses a {@code String capacity} into a {@code Capacity}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code capacity} is invalid.
+     */
+    public static Capacity parseCapacity(String capacity) throws ParseException {
+        requireNonNull(capacity);
+        String trimmedCapacity = capacity.trim();
+        if (!Capacity.isValidCapacity(trimmedCapacity)) {
+            throw new ParseException(Capacity.MESSAGE_CONSTRAINTS);
+        }
+        return new Capacity(trimmedCapacity);
     }
 }

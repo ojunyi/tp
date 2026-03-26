@@ -10,14 +10,16 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 public class Day {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Days should be valid day names (e.g., Monday, Mon, Tuesday, Tue, etc.) "
-            + "or common abbreviations, and should not be blank";
+            "Days should be the first three letters of valid day names, with the only first letter being capitalised"
+            + " (e.g. Mon, Tue, etc.) ";
 
     /*
-     * Day must not be empty and should contain only alphabetic characters.
-     * Accepts full names (Monday) and abbreviations (Mon).
+     * Day must not be empty and should be the first three letters of valid day names,
+     * with the only first letter being capitalised
+     * Accepts only abbreviations (Mon).
      */
-    public static final String VALIDATION_REGEX = "[A-Za-z]+";
+
+    private static final String days[] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
     public final String value;
 
@@ -37,7 +39,12 @@ public class Day {
      * Returns true if a given string is a valid day.
      */
     public static boolean isValidDay(String test) {
-        return test.matches(VALIDATION_REGEX);
+        for (String s : days) {
+            if (s.equals(test)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

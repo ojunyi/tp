@@ -77,7 +77,7 @@ public class DeleteCommandTest {
 
         // Create second tutorial and add the same student
         Tutorial tutorial2 = new Tutorial(new TutorialCode("CS2103T-T01"), new Day("Thu"),
-                new TimeSlot("2pm-3pm"), new Capacity(10));
+                new TimeSlot("14:00-15:00"), new Capacity(10));
         tutorial2.addStudent(studentToDelete);
         model.addTutorial(tutorial2);
 

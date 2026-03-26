@@ -73,7 +73,7 @@ public class TypicalStudents {
             ab.addStudent(student);
         }
         Tutorial tutorial = new Tutorial(new TutorialCode("CS2103T-W13"), new Day("Wed"),
-                new TimeSlot("1pm-2pm"), new Capacity(10));
+                new TimeSlot("13:00-14:00"), new Capacity(10));
         for (Student student : getTypicalStudents()) {
             tutorial.addStudent(student);
         }
