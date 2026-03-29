@@ -128,6 +128,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        logger.info("Initialising UI panels");
         tutorialCodeListPanel = new TutorialCodeListPanel(logic.getFilteredTutorialList(),
                 logic.getCurrentOperatingTutorialProperty());
         tutorialListPanelPlaceholder.getChildren().add(tutorialCodeListPanel.getRoot());
@@ -155,6 +156,7 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
+        logger.fine("Setting window size to " + guiSettings.getWindowWidth() + "x" + guiSettings.getWindowHeight());
         primaryStage.setHeight(guiSettings.getWindowHeight());
         primaryStage.setWidth(guiSettings.getWindowWidth());
         if (guiSettings.getWindowCoordinates() != null) {
@@ -180,10 +182,11 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Closes the application.
+     * Closes CoursePilot.
      */
     @FXML
     private void handleExit() {
+        logger.info("Exiting CoursePilot");
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
