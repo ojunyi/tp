@@ -48,21 +48,18 @@ dependencies {
     String jUnitVersion = '5.4.0'
     String javaFxVersion = '17.0.7'
 
-    String osName = System.getProperty('os.name').toLowerCase()
-    String osArch = System.getProperty('os.arch')
-    String platform
-    if (osName.contains('win')) {
-        platform = 'win'
-    } else if (osName.contains('mac')) {
-        platform = osArch == 'aarch64' ? 'mac-aarch64' : 'mac'
-    } else {
-        platform = 'linux'
-    }
-
-    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: platform
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: platform
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: platform
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: platform
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
