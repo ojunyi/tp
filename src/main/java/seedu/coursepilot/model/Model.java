@@ -40,17 +40,17 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' course pilot file path.
+     * Returns the user prefs' CoursePilot file path.
      */
     Path getCoursePilotFilePath();
 
     /**
-     * Sets the user prefs' course pilot file path.
+     * Sets the user prefs' CoursePilot file path.
      */
     void setCoursePilotFilePath(Path coursePilotFilePath);
 
     /**
-     * Replaces course pilot data with the data in {@code coursePilot}.
+     * Replaces CoursePilot data with the data in {@code coursePilot}.
      */
     void setCoursePilot(ReadOnlyCoursePilot coursePilot);
 
@@ -58,27 +58,27 @@ public interface Model {
     ReadOnlyCoursePilot getCoursePilot();
 
     /**
-     * Returns true if a student with the same identity as {@code student} exists in the course pilot.
+     * Returns true if a student with the same identity as {@code student} exists in the CoursePilot.
      */
     boolean hasStudent(Student student);
     boolean hasTutorial(Tutorial tutorial);
     /**
      * Deletes the given student.
-     * The student must exist in the course pilot.
+     * The student must exist in the CoursePilot.
      */
     void deleteStudent(Student target);
     void deleteTutorial(Tutorial target);
     /**
      * Adds the given student.
-     * {@code student} must not already exist in the course pilot.
+     * {@code student} must not already exist in the CoursePilot.
      */
     void addStudent(Student student);
     void addTutorial(Tutorial tutorial);
     /**
      * Replaces the given student {@code target} with {@code editedStudent}.
-     * {@code target} must exist in the course pilot.
+     * {@code target} must exist in the CoursePilot.
      * The student identity of {@code editedStudent} must not be the same as
-     * another existing student in the course pilot.
+     * another existing student in the CoursePilot.
      */
     void setStudent(Student target, Student editedStudent);
     void setTutorial(Tutorial target, Tutorial editedTutorial);

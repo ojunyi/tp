@@ -6,12 +6,12 @@ import seedu.coursepilot.model.CoursePilot;
 import seedu.coursepilot.model.Model;
 
 /**
- * Clears the course pilot.
+ * Clears CoursePilot.
  */
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Course pilot has been cleared!";
+    public static final String MESSAGE_SUCCESS = "CoursePilot has been cleared!";
 
 
     @Override

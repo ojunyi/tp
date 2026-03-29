@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Student's phone number in the course pilot.
+ * Represents a Student's phone number in CoursePilot.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {

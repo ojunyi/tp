@@ -18,14 +18,16 @@ import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.student.Student;
 import seedu.coursepilot.model.tutorial.Tutorial;
 /**
- * Adds a student to the course pilot.
+ * Adds a student to the CoursePilot.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " -student: Adds a student to the course pilot. "
-            + "Parameters: add -student "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds a student or tutorial to CoursePilot.\n"
+            + "Modes: -student, -tutorial\n"
+            + "Parameter (-student): -student "
             + PREFIX_NAME + " NAME "
             + PREFIX_PHONE + " PHONE "
             + PREFIX_EMAIL + " EMAIL "
@@ -37,30 +39,28 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + " johnd@example.com "
             + PREFIX_MATRICNUMBER + " A000000 "
             + PREFIX_TAG + " friends "
-            + PREFIX_TAG + " owesMoney"
-            + "\nAlternatively, \n"
-            + COMMAND_WORD + " -tutorial: Adds a tutorial to the course pilot. "
-            + "\nParameters: add -tutorial "
+            + PREFIX_TAG + " owesMoney\n"
+            + "Parameters (-tutorial): -tutorial "
             + PREFIX_TUTORIALCODE + " CODE "
             + PREFIX_DAY + " DAY "
             + PREFIX_TIMESLOT + " TIMESLOT "
-            + PREFIX_CAPACITY + " CAPACITY "
-            + "\nExample: " + COMMAND_WORD + " -tutorial "
+            + PREFIX_CAPACITY + " CAPACITY \n"
+            + "Example: " + COMMAND_WORD + " -tutorial "
             + PREFIX_TUTORIALCODE + " CS2103T-W13 "
             + PREFIX_DAY + " Wed "
             + PREFIX_TIMESLOT + " 13:00-14:00 "
             + PREFIX_CAPACITY + " 10 ";
 
-    public static final String MESSAGE_SUCCESS_STUDENT = "New student added: %1$s";
-    public static final String MESSAGE_SUCCESS_TUTORIAL = "New tutorial added: %1$s";
+    public static final String MESSAGE_SUCCESS_STUDENT = "Added student: %1$s";
+    public static final String MESSAGE_SUCCESS_TUTORIAL = "Added tutorial: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT =
-            "This student or matriculation number already exists in the course pilot";
+            "This student or matriculation number already exists in the CoursePilot.";
     public static final String MESSAGE_DUPLICATE_TUTORIAL =
-            "This tutorial already exists in the system";
+            "This tutorial already exists in CoursePilot";
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
-            "No current operating tutorial selected. Use find first.";
+            "No tutorial selected. Please select a tutorial to operate on first.";
     public static final String MESSAGE_TUTORIAL_FULL =
-            "Cannot add student: Tutorial is at full capacity";
+            "Tutorial is at full capacity. Cannot add student";
 
     private final Student toAdd;
     private final Tutorial tutorialToAdd;

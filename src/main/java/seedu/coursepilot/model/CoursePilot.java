@@ -76,7 +76,7 @@ public class CoursePilot implements ReadOnlyCoursePilot {
     //// student-level operations
 
     /**
-     * Returns true if a student with the same identity as {@code student} exists in the course pilot.
+     * Returns true if a student with the same identity as {@code student} exists in CoursePilot.
      */
     public boolean hasStudent(Student student) {
         requireNonNull(student);
@@ -84,7 +84,7 @@ public class CoursePilot implements ReadOnlyCoursePilot {
     }
 
     /**
-     * Returns true if a tutorial with the same identity as {@code tutorial} exists in the course pilot.
+     * Returns true if a tutorial with the same identity as {@code tutorial} exists in CoursePilot.
      */
     public boolean hasTutorial(Tutorial tutorial) {
         requireNonNull(tutorial);
@@ -92,8 +92,8 @@ public class CoursePilot implements ReadOnlyCoursePilot {
     }
 
     /**
-     * Adds a student to the course pilot.
-     * The student must not already exist in the course pilot.
+     * Adds a student to CoursePilot.
+     * The student must not already exist in CoursePilot.
      */
     public void addStudent(Student p) {
         students.add(p);
@@ -103,9 +103,9 @@ public class CoursePilot implements ReadOnlyCoursePilot {
     }
     /**
      * Replaces the given student {@code target} in the list with {@code editedStudent}.
-     * {@code target} must exist in the course pilot.
+     * {@code target} must exist in CoursePilot.
      * The student identity of {@code editedStudent} must not be the same as
-     * another existing student in the course pilot.
+     * another existing student in CoursePilot.
      */
     public void setStudent(Student target, Student editedStudent) {
         requireNonNull(editedStudent);
@@ -118,7 +118,7 @@ public class CoursePilot implements ReadOnlyCoursePilot {
     }
     /**
      * Removes {@code key} from this {@code CoursePilot}.
-     * {@code key} must exist in the course pilot.
+     * {@code key} must exist in CoursePilot.
      */
     public void removeStudent(Student key) {
         students.remove(key);

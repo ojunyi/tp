@@ -18,7 +18,7 @@ import seedu.coursepilot.model.student.Student;
 import seedu.coursepilot.model.tutorial.Tutorial;
 
 /**
- * Represents the in-memory model of the course pilot data.
+ * Represents the in-memory model of CoursePilot data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -36,7 +36,7 @@ public class ModelManager implements Model {
     public ModelManager(ReadOnlyCoursePilot coursePilot, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(coursePilot, userPrefs);
 
-        logger.fine("Initializing with course pilot: " + coursePilot + " and user prefs " + userPrefs);
+        logger.fine("Initializing with CoursePilot: " + coursePilot + " and user prefs " + userPrefs);
 
         this.coursePilot = new CoursePilot(coursePilot);
         this.userPrefs = new UserPrefs(userPrefs);

@@ -67,20 +67,19 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all students whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Finds students by name or by field prefix.\n"
+            + "Prefixes: /phone, /email, /matric\n"
+            + "Parameters: [PREFIX] KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " John\n"
+            + "Example: " + COMMAND_WORD + " /email @u.nus.edu";
 
     public static final String MESSAGE_USAGE_FLAG = COMMAND_WORD + ": Valid flags are: "
             + Flag.validFlagsString() + "\n"
             + "Example: " + COMMAND_WORD + " /email @u.nus.edu @gmail";
 
-    public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
-        "No current operating tutorial selected. Use select first.";
-
     public static final String MESSAGE_SUCCESS_ALL_STUDENTS =
-        "No current operating tutorial selected. Finding from entire student list.";
+        "No tutorial selected. Showing all matching students.";
 
     private final Predicate<Student> predicate;
 

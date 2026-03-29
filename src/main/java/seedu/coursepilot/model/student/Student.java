@@ -11,7 +11,7 @@ import seedu.coursepilot.commons.util.ToStringBuilder;
 import seedu.coursepilot.model.tag.Tag;
 
 /**
- * Represents a Student in the course pilot.
+ * Represents a Student in CoursePilot.
  * Guarantees: details are present and not null, field values are validated and immutable.
  */
 public class Student {

@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Tutorial's capacity in the course pilot.
+ * Represents a Tutorial's capacity in CoursePilot.
  * Guarantees: immutable; is valid as declared in {@link #isValidCapacity(int)}
  */
 public class Capacity {

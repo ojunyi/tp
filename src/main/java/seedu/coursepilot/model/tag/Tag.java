@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Tag in the course pilot.
+ * Represents a Tag in CoursePilot.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
 public class Tag {

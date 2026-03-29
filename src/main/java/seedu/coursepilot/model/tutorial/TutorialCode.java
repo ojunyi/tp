@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Tutorial's code in the course pilot.
+ * Represents a Tutorial's code in CoursePilot.
  * Guarantees: immutable; is valid as declared in {@link #isValidTutorialCode(String)}
  */
 public class TutorialCode {

@@ -46,7 +46,7 @@ public interface Logic {
     ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty();
 
     /**
-     * Returns the user prefs' course pilot file path.
+     * Returns the user prefs' CoursePilot file path.
      */
     Path getCoursePilotFilePath();
 

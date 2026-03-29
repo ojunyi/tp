@@ -6,7 +6,7 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 import java.time.LocalTime;
 
 /**
- * Represents a Tutorial's time slot in the course pilot.
+ * Represents a Tutorial's time slot in CoursePilot.
  * Guarantees: immutable; is valid as declared in {@link #isValidTimeSlot(String)}
  */
 public class TimeSlot {

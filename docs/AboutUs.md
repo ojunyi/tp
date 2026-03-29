@@ -14,9 +14,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/ojunyi.png" width="200px">
 
 [[github](https://github.com/ojunyi/)]
-[[portfolio](team/ojunyi.md)]
 
-* Role: Project Advisor
+* Role: Developer
 
 ### Jin Liangdong
 
@@ -24,8 +23,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](http://github.com/jyc300564)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
 
 ### Teh Ming Wei
 

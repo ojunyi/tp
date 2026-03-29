@@ -15,22 +15,23 @@ import seedu.coursepilot.model.tutorial.Tutorial;
 
 
 /**
- * Deletes a student identified using it's displayed index from the course pilot.
+ * Deletes a student identified using it's displayed index from CoursePilot.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the student identified by the index number used in the displayed student list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " -student 1"
-            + "\nExample: " + COMMAND_WORD + " -tutorial 1";
+            + ": Deletes a student or tutorial by index.\n"
+            + "Modes: -student, -tutorial\n"
+            + "Parameters: MODE INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " -student 1\n"
+            + "Example: " + COMMAND_WORD + " -tutorial 1";
 
-    public static final String MESSAGE_DELETE_STUDENT_SUCCESS = "Deleted Student: %1$s";
-    public static final String MESSAGE_DELETE_TUTORIAL_SUCCESS = "Deleted Tutorial: %1$s";
+    public static final String MESSAGE_DELETE_STUDENT_SUCCESS = "Deleted student: %1$s";
+    public static final String MESSAGE_DELETE_TUTORIAL_SUCCESS = "Deleted tutorial: %1$s";
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
-            "No current operating tutorial selected. Use select first.";
+            "No tutorial selected. Please select a tutorial to operate on first.";
     public static final String MESSAGE_STUDENT_NOT_IN_TUTORIAL =
             "This student is not in the current tutorial.";
 
