@@ -281,10 +281,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | * * *    | Tutor | Ask for help when using CoursePilot                      | I can refer to instructions when I forget how to use CoursePilot |
 | * * *    | Tutor | Add a student to CoursePilot                             | I can keep track of all my students in one place |
 | * * *    | Tutor | Delete a student from CoursePilot                        | I can remove students who are no longer relevant |
-| * * *    | Tutor | List all student records                                 | I can quickly view all students stored in CoursePilot |
-| * * *    | Tutor | Edit existing student record                             | I can keep student information accurate and up to date |
-| * * *    | Tutor | Find a student record                                    | I can quickly find a specific student's information |
-| * * *    | Tutor | Clear all existing student records                       | I can reset the system when the data is no longer needed |
+| * * *    | Tutor | List all student contacts                                | I can quickly view all students stored in CoursePilot |
+| * * *    | Tutor | Edit existing student contact                            | I can keep student information accurate and up to date |
+| * * *    | Tutor | Find a student contact                                   | I can quickly find a specific student's information |
+| * * *    | Tutor | Clear all existing student contacts                      | I can reset the system when the data is no longer needed |
 | * * *    | Tutor | Exit CoursePilot                                         | I can safely close the application after use |
 | * * *    | Tutor | Archive CoursePilot data                                 | I do not have to repopulate all my data again |
 | * * *    | Tutor | List all tutorial slots                                  | I can check all the tutorials I am in charge of |
@@ -322,16 +322,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is `CoursePilot` and the **Actor** is the `tutor`, unless specified otherwise)
 
 **Use case: UC01 - Ask for help**
-**Use case: UC02 - Manage Student Records**
-How to add, delete, edit, find, list, clear, assign to tutorial
-**Use case: UC03 - Manage Tutorial Slots**
-How to add, delete, select, list tutorial slots and detail
-**Use case: UC04 - Manage Attendance**
-**Use case: UC05 - Manage Deadlines**
-**Use case: UC06 - Archive and Restore Data**
-**Use case: UC07 - Manage Assessments**
 
-**Use case: UC01 - Add a student**
+**MSS**
+
+1.  Tutor requests for help.
+2.  CoursePilot shows the details of possible user commands.
+
+    Use case ends.
+
+**Use case: UC02 - Add a student**
 
 **MSS**
 
@@ -354,7 +353,7 @@ How to add, delete, select, list tutorial slots and detail
 
       Use case ends.
 
-**Use case: UC02 - Delete a student**
+**Use case: UC03 - Delete a student**
 
 **MSS**
 
@@ -376,7 +375,7 @@ How to add, delete, select, list tutorial slots and detail
 
       Use case ends.
 
-**Use case: UC03 - Mark attendance**
+**Use case: UC04 - Edit a student**
 
 **MSS**
 
@@ -400,54 +399,8 @@ How to add, delete, select, list tutorial slots and detail
 
       Use case ends.
 
-**Use case: UC04 - Record a grade**
 
-**MSS**
-
-1.  Tutor enters the command to record a grade for a student for a specific assessment.
-2.  CoursePilot records the grade and displays a confirmation message.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. The given student index is invalid.
-
-    * 1a1. CoursePilot shows an error message.
-
-      Use case ends.
-
-* 1b. The specified assessment does not exist.
-
-    * 1b1. CoursePilot shows an error message.
-
-      Use case ends.
-
-* 1c. The grade value is out of the valid range.
-
-    * 1c1. CoursePilot shows an error message.
-
-      Use case ends.
-
-**Use case: UC05 - Ask for help**
-
-**MSS**
-
-1.  Tutor requests for help.
-2.  CoursePilot shows the details of possible user commands.
-
-    Use case ends.
-
-**Use case: UC06 - List students**
-
-**MSS**
-
-1.  Tutor requests to list students.
-2.  CoursePilot shows a list of students.
-
-    Use case ends.
-
-**Use case: UC07 - Add a tutorial**
+**Use case: UC05 - Add a tutorial**
 
 **MSS**
 
@@ -465,11 +418,11 @@ timing, and students.
 
       Use case ends.
 
-**Use case: UC08 - Delete a tutorial**
+**Use case: UC06 - Delete a tutorial**
 
 **MSS**
 
-1.  Tutor requests to <u>list tutorials (UC09)</u>.
+1.  Tutor requests to list tutorials.
 2.  Tutor requests to delete a specific tutorial in the list.
 3.  CoursePilot deletes the tutorial and displays a confirmation message.
 
@@ -487,7 +440,7 @@ timing, and students.
 
       Use case ends.
 
-**Use case: UC09 - List tutorials**
+**Use case: UC07 - List student contact**
 
 **MSS**
 
@@ -496,7 +449,7 @@ timing, and students.
 
     Use case ends.
 
-**Use case: UC10 - Find student**
+**Use case: UC08 - Find student contact**
 
 **MSS**
 
@@ -510,23 +463,6 @@ timing, and students.
 * 1a. No such student is found.
 
     * 1a1. CoursePilot shows no such student is found.
-
-  Use case ends.
-
-**Use case: UC11 - Find tutorial**
-
-**MSS**
-
-1.  Tutor requests to find a tutorial and specifies details to be searched.
-2.  CoursePilot shows details of tutorial.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. No such tutorial is found.
-
-    * 1a1. CoursePilot shows no such tutorial is found.
 
   Use case ends.
 
@@ -548,7 +484,7 @@ timing, and students.
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Tutor/TA**: A teaching assistant at a university responsible for conducting tutorial sessions, marking attendance, and grading assessments
-* **Student Record**: A stored entry in CoursePilot containing a student's information
+* **Student Contact**: A stored entry in CoursePilot containing a student's information
 * **Tutorial Slot**: A tutorial object defined by a code, time, day, and capacity, created and managed by a tutor in CoursePilot
 * **Tutorial Resource**: A local file (e.g. PDF) detected by CoursePilot from the tutor's PC and imported into CoursePilot for easy access
 * **Assessment**: A graded component of a course such as an assignment, quiz, or exam
