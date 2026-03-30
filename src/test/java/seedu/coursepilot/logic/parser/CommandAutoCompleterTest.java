@@ -68,7 +68,7 @@ public class CommandAutoCompleterTest {
 
     @Test
     public void getSuggestions_addStudentSpace_returnsStudentPrefixes() {
-        List<String> result = completer.getSuggestions("add -student ");
+        List<String> result = completer.getSuggestions("add -student /");
         assertTrue(result.contains("/name"));
         assertTrue(result.contains("/phone"));
         assertTrue(result.contains("/email"));
@@ -78,7 +78,7 @@ public class CommandAutoCompleterTest {
 
     @Test
     public void getSuggestions_addTutorialSpace_returnsTutorialPrefixes() {
-        List<String> result = completer.getSuggestions("add -tutorial ");
+        List<String> result = completer.getSuggestions("add -tutorial /");
         assertTrue(result.contains("/code"));
         assertTrue(result.contains("/day"));
         assertTrue(result.contains("/timeslot"));
@@ -87,14 +87,14 @@ public class CommandAutoCompleterTest {
 
     @Test
     public void getSuggestions_addStudentWithUsedPrefix_excludesUsed() {
-        List<String> result = completer.getSuggestions("add -student /name Alice ");
+        List<String> result = completer.getSuggestions("add -student /name Alice /");
         assertTrue(!result.contains("/name"));
         assertTrue(result.contains("/phone"));
     }
 
     @Test
     public void getSuggestions_addStudentTagAlwaysSuggested() {
-        List<String> result = completer.getSuggestions("add -student /tag friend ");
+        List<String> result = completer.getSuggestions("add -student /tag friend /");
         assertTrue(result.contains("/tag"));
     }
 
@@ -126,14 +126,14 @@ public class CommandAutoCompleterTest {
 
     @Test
     public void getSuggestions_editWithIndex_returnsPrefixes() {
-        List<String> result = completer.getSuggestions("edit 1 ");
+        List<String> result = completer.getSuggestions("edit 1 /");
         assertTrue(result.contains("/name"));
         assertTrue(result.contains("/phone"));
     }
 
     @Test
     public void getSuggestions_editWithUsedPrefix_excludesUsed() {
-        List<String> result = completer.getSuggestions("edit 1 /name Alice ");
+        List<String> result = completer.getSuggestions("edit 1 /name Alice /");
         assertTrue(!result.contains("/name"));
         assertTrue(result.contains("/phone"));
     }
