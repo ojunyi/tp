@@ -3,8 +3,6 @@ package seedu.coursepilot.model.tutorial;
 import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javafx.collections.FXCollections;

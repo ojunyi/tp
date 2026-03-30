@@ -42,7 +42,7 @@ public class StudentListPanel extends UiPart<Region> {
         tutorialList.forEach(tutorial ->
                 tutorial.getStudents().addListener((ListChangeListener<Student>) change ->
                         studentListView.refresh()));
-        
+
         tutorialList.addListener((ListChangeListener<Tutorial>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {

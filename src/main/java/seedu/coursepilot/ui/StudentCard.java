@@ -1,7 +1,6 @@
 package seedu.coursepilot.ui;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -63,19 +62,19 @@ public class StudentCard extends UiPart<Region> {
         student.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        
+
         tutorialList.stream()
-        .filter(tutorial -> tutorial.hasStudent(student))
-        .map(Tutorial::getTutorialCode)
-        .forEach(code -> {
-            Label tutorialLabel = new Label(code);
-            tutorialLabel.setStyle("-fx-text-fill: white; "
-                    + "-fx-background-color: #3e7b91; "
-                    + "-fx-padding: 1 3 1 3; "
-                    + "-fx-border-radius: 2; "
-                    + "-fx-background-radius: 2; "
-                    + "-fx-font-size: 11;");
-            tutorialTags.getChildren().add(tutorialLabel);
-        });
+                .filter(tutorial -> tutorial.hasStudent(student))
+                .map(Tutorial::getTutorialCode)
+                .forEach(code -> {
+                    Label tutorialLabel = new Label(code);
+                    tutorialLabel.setStyle("-fx-text-fill: white; "
+                            + "-fx-background-color: #3e7b91; "
+                            + "-fx-padding: 1 3 1 3; "
+                            + "-fx-border-radius: 2; "
+                            + "-fx-background-radius: 2; "
+                            + "-fx-font-size: 11;");
+                    tutorialTags.getChildren().add(tutorialLabel);
+                });
     }
 }
