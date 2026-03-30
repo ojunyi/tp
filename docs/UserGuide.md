@@ -79,16 +79,18 @@ Format: `help`
 
 Sets a tutorial as the **current operating tutorial**. Once selected, student-level commands (`add -student`, `delete -student`, `list -student`, `find`) will operate within this tutorial.
 
-Format: `select TUTORIAL_CODE`
+Format: `select TUTORIAL_CODE` or `select none`
 
 * The `TUTORIAL_CODE` is case-insensitive.
 * The tutorial code must exactly match a tutorial already in the system (e.g., `CS2103T-W12`).
 * The tutorial remains active until you run another `select` command or `list -tutorial`.
 * If the tutorial code is not found, an informational message is shown and the current operating tutorial is unchanged.
+* Use `select none` to clear the current operating tutorial without selecting a new one.
 
 Examples:
 * `select CS2103T-W12` : Selects the tutorial with code `CS2103T-W12`.
 * `select cs2103t-w12` : Also selects the same tutorial (case-insensitive).
+* `select none` : Clears the current operating tutorial.
 
 ### Listing tutorials or students : `list`
 
@@ -122,7 +124,7 @@ Format: `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRIC
 * A student cannot be added to the same tutorial twice.
 
 **Field Constraints:**
-* **Name**: Must contain only alphanumeric characters and spaces. Cannot be blank.
+* **Name**: Must contain only alphanumeric characters and spaces. Cannot be blank. Maximum 100 characters.
 * **Phone**: Must contain only digits and be at least 3 digits long.
 * **Email**: Must follow standard email format (e.g., `student@u.nus.edu`).
 * **Matric Number**: Must follow the format `Axxxxxx` where `x` is a digit (e.g., `A000000`, `A123456`). Must be exactly 7 characters: the letter `A` followed by 6 digits.
@@ -141,9 +143,11 @@ Format: `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY
 * The tutorial code must be unique.
 
 **Field Constraints:**
-* **Day**: Must be the first three letters of day names with only first letter capitalised. (e.g 'Mon')
-* **TimeSlot**: Must follow the format `XX:XX-XX:XX` where `X` is a digit (e.g., `13:00-14:00`). 
+* **Code**: Must contain only alphanumeric characters, hyphens, and underscores. Cannot be blank.
+* **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-sensitive, first letter capitalised).
+* **TimeSlot**: Must follow the format `XX:XX-XX:XX` where `X` is a digit (e.g., `13:00-14:00`).
 Start time must be before end time. Time is in 24-hour format.
+* **Capacity**: Must be a positive integer between 1 and 1000.
 
 Examples:
 * `add -tutorial /code CS2103T-W12 /day Wed /timeslot 10:00-11:00 /capacity 10`
@@ -299,7 +303,7 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 Action | Format, Examples
 --------|------------------
 **Add student** | `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRICNUMBER [/tag TAG]…​` <br> e.g., `add -student /name James Ho /phone 22224444 /email jamesho@example.com /matric A000000 /tag friend`
-**Add tutorial** | `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY` <br> e.g., `add -tutorial /code CS2103T-W12 /day Wed /timeslot 10am-11am /capacity 10`
+**Add tutorial** | `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY` <br> e.g., `add -tutorial /code CS2103T-W12 /day Wed /timeslot 10:00-11:00 /capacity 10`
 **Clear** | `clear`
 **Delete student** | `delete -student INDEX` <br> e.g., `delete -student 3`
 **Delete tutorial** | `delete -tutorial INDEX` <br> e.g., `delete -tutorial 1`
@@ -307,6 +311,6 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]…​` or `find /phone KEYWORD` or `find /email KEYWORD` or `find /matric KEYWORD` <br> e.g., `find James`, `find /email u.nus.edu`
 **List students** | `list -student`
 **List tutorials** | `list -tutorial`
-**Select** | `select TUTORIAL_CODE` <br> e.g., `select CS2103T-W12`
+**Select** | `select TUTORIAL_CODE` or `select none` <br> e.g., `select CS2103T-W12`, `select none`
 **Help** | `help`
 **Exit** | `exit`
