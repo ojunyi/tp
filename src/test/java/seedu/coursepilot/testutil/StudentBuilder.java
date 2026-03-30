@@ -93,4 +93,13 @@ public class StudentBuilder {
         return new Student(name, phone, email, matricNumber, tags);
     }
 
+    /**
+     * Returns a {@code Student} with different contact details.
+     */
+    public Student altContactBuild() {
+        Phone altPhone = new Phone("87654321");
+        Email altEmail = new Email("amy@outlook.com");
+        return new Student(name, altPhone, altEmail, matricNumber, tags);
+    }
+
 }

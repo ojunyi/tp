@@ -125,6 +125,16 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_duplicatePhoneUnfilteredList_failure() {
+        Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
+        EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder()
+                .withPhone(firstStudent.getPhone().value).build();
+        EditCommand editCommand = new EditCommand(INDEX_SECOND_STUDENT, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CONTACT_DETAIL);
+    }
+
+    @Test
     public void execute_invalidStudentIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredStudentList().size() + 1);
         EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder().withName(VALID_NAME_BOB).build();

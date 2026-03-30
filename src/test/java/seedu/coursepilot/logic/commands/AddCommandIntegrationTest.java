@@ -57,10 +57,11 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicateStudent_throwsCommandException() {
         Student validStudent = new StudentBuilder().build();
+        Student duplicateStudent = new StudentBuilder().altContactBuild();
         model.addStudent(validStudent);
         model.getCurrentOperatingTutorial().get().addStudent(validStudent);
 
-        assertCommandFailure(new AddCommand(validStudent), model,
+        assertCommandFailure(new AddCommand(duplicateStudent), model,
                 AddCommand.MESSAGE_DUPLICATE_STUDENT);
     }
 

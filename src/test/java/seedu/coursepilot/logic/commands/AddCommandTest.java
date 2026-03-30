@@ -58,7 +58,8 @@ public class AddCommandTest {
     @Test
     public void execute_duplicateStudent_throwsCommandException() {
         Student validStudent = new StudentBuilder().build();
-        AddCommand addCommand = new AddCommand(validStudent);
+        Student duplicateStudent = new StudentBuilder().altContactBuild();
+        AddCommand addCommand = new AddCommand(duplicateStudent);
         ModelStubWithStudent modelStub = new ModelStubWithStudent(validStudent);
         Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
                 new TimeSlot("13:00-14:00"), new Capacity(20));
@@ -81,6 +82,20 @@ public class AddCommandTest {
         modelStub.setCurrentOperatingTutorial(tutorial);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_STUDENT, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_duplicatePhone_throwsCommandException() {
+        Student alice = new StudentBuilder(ALICE).build();
+        Student bobWithAlicePhone = new StudentBuilder(BOB).withPhone(ALICE.getPhone().value).build();
+        AddCommand addCommand = new AddCommand(bobWithAlicePhone);
+        ModelStubWithStudent modelStub = new ModelStubWithStudent(alice);
+        Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
+                new TimeSlot("13:00-14:00"), new Capacity(20));
+        modelStub.setCurrentOperatingTutorial(tutorial);
+
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_DUPLICATE_CONTACT_DETAIL, () -> addCommand.execute(modelStub));
     }
 
     @Test
@@ -244,16 +259,23 @@ public class AddCommandTest {
      */
     private class ModelStubWithStudent extends ModelStub {
         private final Student student;
+        private final CoursePilot coursePilot = new CoursePilot();
 
         ModelStubWithStudent(Student student) {
             requireNonNull(student);
             this.student = student;
+            coursePilot.addStudent(student);
         }
 
         @Override
         public boolean hasStudent(Student student) {
             requireNonNull(student);
             return this.student.isSameStudent(student);
+        }
+
+        @Override
+        public ReadOnlyCoursePilot getCoursePilot() {
+            return this.coursePilot;
         }
     }
 

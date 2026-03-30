@@ -53,6 +53,9 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT =
             "This student or matriculation number already exists in CoursePilot.";
+    public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
+            "Another student with the same phone number or email"
+            + "already exists in the CoursePilot.";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;
@@ -69,6 +72,17 @@ public class EditCommand extends Command {
         this.editStudentDescriptor = new EditStudentDescriptor(editStudentDescriptor);
     }
 
+    private boolean hasDuplicateContact(List<Student> students,
+                                        Student studentToEdit,
+                                        Student editedStudent) {
+        return students.stream().anyMatch(existingStudent ->
+                !existingStudent.isSameStudent(studentToEdit)
+                        && (
+                        existingStudent.getPhone().equals(editedStudent.getPhone())
+                                || existingStudent.getEmail().equals(editedStudent.getEmail())
+                ));
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -83,6 +97,11 @@ public class EditCommand extends Command {
 
         if (!studentToEdit.isSameStudent(editedStudent) && model.hasStudent(editedStudent)) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
+        }
+
+        if (hasDuplicateContact(
+                model.getCoursePilot().getStudentList(), studentToEdit, editedStudent)) {
+            throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
         }
 
         model.setStudent(studentToEdit, editedStudent);

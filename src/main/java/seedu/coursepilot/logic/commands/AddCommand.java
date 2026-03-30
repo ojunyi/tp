@@ -55,6 +55,9 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS_TUTORIAL = "Added tutorial: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT =
             "This student or matriculation number already exists in the CoursePilot.";
+    public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
+            "Another student with the same phone number or email"
+            + "already exists in the CoursePilot.";
     public static final String MESSAGE_DUPLICATE_TUTORIAL =
             "This tutorial already exists in CoursePilot";
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
@@ -106,6 +109,13 @@ public class AddCommand extends Command {
 
             Tutorial currentOperatingTutorial = model.getCurrentOperatingTutorial()
                     .orElseThrow(() -> new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL));
+
+            if (model.getCoursePilot().getStudentList().stream()
+                    .anyMatch(existingStudent ->
+                            existingStudent.getPhone().equals(toAdd.getPhone())
+                                    || existingStudent.getEmail().equals(toAdd.getEmail()))) {
+                throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
+            }
 
             if (!model.hasStudent(toAdd)) {
                 model.addStudent(toAdd);
