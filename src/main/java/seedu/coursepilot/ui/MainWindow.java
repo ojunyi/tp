@@ -216,11 +216,21 @@ public class MainWindow extends UiPart<Stage> {
             return;
         }
 
+        final boolean[] isLocking = { false };
+
         scrollBar1.valueProperty().addListener((obs, oldVal, newVal) -> {
-            scrollBar2.setValue(newVal.doubleValue());
+            if (!isLocking[0]) {
+                isLocking[0] = true;
+                scrollBar2.setValue(newVal.doubleValue());
+                isLocking[0] = false;
+            }
         });
         scrollBar2.valueProperty().addListener((obs, oldVal, newVal) -> {
-            scrollBar1.setValue(newVal.doubleValue());
+            if (!isLocking[0]) {
+                isLocking[0] = true;
+                scrollBar1.setValue(newVal.doubleValue());
+                isLocking[0] = false;
+            }
         });
     }
 

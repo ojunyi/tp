@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import seedu.coursepilot.model.tutorial.Tutorial;
 
@@ -32,7 +33,14 @@ public class TutorialCodeListPanel extends UiPart<Region> {
         super(FXML);
         tutorialCodeListView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tutorialCodeListView.setItems(tutorials);
-        tutorialCodeListView.setSelectionModel(null);
+        tutorialCodeListView.setSelectionModel(new NoOpTableSelectionModel<>(tutorialCodeListView));
+        tutorialCodeListView.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+            KeyCode key = event.getCode();
+            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.PAGE_UP
+                || key == KeyCode.PAGE_DOWN || key == KeyCode.HOME || key == KeyCode.END) {
+                event.consume();
+            }
+        });
 
         tutorialCodeColumn.setCellFactory(col -> new TableCell<Tutorial, String>() {
             @Override

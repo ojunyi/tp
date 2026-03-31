@@ -32,8 +32,7 @@ public class StudentListPanel extends UiPart<Region> {
         this.tutorialList = tutorialList;
         studentListView.setItems(studentList);
         studentListView.setCellFactory(listView -> new StudentListViewCell());
-        studentListView.setSelectionModel(null);
-        studentListView.addEventFilter(javafx.scene.input.KeyEvent.ANY, javafx.event.Event::consume);
+        studentListView.setSelectionModel(new NoOpListSelectionModel<>());
 
         tutorialList.addListener((ListChangeListener<Tutorial>) change -> {
             studentListView.refresh();
