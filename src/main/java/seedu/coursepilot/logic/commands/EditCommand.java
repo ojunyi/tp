@@ -95,7 +95,14 @@ public class EditCommand extends Command {
         Student studentToEdit = lastShownList.get(index.getZeroBased());
         Student editedStudent = createEditedStudent(studentToEdit, editStudentDescriptor);
 
-        if (!studentToEdit.isSameStudent(editedStudent) && model.hasStudent(editedStudent)) {
+        boolean isDuplicateStudent = !studentToEdit.isSameStudent(editedStudent)
+                                        && model.hasStudent(editedStudent);
+        boolean matricNumberAlreadyExists = model.getCoursePilot().getStudentList().stream()
+                .filter(student -> !student.equals(studentToEdit))
+                .map(Student::getMatriculationNumber)
+                .anyMatch(editedStudent.getMatriculationNumber()::equals);
+
+        if (isDuplicateStudent || matricNumberAlreadyExists) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 

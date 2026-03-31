@@ -143,6 +143,17 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
 
+    @Test
+    public void execute_duplicateMatricNumberUnfilteredList_failure() {
+        Student secondStudent = model.getFilteredStudentList().get(INDEX_SECOND_STUDENT.getZeroBased());
+        EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder()
+                .withMatriculationNumber(secondStudent.getMatriculationNumber().toString())
+                .build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_STUDENT, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_STUDENT);
+    }
+
     /**
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of course pilot
