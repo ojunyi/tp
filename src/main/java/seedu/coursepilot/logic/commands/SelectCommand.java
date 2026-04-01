@@ -64,7 +64,7 @@ public class SelectCommand extends Command {
             return false;
         }
         SelectCommand otherSelectCommand = (SelectCommand) other;
-        return tutorialKeyword.equals(otherSelectCommand.tutorialKeyword);
+        return tutorialKeyword.equalsIgnoreCase(otherSelectCommand.tutorialKeyword);
     }
 
     @Override
