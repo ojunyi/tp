@@ -64,6 +64,9 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com")); // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
         assertTrue(Email.isValidEmail("e1234567@u.nus.edu")); // more than one period in domain
+
+        // email exceeding max length
+        assertFalse(Email.isValidEmail("a".repeat(90) + "@example.com")); // exceeds 100 characters
     }
 
     @Test
