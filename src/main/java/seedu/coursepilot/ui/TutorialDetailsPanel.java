@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import seedu.coursepilot.model.tutorial.Tutorial;
 
@@ -42,5 +43,17 @@ public class TutorialDetailsPanel extends UiPart<Region> {
 
         tutorialDetailsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tutorialDetailsTable.setItems(tutorials);
+        tutorialDetailsTable.setSelectionModel(new NoOpTableSelectionModel<>(tutorialDetailsTable));
+        tutorialDetailsTable.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+            KeyCode key = event.getCode();
+            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.PAGE_UP
+                || key == KeyCode.PAGE_DOWN || key == KeyCode.HOME || key == KeyCode.END) {
+                event.consume();
+            }
+        });
+    }
+
+    public TableView<Tutorial> getTableView() {
+        return tutorialDetailsTable;
     }
 }

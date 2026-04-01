@@ -13,13 +13,9 @@ public class CommandResult {
 
     /**
      * Represents the panel switch behaviour after a command is executed.
-     * {@code SHOW_STUDENT_LIST} switches the center panel to the student list.
-     * {@code SHOW_TUTORIAL_DETAILS} switches the center panel to the tutorial details.
      * {@code NO_CHANGE} leaves the center panel as-is.
      */
     public enum PanelSwitch {
-        SHOW_STUDENT_LIST,
-        SHOW_TUTORIAL_DETAILS,
         NO_CHANGE
     }
 

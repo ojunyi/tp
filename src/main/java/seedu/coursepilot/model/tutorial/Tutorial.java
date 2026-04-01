@@ -68,7 +68,7 @@ public class Tutorial {
     }
 
     /**
-     * Returns the list of students in this tutorial
+     * Returns the list of students in this tutorial.
      */
     public List<Student> getStudents() {
         return students;

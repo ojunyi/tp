@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Address App" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="CoursePilot" minWidth="850" minHeight="480" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -33,17 +33,23 @@
           </Menu>
         </MenuBar>
 
-        <SplitPane VBox.vgrow="ALWAYS" dividerPositions="0.25" styleClass="pane-with-border">
-          <VBox minWidth="150" maxWidth="300" prefWidth="200" styleClass="pane-with-border">
+        <SplitPane fx:id="outerSplitPane" VBox.vgrow="ALWAYS" dividerPositions="0.20" styleClass="pane-with-border">
+          <VBox minWidth="140" maxWidth="200" prefWidth="180" styleClass="pane-with-border">
             <StackPane fx:id="tutorialListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
-          <VBox minWidth="400" prefWidth="640" styleClass="pane-with-border">
-            <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-          </VBox>
+          <SplitPane fx:id="innerSplitPane" orientation="HORIZONTAL" dividerPositions="0.31" styleClass="pane-with-border">
+
+            <StackPane fx:id="tutorialDetailsPanelPlaceholder" VBox.vgrow="ALWAYS"
+                       minWidth="200" minHeight="150" prefHeight="250"/>
+
+            <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS"
+                       minWidth="150" minHeight="150" prefHeight="400"/>
+
+          </SplitPane>
         </SplitPane>
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+                   minHeight="100" prefHeight="120" maxHeight="120">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>

@@ -2,14 +2,20 @@ package seedu.coursepilot.ui;
 
 import java.util.logging.Logger;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.coursepilot.commons.core.GuiSettings;
 import seedu.coursepilot.commons.core.LogsCenter;
 import seedu.coursepilot.logic.Logic;
@@ -50,10 +56,19 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane tutorialListPanelPlaceholder;
 
     @FXML
+    private StackPane tutorialDetailsPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private SplitPane outerSplitPane;
+
+    @FXML
+    private SplitPane innerSplitPane;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -125,17 +140,18 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        logger.info("Initialising UI panels");
         tutorialCodeListPanel = new TutorialCodeListPanel(logic.getFilteredTutorialList(),
                 logic.getCurrentOperatingTutorialProperty());
         tutorialListPanelPlaceholder.getChildren().add(tutorialCodeListPanel.getRoot());
 
-        studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
-        setStudentListPanelVisible(false);
+        studentListPanel = new StudentListPanel(logic.getFilteredStudentList(), logic.getFilteredTutorialList());
+        setStudentListPanelVisible(true);
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
 
         tutorialDetailsPanel = new TutorialDetailsPanel(logic.getFilteredTutorialList());
         setTutorialDetailsPanelVisible(true);
-        studentListPanelPlaceholder.getChildren().add(tutorialDetailsPanel.getRoot());
+        tutorialDetailsPanelPlaceholder.getChildren().add(tutorialDetailsPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -146,18 +162,91 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        lockSplitPaneDividers(outerSplitPane);
+        lockSplitPaneDividers(innerSplitPane);
+
+        Platform.runLater(() -> syncTableViewScrollBars(
+            tutorialCodeListPanel.getTableView(),
+            tutorialDetailsPanel.getTableView()
+        ));
+    }
+
+    /**
+     * Disables all dividers in a SplitPane to prevent manual resizing.
+     */
+    private void lockSplitPaneDividers(SplitPane splitPane) {
+        for (SplitPane.Divider divider : splitPane.getDividers()) {
+            final double[] lockedPosition = {
+                divider.getPosition()
+            };
+            final boolean[] isLocking = { false };
+            divider.positionProperty().addListener((obs, oldVal, newVal) -> {
+                if (!isLocking[0]) {
+                    isLocking[0] = true;
+                    divider.setPosition(lockedPosition[0]);
+                    isLocking[0] = false;
+                }
+            });
+        }
     }
 
     /**
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
+        logger.fine("Setting window size to " + guiSettings.getWindowWidth() + "x" + guiSettings.getWindowHeight());
         primaryStage.setHeight(guiSettings.getWindowHeight());
         primaryStage.setWidth(guiSettings.getWindowWidth());
         if (guiSettings.getWindowCoordinates() != null) {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
         }
+    }
+
+    /**
+     * Syncs the vertical scroll bars of two TableViews so scrolling one scrolls the other.
+     */
+    private void syncTableViewScrollBars(TableView<?> table1, TableView<?> table2) {
+        ScrollBar scrollBar1 = getVerticalScrollBar(table1);
+        ScrollBar scrollBar2 = getVerticalScrollBar(table2);
+
+        if (scrollBar1 == null || scrollBar2 == null) {
+            logger.warning("Could not find scroll bars to sync");
+            return;
+        }
+
+        final boolean[] isLocking = { false };
+
+        scrollBar1.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (!isLocking[0]) {
+                isLocking[0] = true;
+                scrollBar2.setValue(newVal.doubleValue());
+                isLocking[0] = false;
+            }
+        });
+        scrollBar2.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (!isLocking[0]) {
+                isLocking[0] = true;
+                scrollBar1.setValue(newVal.doubleValue());
+                isLocking[0] = false;
+            }
+        });
+    }
+
+    /**
+     * Extracts the vertical ScrollBar from a TableView.
+     */
+    private ScrollBar getVerticalScrollBar(TableView<?> tableView) {
+        for (javafx.scene.Node node : tableView.lookupAll(".scroll-bar")) {
+            if (node instanceof ScrollBar) {
+                ScrollBar scrollBar = (ScrollBar) node;
+                if (scrollBar.getOrientation() == javafx.geometry.Orientation.VERTICAL) {
+                    return scrollBar;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -177,25 +266,19 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Closes the application.
+     * Closes CoursePilot.
      */
     @FXML
     private void handleExit() {
+        logger.info("Exiting CoursePilot");
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
-        primaryStage.hide();
-    }
 
-    private void handleShowStudentList() {
-        setTutorialDetailsPanelVisible(false);
-        setStudentListPanelVisible(true);
-    }
-
-    private void handleShowTutorialDetails() {
-        setStudentListPanelVisible(false);
-        setTutorialDetailsPanelVisible(true);
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        delay.setOnFinished(event -> primaryStage.hide());
+        delay.play();
     }
 
     /**
@@ -208,6 +291,7 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            studentListPanel.refresh();
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -215,17 +299,6 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
-            }
-
-            switch (commandResult.getPanelSwitch()) {
-            case SHOW_STUDENT_LIST:
-                handleShowStudentList();
-                break;
-            case SHOW_TUTORIAL_DETAILS:
-                handleShowTutorialDetails();
-                break;
-            default:
-                break;
             }
 
             return commandResult;

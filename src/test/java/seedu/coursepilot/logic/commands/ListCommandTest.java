@@ -8,7 +8,6 @@ import static seedu.coursepilot.testutil.TypicalStudents.getTypicalCoursePilot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import seedu.coursepilot.logic.commands.CommandResult.PanelSwitch;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.ModelManager;
 import seedu.coursepilot.model.UserPrefs;
@@ -30,14 +29,14 @@ public class ListCommandTest {
     @Test
     public void execute_listTutorial_success() {
         CommandResult expectedResult = new CommandResult(
-            ListCommand.MESSAGE_SUCCESS_TUTORIAL, PanelSwitch.SHOW_TUTORIAL_DETAILS);
+            ListCommand.MESSAGE_SUCCESS_TUTORIAL);
         assertCommandSuccess(new ListCommand(ListCommand.ListTarget.TUTORIAL), model, expectedResult, expectedModel);
     }
 
     @Test
     public void execute_listStudentWithNoCurrentOperatingTutorial() {
         CommandResult expectedResult = new CommandResult(
-            ListCommand.MESSAGE_SUCCESS_ALL_STUDENTS, PanelSwitch.SHOW_STUDENT_LIST);
+            ListCommand.MESSAGE_SUCCESS_ALL_STUDENTS);
         expectedModel.updateFilteredStudentList(
             student -> expectedModel.getCoursePilot().getTutorialList().stream()
                     .anyMatch(tut -> tut.hasStudent(student))
@@ -49,7 +48,7 @@ public class ListCommandTest {
     @Test
     public void execute_listStudentWithCurrentOperatingTutorial_success() {
         CommandResult expectedResult = new CommandResult(
-            ListCommand.MESSAGE_SUCCESS_STUDENT, PanelSwitch.SHOW_STUDENT_LIST);
+            ListCommand.MESSAGE_SUCCESS_STUDENT);
         showStudentAtIndex(model, INDEX_FIRST_STUDENT);
         expectedModel.setCurrentOperatingTutorial(expectedModel.getFilteredTutorialList().get(0));
         expectedModel.updateFilteredStudentList(student ->

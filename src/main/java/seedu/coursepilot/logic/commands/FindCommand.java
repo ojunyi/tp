@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import seedu.coursepilot.commons.util.ToStringBuilder;
 import seedu.coursepilot.logic.Messages;
-import seedu.coursepilot.logic.commands.CommandResult.PanelSwitch;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.student.Student;
@@ -97,7 +96,7 @@ public class FindCommand extends Command {
             assert model.getFilteredStudentList() != null;
             return new CommandResult(
                 String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
-                        model.getFilteredStudentList().size()), PanelSwitch.SHOW_STUDENT_LIST);
+                        model.getFilteredStudentList().size()));
         }
 
         model.updateFilteredStudentList(
