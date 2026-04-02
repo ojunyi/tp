@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.coursepilot.model.student.Student;
-import seedu.coursepilot.model.student.exceptions.DuplicateStudentException;
 import seedu.coursepilot.model.tutorial.Tutorial;
 import seedu.coursepilot.testutil.StudentBuilder;
 
