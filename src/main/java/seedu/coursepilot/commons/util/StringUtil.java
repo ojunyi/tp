@@ -39,34 +39,40 @@ public class StringUtil {
     }
 
     /**
-     * Returns true if the {@code sentence} contains the {@code word}.
+     * Returns true if {@code sentence} contains {@code substring} as a substring.
      *   Ignores case.
      *   <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       containsPartWordIgnoreCase("ABc def", "abc") == true
+     *       containsPartWordIgnoreCase("ABc def", "DEF") == true
+     *       containsPartWordIgnoreCase("ABc def", "AB") == true //substring match
      *       </pre>
-     * @param word cannot be null
+     * @param sentence cannot be null, cannot be empty, must be a single word
      * @param substring cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsPartWordIgnoreCase(String word, String substring) {
-        requireNonNull(word);
+    public static boolean containsPartWordIgnoreCase(String sentence, String substring) {
+        requireNonNull(sentence);
         requireNonNull(substring);
 
-        String preppedWord = word.trim();
+        String preppedSentence = sentence.trim();
         String preppedSubstring = substring.trim();
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(!preppedSentence.isEmpty(), "Sentence parameter cannot be empty");
+        checkArgument(preppedSentence.split("\\s+").length == 1, "Sentence parameter should be a single word");
         checkArgument(!preppedSubstring.isEmpty(), "Substring parameter cannot be empty");
-        checkArgument(preppedSubstring.split("\\s+").length == 1, "Substring parameter should be a single substring");
+        checkArgument(preppedSubstring.split("\\s+").length == 1, "Substring parameter should be a single word");
 
-        return preppedWord.contains(preppedSubstring);
+        return preppedSentence.toLowerCase().contains(preppedSubstring.toLowerCase());
     }
 
     /**
-     * Returns true if the {@code value} starts with {@code prefix}.
-     *   Ignores cases.
-     * @param word cannot be null
-     * @param prefix cannot be null, cannot be empty, must be a single prefix
+     * Returns true if {@code word} starts with {@code prefix}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       startsWithString("A123456", "A12") == true
+     *       startsWithString("A123456", "a12") == true //case-insensitive
+     *       startsWithString("A123456", "456") == false //not a prefix match
+     *       </pre>
+     * @param word cannot be null, cannot be empty, must be a single word
+     * @param prefix cannot be null, cannot be empty, must be a single word
      */
     public static boolean startsWithString(String word, String prefix) {
         requireNonNull(word);
@@ -74,11 +80,12 @@ public class StringUtil {
 
         String preppedWord = word.trim();
         String preppedPrefix = prefix.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
         checkArgument(!preppedPrefix.isEmpty(), "Prefix parameter cannot be empty");
-        checkArgument(preppedPrefix.split("\\s+").length == 1, "Prefix parameter should be a single substring");
+        checkArgument(preppedPrefix.split("\\s+").length == 1, "Prefix parameter should be a single word");
 
-        return preppedWord.startsWith(preppedPrefix);
+        return preppedWord.toLowerCase().startsWith(preppedPrefix.toLowerCase());
     }
 
     /**
