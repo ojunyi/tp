@@ -124,7 +124,7 @@ Format: `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRIC
 * A student cannot be added to the same tutorial twice.
 
 **Field Constraints:**
-* **Name**: Must contain only alphanumeric characters and spaces. Cannot be blank. Maximum 100 characters.
+* **Name**: Must contain only alphabetic characters and spaces. Cannot be blank. Maximum 100 characters.
 * **Phone**: Must contain only digits and be at least 3 digits long.
 * **Email**: Must follow standard email format (e.g., `student@u.nus.edu`).
 * **Matric Number**: Must follow the format `Axxxxxx` where `x` is a digit (e.g., `A000000`, `A123456`). Must be exactly 7 characters: the letter `A` followed by 6 digits.
@@ -208,7 +208,7 @@ Format: `delete -student INDEX`
 * If the student **is enrolled in another tutorial**, they remain in the system and in those other tutorials.
 
 Examples:
-* `list -student` followed by `delete -student 2` : Deletes the 2nd student in the current tutorial.
+* `delete -student 2` : Deletes the 2nd student in the current tutorial.
 * `find John` followed by `delete -student 1` : Deletes the 1st student in the results of the `find` command.
 
 #### Delete a tutorial: `delete -tutorial`
@@ -221,7 +221,7 @@ Format: `delete -tutorial INDEX`
 * Students who were in the deleted tutorial are **not** automatically removed from the global student list.
 
 Examples:
-* `list -tutorial` followed by `delete -tutorial 1` : Deletes the 1st tutorial in the list.
+* `delete -tutorial 1` : Deletes the 1st tutorial in the list.
 
 ### Clearing all entries : `clear`
 
@@ -279,6 +279,7 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 
 **Q**: Can I add a student without selecting a tutorial first?<br>
 **A**: No. Students must be added through a tutorial using `add -student` while a tutorial is selected. Use `select TUTORIAL_CODE` first, then `add -student`.
+This should make sense because we want to add students to a tutorial rather than leave them hanging.
 
 **Q**: What happens to a student's data when I delete them from a tutorial?<br>
 **A**: If the student is enrolled in other tutorials, they remain in the system. If the deleted tutorial was their only one, they are removed from the global student list as well.
