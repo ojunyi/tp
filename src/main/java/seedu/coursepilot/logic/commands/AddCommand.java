@@ -54,7 +54,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS_STUDENT = "Added student: %1$s";
     public static final String MESSAGE_SUCCESS_TUTORIAL = "Added tutorial: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT =
-            "This student or matriculation number already exists in the CoursePilot.";
+            "This student or matriculation number already exists in CoursePilot.";
     public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
             "Another student with the same phone number or email"
             + " already exists in the CoursePilot.";
