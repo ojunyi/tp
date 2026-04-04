@@ -101,7 +101,6 @@ public class Tutorial {
      *
      * @param matric the old matric number of the student to be edited
      * @param editedStudent the student to be removed
-     * @return true if the student was removed, false if not found
      */
     public void editStudent(String matric, Student editedStudent) {
         requireNonNull(editedStudent);
