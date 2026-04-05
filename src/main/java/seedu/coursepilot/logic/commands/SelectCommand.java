@@ -57,9 +57,7 @@ public class SelectCommand extends Command {
         }
 
         model.setCurrentOperatingTutorial(tutorial);
-        model.updateFilteredStudentList(
-                student -> model.getCurrentOperatingTutorial().get().hasStudent(student)
-        );
+        model.updateFilteredStudentList(tutorial::hasStudent);
         return new CommandResult(
                 String.format(MESSAGE_SUCCESS, tutorial.getTutorialCode()));
     }
