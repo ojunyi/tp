@@ -111,9 +111,9 @@ public class AddCommand extends Command {
                     .orElseThrow(() -> new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL));
 
             if (model.getCoursePilot().getStudentList().stream()
-                    .anyMatch(existingStudent ->
-                            existingStudent.getPhone().equals(toAdd.getPhone())
-                                    || existingStudent.getEmail().equals(toAdd.getEmail()))) {
+                    .anyMatch(existingStudent -> !existingStudent.isSameStudent(toAdd)
+                            && (existingStudent.getPhone().equals(toAdd.getPhone())
+                                    || existingStudent.getEmail().equals(toAdd.getEmail())))) {
                 throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
             }
 
