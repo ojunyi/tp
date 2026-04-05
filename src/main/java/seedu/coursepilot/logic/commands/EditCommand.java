@@ -55,7 +55,7 @@ public class EditCommand extends Command {
             "This student or matriculation number already exists in CoursePilot.";
     public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
             "Another student with the same phone number or email"
-            + " already exists in the CoursePilot.";
+            + " already exists in CoursePilot.";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;

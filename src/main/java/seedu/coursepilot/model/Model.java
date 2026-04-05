@@ -85,6 +85,8 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered student list */
     ObservableList<Student> getFilteredStudentList();
     ObservableList<Tutorial> getFilteredTutorialList();
+    /** Returns true if the given student belongs to the current operating tutorial. */
+    boolean isStudentInCurrentTutorial(Student student);
     /**
      * Updates the filter of the filtered student list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -93,6 +95,8 @@ public interface Model {
     void updateFilteredTutorialList(Predicate<Tutorial> predicate);
     /** Returns the current operating tutorial, if any. */
     Optional<Tutorial> getCurrentOperatingTutorial();
+    /** Returns the tutorial with the given code (case-insensitive), or empty if not found. */
+    Optional<Tutorial> getTutorialByCode(String tutorialCode);
 
     /** Returns the current operating tutorial, for JavaFX UI */
     ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty();

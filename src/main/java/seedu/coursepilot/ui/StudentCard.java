@@ -63,6 +63,10 @@ public class StudentCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
+        // tutorialList is passed in from StudentListPanel to maintain a single source of truth.
+        // Tutorials are derived from the model rather than stored per-student,
+        // so we filter here to find which tutorials this student belongs to.
+        // Exception to Law of Demeter as this is a design choice
         tutorialList.stream()
                 .filter(tutorial -> tutorial.hasStudent(student))
                 .map(Tutorial::getTutorialCode)

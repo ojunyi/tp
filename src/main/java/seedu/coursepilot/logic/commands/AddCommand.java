@@ -17,8 +17,9 @@ import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.student.Student;
 import seedu.coursepilot.model.tutorial.Tutorial;
+
 /**
- * Adds a student to the CoursePilot.
+ * Adds a student to CoursePilot.
  */
 public class AddCommand extends Command {
 
@@ -54,10 +55,10 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS_STUDENT = "Added student: %1$s";
     public static final String MESSAGE_SUCCESS_TUTORIAL = "Added tutorial: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT =
-            "This student or matriculation number already exists in the CoursePilot.";
+            "This student or matriculation number already exists in CoursePilot.";
     public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
             "Another student with the same phone number or email"
-            + " already exists in the CoursePilot.";
+            + " already exists in CoursePilot.";
     public static final String MESSAGE_DUPLICATE_TUTORIAL =
             "This tutorial code already exists in CoursePilot";
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =

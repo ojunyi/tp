@@ -1,48 +1,26 @@
 package seedu.coursepilot.model.student;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.coursepilot.commons.util.StringUtil;
-import seedu.coursepilot.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Student}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Student}'s {@code Name} contains any of the given keywords.
+ * Keyword matching is case-insensitive and checks for whole-word presence.
  */
-public class NameContainsKeywordsPredicate implements Predicate<Student> {
-    private final List<String> keywords;
+public class NameContainsKeywordsPredicate extends StudentFieldPredicate {
 
+    /**
+     * Creates a {@code NameContainsKeywordsPredicate} with the given {@code keywords}.
+     */
     public NameContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    public List<String> getKeywords() {
-        return this.keywords;
+        super(keywords);
     }
 
     @Override
     public boolean test(Student student) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(student.getName().fullName, keyword));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof NameContainsKeywordsPredicate)) {
-            return false;
-        }
-
-        NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (NameContainsKeywordsPredicate) other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).add("keywords", keywords).toString();
+                .anyMatch(keyword ->
+                        StringUtil.containsWordIgnoreCase(student.getName().fullName, keyword));
     }
 }

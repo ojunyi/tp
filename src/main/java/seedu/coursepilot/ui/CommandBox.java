@@ -1,6 +1,7 @@
 package seedu.coursepilot.ui;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Popup;
+import seedu.coursepilot.commons.core.LogsCenter;
 import seedu.coursepilot.logic.commands.CommandResult;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.logic.parser.CommandAutoCompleter;
@@ -22,10 +24,14 @@ import seedu.coursepilot.logic.parser.exceptions.ParseException;
  */
 public class CommandBox extends UiPart<Region> {
 
-    public static final String ERROR_STYLE_CLASS = "error";
+    private static final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
+    private static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
     private static final int MAX_SUGGESTIONS = 8;
     private static final double LIST_CELL_HEIGHT = 30.0;
+    private static final double POPUP_PADDING = 2.0;
+    private static final double MAX_POPUP_HEIGHT = 200.0;
 
     private final CommandExecutor commandExecutor;
     private final CommandAutoCompleter autoCompleter = new CommandAutoCompleter();
@@ -75,6 +81,9 @@ public class CommandBox extends UiPart<Region> {
         suggestionPopup.setAutoHide(true);
     }
 
+    /**
+     * Handles key events for navigating and accepting autocomplete suggestions.
+     */
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.TAB) {
             if (suggestionPopup.isShowing()) {
@@ -126,6 +135,9 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Updates the suggestion popup based on the current text input.
+     */
     private void updateSuggestions(String text) {
         List<String> suggestions = autoCompleter.getSuggestions(text);
 
@@ -143,12 +155,15 @@ public class CommandBox extends UiPart<Region> {
 
         suggestionListView.getSelectionModel().selectFirst();
 
-        double height = Math.min(items.size() * LIST_CELL_HEIGHT + 2, 200);
+        double height = Math.min(items.size() * LIST_CELL_HEIGHT + POPUP_PADDING, MAX_POPUP_HEIGHT);
         suggestionListView.setPrefHeight(height);
 
         showPopupAboveTextField(height);
     }
 
+    /**
+     * Positions and shows the suggestion popup above the command text field.
+     */
     private void showPopupAboveTextField(double listHeight) {
         if (commandTextField.getScene() == null) {
             return;
@@ -166,7 +181,11 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Applies the selected {@code suggestion} to the current command text field input.
+     */
     private void applySuggestion(String suggestion) {
+        logger.fine("Applying autocomplete suggestion: " + suggestion);
         String text = commandTextField.getText();
         String[] parts = text.stripLeading().split("\\s+");
 

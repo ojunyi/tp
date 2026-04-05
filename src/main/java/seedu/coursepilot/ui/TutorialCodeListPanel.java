@@ -7,6 +7,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.coursepilot.model.tutorial.Tutorial;
 
@@ -14,7 +15,11 @@ import seedu.coursepilot.model.tutorial.Tutorial;
  * A UI component that displays a list of tutorials in the application.
  */
 public class TutorialCodeListPanel extends UiPart<Region> {
+
     private static final String FXML = "TutorialCodeListPanel.fxml";
+    private static final String SELECTED_STYLE = "-fx-background-color: #3a7bd5; -fx-font-weight: bold;";
+    private static final String SELECTED_INDICATOR = " ●";
+    private static final String CELL_PADDING = "  ";
 
     /**
      * The {@code TableView} UI element that displays the list of tutorials.
@@ -22,6 +27,9 @@ public class TutorialCodeListPanel extends UiPart<Region> {
     @FXML
     private TableView<Tutorial> tutorialCodeListView;
 
+    /**
+     * The column that displays tutorial codes.
+     */
     @FXML
     private TableColumn<Tutorial, String> tutorialCodeColumn;
 
@@ -34,10 +42,11 @@ public class TutorialCodeListPanel extends UiPart<Region> {
         tutorialCodeListView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tutorialCodeListView.setItems(tutorials);
         tutorialCodeListView.setSelectionModel(new NoOpTableSelectionModel<>(tutorialCodeListView));
-        tutorialCodeListView.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+
+        tutorialCodeListView.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             KeyCode key = event.getCode();
             if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.PAGE_UP
-                || key == KeyCode.PAGE_DOWN || key == KeyCode.HOME || key == KeyCode.END) {
+                    || key == KeyCode.PAGE_DOWN || key == KeyCode.HOME || key == KeyCode.END) {
                 event.consume();
             }
         });
@@ -46,15 +55,20 @@ public class TutorialCodeListPanel extends UiPart<Region> {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                Tutorial tutorial = getTableRow() == null ? null : getTableRow().getItem();
+                if (empty || tutorial == null) {
                     setText(null);
+                    setStyle("");
                     return;
                 }
-                Tutorial tutorial = getTableRow().getItem();
+                updateCellDisplay(tutorial, currentTutorial);
+            }
+
+            private void updateCellDisplay(Tutorial tutorial, ObjectProperty<Tutorial> currentTutorial) {
                 Tutorial current = currentTutorial == null ? null : currentTutorial.get();
                 boolean isSelected = current != null && current.isSameTutorial(tutorial);
-                setText(isSelected ? "  " + tutorial.getTutorialCode() + " ●" : "  " + tutorial.getTutorialCode());
-                setStyle(isSelected ? "-fx-background-color: #3a7bd5; -fx-font-weight: bold;" : "");
+                setText(CELL_PADDING + tutorial.getTutorialCode() + (isSelected ? SELECTED_INDICATOR : ""));
+                setStyle(isSelected ? SELECTED_STYLE : "");
             }
         });
 
@@ -66,6 +80,9 @@ public class TutorialCodeListPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Returns the {@code TableView} displaying tutorial codes.
+     */
     public TableView<Tutorial> getTableView() {
         return tutorialCodeListView;
     }

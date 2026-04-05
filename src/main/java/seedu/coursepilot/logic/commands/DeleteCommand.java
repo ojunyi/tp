@@ -16,7 +16,7 @@ import seedu.coursepilot.model.tutorial.Tutorial;
 
 
 /**
- * Deletes a student identified using it's displayed index from CoursePilot.
+ * Deletes a student or tutorial identified using it's displayed index from CoursePilot.
  */
 public class DeleteCommand extends Command {
 

@@ -6,6 +6,8 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
@@ -88,10 +90,16 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow = new HelpWindow();
     }
 
+    /**
+     * Returns the primary stage of this window.
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Sets keyboard accelerators for menu items.
+     */
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
@@ -126,11 +134,17 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
+    /**
+     * Sets the visibility of the student list panel.
+     */
     private void setStudentListPanelVisible(boolean visible) {
         this.studentListPanel.getRoot().setVisible(visible);
         this.studentListPanel.getRoot().setManaged(visible);
     }
 
+    /**
+     * Sets the visibility of the tutorial details panel.
+     */
     private void setTutorialDetailsPanelVisible(boolean visible) {
         this.tutorialDetailsPanel.getRoot().setVisible(visible);
         this.tutorialDetailsPanel.getRoot().setManaged(visible);
@@ -180,7 +194,9 @@ public class MainWindow extends UiPart<Stage> {
             final double[] lockedPosition = {
                 divider.getPosition()
             };
-            final boolean[] isLocking = { false };
+            final boolean[] isLocking = {
+                false
+            };
             divider.positionProperty().addListener((obs, oldVal, newVal) -> {
                 if (!isLocking[0]) {
                     isLocking[0] = true;
@@ -238,10 +254,10 @@ public class MainWindow extends UiPart<Stage> {
      * Extracts the vertical ScrollBar from a TableView.
      */
     private ScrollBar getVerticalScrollBar(TableView<?> tableView) {
-        for (javafx.scene.Node node : tableView.lookupAll(".scroll-bar")) {
+        for (Node node : tableView.lookupAll(".scroll-bar")) {
             if (node instanceof ScrollBar) {
                 ScrollBar scrollBar = (ScrollBar) node;
-                if (scrollBar.getOrientation() == javafx.geometry.Orientation.VERTICAL) {
+                if (scrollBar.getOrientation() == Orientation.VERTICAL) {
                     return scrollBar;
                 }
             }
@@ -261,6 +277,9 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Shows the primary stage.
+     */
     void show() {
         primaryStage.show();
     }
@@ -303,7 +322,7 @@ public class MainWindow extends UiPart<Stage> {
 
             return commandResult;
         } catch (CommandException | ParseException e) {
-            logger.info("An error occurred while executing command: " + commandText);
+            logger.warning("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }

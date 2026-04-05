@@ -152,6 +152,14 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Optional<Tutorial> getTutorialByCode(String tutorialCode) {
+        requireNonNull(tutorialCode);
+        return filteredTutorials.stream()
+                .filter(tut -> tut.getTutorialCode().equalsIgnoreCase(tutorialCode))
+                .findFirst();
+    }
+
+    @Override
     public ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty() {
         return currentOperatingTutorial;
     }
@@ -176,6 +184,14 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Student> getFilteredStudentList() {
         return filteredStudents;
+    }
+
+    @Override
+    public boolean isStudentInCurrentTutorial(Student student) {
+        requireNonNull(student);
+        return getCurrentOperatingTutorial()
+                .map(tutorial -> tutorial.hasStudent(student))
+                .orElse(false);
     }
 
     @Override
