@@ -10,7 +10,7 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, "
+            "Names should only contain alphabetic characters and spaces, "
             + "should not be blank, and should be between 1 and 100 characters long";
 
     public static final int MAX_NAME_LENGTH = 100;
@@ -19,7 +19,7 @@ public class Name {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[a-zA-Z][a-zA-Z ]*";
 
     public final String fullName;
 

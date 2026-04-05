@@ -45,10 +45,10 @@ public class UniqueStudentListTest {
         // same name
         Student editedAlice = new StudentBuilder(ALICE).withMatriculationNumber(VALID_MATRIC_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(uniqueStudentList.contains(editedAlice));
+        assertFalse(uniqueStudentList.contains(editedAlice));
 
         // same matric number
-        editedAlice = new StudentBuilder(ALICE).withName(VALID_MATRIC_BOB).withTags(VALID_TAG_HUSBAND)
+        editedAlice = new StudentBuilder(ALICE).withName("Different Name").withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(uniqueStudentList.contains(editedAlice));
     }
@@ -102,7 +102,7 @@ public class UniqueStudentListTest {
         // same matric number
         uniqueStudentList.setStudents(new UniqueStudentList());
         uniqueStudentList.add(ALICE);
-        editedAlice = new StudentBuilder(ALICE).withName(VALID_MATRIC_BOB).withTags(VALID_TAG_HUSBAND)
+        editedAlice = new StudentBuilder(ALICE).withName("Different Name").withTags(VALID_TAG_HUSBAND)
                 .build();
         uniqueStudentList.setStudent(ALICE, editedAlice);
         expectedUniqueStudentList = new UniqueStudentList();

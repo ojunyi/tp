@@ -3,6 +3,7 @@ package seedu.coursepilot.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.coursepilot.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.coursepilot.testutil.TypicalStudents.getTypicalCoursePilot;
 
@@ -92,7 +93,7 @@ public class SelectCommandTest {
         SelectCommand selectCommand = new SelectCommand(invalidCode);
         String expectedMessage = String.format(SelectCommand.MESSAGE_TUTORIAL_NOT_FOUND, invalidCode);
 
-        assertCommandSuccess(selectCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(selectCommand, model, expectedMessage);
         assertTrue(model.getCurrentOperatingTutorial().isEmpty());
     }
 

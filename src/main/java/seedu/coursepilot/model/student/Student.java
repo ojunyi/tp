@@ -71,8 +71,7 @@ public class Student {
         }
 
         return otherStudent != null
-                && (otherStudent.getName().equals(getName())
-                || otherStudent.getMatriculationNumber().equals(getMatriculationNumber()));
+                && otherStudent.getMatriculationNumber().equals(getMatriculationNumber());
     }
 
     /**

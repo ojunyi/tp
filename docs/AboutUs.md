@@ -40,13 +40,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/gaoze24)]
 [[portfolio](team/gaoze24.md)]
 
-* Role: Developer
-
 ### Zhang Qixiang
 
 <img src="images/zhangqixiang123.png" width="200px">
 
 [[github](https://github.com/ZhangQixiang123)]
-[[portfolio](team/zhangqixiang123.md)]
 
 * Role: Developer

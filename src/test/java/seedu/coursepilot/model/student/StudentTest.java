@@ -36,7 +36,7 @@ public class StudentTest {
         // same name, all other attributes different -> returns true
         Student editedAlice = new StudentBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withMatriculationNumber(VALID_MATRIC_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSameStudent(editedAlice));
+        assertFalse(ALICE.isSameStudent(editedAlice));
 
         // same matric number, all other attributes different -> returns true
         editedAlice = new StudentBuilder(ALICE).withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)

@@ -292,6 +292,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredStudentList(Predicate<Student> predicate) {
+
+        }
+
+        @Override
         public void addStudent(Student student) {
             requireNonNull(student);
             studentsAdded.add(student);

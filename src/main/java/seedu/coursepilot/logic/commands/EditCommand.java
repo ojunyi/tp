@@ -55,7 +55,7 @@ public class EditCommand extends Command {
             "This student or matriculation number already exists in CoursePilot.";
     public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
             "Another student with the same phone number or email"
-            + "already exists in the CoursePilot.";
+            + " already exists in the CoursePilot.";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;
@@ -110,9 +110,16 @@ public class EditCommand extends Command {
                 model.getCoursePilot().getStudentList(), studentToEdit, editedStudent)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
         }
-
+        String newMatric = editedStudent.getMatriculationNumber().toString();
+        model.getFilteredTutorialList().forEach(t -> t.editStudent(newMatric, editedStudent));
         model.setStudent(studentToEdit, editedStudent);
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+        if (model.getCurrentOperatingTutorial().isEmpty()) {
+            model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+        } else {
+            model.updateFilteredStudentList(
+                    student -> model.getCurrentOperatingTutorial().get().hasStudent(student)
+            );
+        }
         return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent)));
     }
 

@@ -10,8 +10,9 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 public class TutorialCode {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Tutorial codes should not be blank, should not contain only whitespace, "
-            + "and should only contain alphanumeric characters, hyphens, and underscores";
+            "Tutorial codes should not be blank, should only contain alphanumeric characters, "
+            + "hyphens, and underscores, and should be at most 20 characters long";
+    public static final int MAX_CODE_LENGTH = 20;
 
     /*
      * Tutorial code must not be empty or only whitespace, and should contain alphanumeric
@@ -37,7 +38,7 @@ public class TutorialCode {
      * Returns true if a given string is a valid tutorial code.
      */
     public static boolean isValidTutorialCode(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.matches(VALIDATION_REGEX) && test.length() <= MAX_CODE_LENGTH;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class TutorialCode {
         }
 
         TutorialCode otherCode = (TutorialCode) other;
-        return value.equals(otherCode.value);
+        return value.toLowerCase().equals(otherCode.value.toLowerCase());
     }
 
     @Override

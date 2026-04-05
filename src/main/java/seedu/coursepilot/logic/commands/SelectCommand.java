@@ -1,8 +1,10 @@
 package seedu.coursepilot.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.coursepilot.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import seedu.coursepilot.commons.util.ToStringBuilder;
+import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.tutorial.Tutorial;
 
@@ -32,11 +34,12 @@ public class SelectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
         if (tutorialKeyword.equalsIgnoreCase(CLEAR_KEYWORD)) {
             model.clearCurrentOperatingTutorial();
+            model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
             return new CommandResult(MESSAGE_CLEAR_TUTORIAL);
         }
 
@@ -46,11 +49,14 @@ public class SelectCommand extends Command {
                 .orElse(null);
 
         if (tutorial == null) {
-            return new CommandResult(
+            throw new CommandException(
                     String.format(MESSAGE_TUTORIAL_NOT_FOUND, tutorialKeyword));
         }
 
         model.setCurrentOperatingTutorial(tutorial);
+        model.updateFilteredStudentList(
+                student -> model.getCurrentOperatingTutorial().get().hasStudent(student)
+        );
         return new CommandResult(
                 String.format(MESSAGE_SUCCESS, tutorial.getTutorialCode()));
     }
