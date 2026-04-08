@@ -108,7 +108,7 @@ Format: `select TUTORIAL_CODE` or `select none`
 * The `TUTORIAL_CODE` is case-insensitive.
 * The tutorial code must exactly match a tutorial already in the system (e.g., `CS2103T-W13`).
 * The tutorial remains active until you run another `select` command or `select none`.
-* If the tutorial code is not found, an informational message is shown and the current operating tutorial is unchanged.
+* If the tutorial code is not found, an error message is shown and the current operating tutorial remains unchanged.
 * Use `select none` to clear the current operating tutorial without selecting a new one.
 
 Examples:
@@ -266,7 +266,7 @@ Format: `delete -tutorial INDEX`
 * `INDEX` refers to the position in the **displayed tutorial list**. The index **must be a positive integer** 1, 2, 3, …​
 * The tutorial is removed from the system.
 * Students who were enrolled in the deleted tutorial are **not** automatically removed from the global student list. They will remain in any other tutorials they are enrolled in.
-* If the Student's o
+* If the student is no longer enrolled in any other tutorial after this deletion, they will also be removed from the global student list entirely, as CoursePilot does not allow students to exist without being enrolled in at least one tutorial.
 
 Examples:
 * `delete -tutorial 2` : Deletes the 2nd tutorial in the list.
@@ -280,6 +280,8 @@ Examples:
 Clears **all students and all tutorials** from the system.
 
 Format: `clear`
+
+* Running `clear` will also reset the current operating tutorial selection. You will need to use `select` again after clearing if you wish to perform student-level operations.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 This command permanently deletes all students and all tutorials. This action cannot be undone. Use with care.
@@ -339,7 +341,7 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 
 **Q**: What happens if I forget to select a tutorial before using write operations like `add -student` or `delete -student`?<br>
 **A**: CoursePilot will display an error message: "No current operating tutorial selected. Use select first." Use the `select` command to choose a tutorial before retrying.
-
+* Running `clear` will also reset the current operating tutorial selection. You will need to use `select` again after clearing if you wish to perform student-level operations.
 **Q**: Can I add a student without selecting a tutorial first?<br>
 **A**: No. Students must be added to a tutorial using `add -student` while a tutorial is selected. Use `select TUTORIAL_CODE` first, then `add -student`. This ensures every student is organised under a tutorial from the moment they are added.
 
@@ -351,6 +353,9 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 
 **Q**: What should I do if I enter an invalid command?<br>
 **A**: CoursePilot will display an error message indicating what went wrong. Use the `help` command to view the correct command format.
+
+**Q**: When should I use `select none`?<br>
+**A**: Use `select none` when you want to stop working within a specific tutorial without selecting a new one. This clears the current operating tutorial, and student-level commands like `add -student` and `delete -student` will no longer be available until you select a tutorial again. It is useful when you want to use `list -student` or `find` to search across all students in the system.
 
 ## Known issues
 
