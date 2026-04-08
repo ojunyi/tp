@@ -103,6 +103,20 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Student alice = new StudentBuilder(ALICE).build();
+        Student bobWithAliceEmail = new StudentBuilder(BOB).withEmail(ALICE.getEmail().toString()).build();
+        AddCommand addCommand = new AddCommand(bobWithAliceEmail);
+        ModelStubWithStudent modelStub = new ModelStubWithStudent(alice);
+        Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
+                new TimeSlot("13:00-14:00"), new Capacity(20));
+        modelStub.setCurrentOperatingTutorial(tutorial);
+
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_DUPLICATE_CONTACT_DETAIL, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
     public void execute_tutorialAtCapacity_throwsCommandExceptionAndStudentNotAddedToGlobalList() {
         ModelStubAcceptingStudentAdded modelStub = new ModelStubAcceptingStudentAdded();
         Student existingStudent = new StudentBuilder(ALICE).build();
@@ -170,6 +184,21 @@ public class AddCommandTest {
         assertTrue(tutorial.hasStudent(canonicalAlice));
         assertFalse(tutorial.getStudents().contains(conflictingAlicePayload));
         assertEquals(TypicalStudents.getTypicalStudents().size(), model.getCoursePilot().getStudentList().size());
+    }
+
+    @Test
+    public void execute_existingStudentAlreadyInCurrentTutorial_throwsCommandException() {
+        Model model = new ModelManager(TypicalStudents.getTypicalCoursePilot(), new UserPrefs());
+        Tutorial currentTutorial = model.getFilteredTutorialList().get(0);
+        model.setCurrentOperatingTutorial(currentTutorial);
+
+        Student modifiedAlicePayload = new StudentBuilder(ALICE)
+                .withPhone("90009999")
+                .withEmail("alice.modified@example.com")
+                .build();
+
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_DUPLICATE_STUDENT, () -> new AddCommand(modifiedAlicePayload).execute(model));
     }
 
     @Test

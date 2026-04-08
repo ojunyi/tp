@@ -45,9 +45,6 @@ public class HelpWindow extends UiPart<Stage> {
             "  - Use TAB or ENTER to accept autocomplete suggestions, ESC to dismiss"
     );
 
-    @Deprecated
-    public static final String COMMAND_SUMMARY = COMMAND_REFERENCE;
-
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
@@ -68,7 +65,7 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
-        commandReference.setText(COMMAND_SUMMARY);
+        commandReference.setText(COMMAND_REFERENCE);
     }
 
     /**

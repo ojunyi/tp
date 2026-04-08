@@ -107,11 +107,7 @@ class JsonAdaptedTutorial {
         Tutorial tutorial = new Tutorial(modelTutorialCode, modelDay, modelTimeSlot, modelCapacity);
 
         for (Student student : modelStudents) {
-            try {
-                tutorial.addStudent(student);
-            } catch (IllegalStateException e) {
-                throw new IllegalValueException(MESSAGE_TUTORIAL_EXCEEDS_CAPACITY);
-            }
+            tutorial.addStudent(student);
         }
 
         return tutorial;
