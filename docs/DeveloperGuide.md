@@ -371,32 +371,54 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  Tutor requests for help.
-2.  CoursePilot shows the details of possible user commands.
+2.  CoursePilot opens a separate help window containing a link to the user guide and a summary of commands.
 
     Use case ends.
+  
+**Extensions**
+
+* 1a. The help window is already open.
+
+    * 1a1. CoursePilot brings the existing help window to the front.
+
+      Use case ends.
 
 **Use case: UC02 - Add a student**
 
 **MSS**
 
-1.  Tutor enters the command to add a student with the student's name, email, and tutorial group.
-2.  CoursePilot adds the student and displays a confirmation message.
+1.  Tutor requests to add a student by providing the required details (Name, Phone Number, Email, Matriculation Number).
+2.  CoursePilot verifies that a tutorial is currently selected.
+3.  CoursePilot validates that the phone number and email are not already in use by another student in the system.
+4.  CoursePilot checks that the student is not already enrolled in the current tutorial.
+5.  CoursePilot verifies that the current tutorial has not reached maximum capacity.
+6.  CoursePilot creates the student record in the global list.
+7.  CoursePilot assigns the student to the selected tutorial.
+8.  CoursePilot updates the display to show the student in the tutorial list and shows a success message.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The student's name or email is missing.
-
-    * 1a1. CoursePilot shows an error message indicating required fields.
-
+* 2a. No tutorial is currently selected.
+    * 2a1. CoursePilot shows an error message indicating that a tutorial must first be selected
       Use case ends.
 
-* 1b. A student with the same email already exists.
-
-    * 1b1. CoursePilot shows an error message indicating duplicate entry.
-
+* 3a. Phone number or Email is already used by a different student entry.
+    * 3a1. CoursePilot shows an error message indicating a duplicate contact detail.
       Use case ends.
+
+* 4a. The student is already enrolled in the selected tutorial.
+    * 4a1. CoursePilot shows an error message indicating a duplicate student in the tutorial.
+      Use case ends.
+
+* 5a. The selected tutorial is at full capacity.
+    * 5a1. CoursePilot shows an error message: "Tutorial is at full capacity."
+      Use case ends.
+  
+* 6a. The student record already exists in the global student list (but not in this tutorial).
+    * 6a1. CoursePilot skips creating a new student record and uses the existing one.
+      Use case resumes from step 7.
 
 **Use case: UC03 - Delete a student**
 
