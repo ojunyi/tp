@@ -18,7 +18,7 @@ import seedu.coursepilot.model.tutorial.Tutorial;
 public class TutorialCodeListPanel extends UiPart<Region> {
 
     private static final String FXML = "TutorialCodeListPanel.fxml";
-    private static final String SELECTED_STYLE_CLASS  = "tutorial-selected";
+    private static final String SELECTED_STYLE_CLASS = "tutorial-selected";
     private static final String SELECTED_INDICATOR = " ●";
     private static final String CELL_PADDING = "  ";
 

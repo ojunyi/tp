@@ -1,7 +1,7 @@
 package seedu.coursepilot.model.student;
 
-import static seedu.coursepilot.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
+import static seedu.coursepilot.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
