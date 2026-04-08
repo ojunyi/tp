@@ -142,6 +142,13 @@ public class AddCommandTest {
         AddCommand addTutorialCommand = new AddCommand(tutorial);
         assertFalse(addAliceCommand.equals(addTutorialCommand));
         assertFalse(addTutorialCommand.equals(addAliceCommand));
+
+        // same tutorial -> returns true; different tutorial -> returns false
+        AddCommand addTutorialCommandCopy = new AddCommand(tutorial);
+        assertTrue(addTutorialCommand.equals(addTutorialCommandCopy));
+        Tutorial otherTutorial = new Tutorial(new TutorialCode("CS2103T-W14"), new Day("Tue"),
+                new TimeSlot("11:00-12:00"), new Capacity(10));
+        assertFalse(addTutorialCommand.equals(new AddCommand(otherTutorial)));
     }
 
     @Test
