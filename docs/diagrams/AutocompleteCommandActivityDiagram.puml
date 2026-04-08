@@ -1,41 +1,34 @@
 @startuml
 !include style.puml
 
-title Get Suggestions For Command
+title Compute Suggestions For Command
 
 start
 
-if () then ([add])
-    if () then ([flag typed])
+if () then ([command is add])
+    if () then ([no type flag yet])
+        :Suggest type flags\n(-student / -tutorial);
+    else ([else])
         if () then ([typing a "/" token])
             :Suggest matching unused\nprefixes for the flag type;
         else ([else])
-            :No suggestions;
         endif
-    else ([else])
-        :Suggest type flags\n(-student / -tutorial);
     endif
 else ([else])
-    if () then ([delete / list])
+    if () then ([command is delete or list])
         :Suggest type flags;
     else ([else])
-        if () then ([find])
+        if () then ([command is find])
             :Suggest find flags;
         else ([else])
-            if () then ([edit])
-                if () then ([typing a "/" token])
-                    :Suggest matching unused\nedit prefixes;
-                else ([else])
-                    :No suggestions;
-                endif
+            if () then ([command is edit\nand typing a "/" token])
+                :Suggest matching unused\nedit prefixes;
             else ([else])
-                :No suggestions;
             endif
         endif
     endif
 endif
 
-:Display suggestions\nin Popup;
 stop
 
 @enduml

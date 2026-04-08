@@ -4,23 +4,19 @@
 start
 :User types text in CommandBox;
 
-if () then ([text is empty])
-    :Return all command words;
+if () then ([text empty])
+    :List all command words;
 else ([else])
     if () then ([no space in text])
         :Filter command words\nby typed prefix;
     else ([else])
-        if () then ([valid command word])
-            :Get suggestions\nfor command;
-            -[hidden]->
-            detach
+        if () then ([first token is\na valid command word])
+            :<<sub-activity>>\nCompute suggestions\nfor command;
         else ([else])
-            :No suggestions;
         endif
     endif
 endif
 
-:Display suggestions\nin Popup;
 stop
 
 @enduml
