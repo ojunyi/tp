@@ -118,22 +118,21 @@ public class AddCommand extends Command {
                 throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
             }
 
+            if (currentOperatingTutorial.hasStudent(toAdd)) {
+                throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
+            }
+
+            if (currentOperatingTutorial.isFull()) {
+                throw new CommandException(MESSAGE_TUTORIAL_FULL);
+            }
+
             if (!model.hasStudent(toAdd)) {
                 model.addStudent(toAdd);
             }
 
-            if (!currentOperatingTutorial.hasStudent(toAdd)) {
-                try {
-                    currentOperatingTutorial.addStudent(toAdd);
-                    model.updateFilteredStudentList(
-                            student -> model.getCurrentOperatingTutorial().get().hasStudent(student)
-                    );
-                    return new CommandResult(String.format(MESSAGE_SUCCESS_STUDENT, Messages.format(toAdd)));
-                } catch (IllegalStateException e) {
-                    throw new CommandException(MESSAGE_TUTORIAL_FULL);
-                }
-            }
-            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
+            currentOperatingTutorial.addStudent(toAdd);
+            model.updateFilteredStudentList(currentOperatingTutorial::hasStudent);
+            return new CommandResult(String.format(MESSAGE_SUCCESS_STUDENT, Messages.format(toAdd)));
         }
         if (addTarget == AddTarget.TUTORIAL) {
             if (model.hasTutorial(tutorialToAdd)) {
