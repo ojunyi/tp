@@ -19,6 +19,10 @@ public class JsonSerializableCoursePilotTest {
     private static final Path TYPICAL_STUDENTS_FILE = TEST_DATA_FOLDER.resolve("typicalStudentsCoursePilot.json");
     private static final Path INVALID_STUDENT_FILE = TEST_DATA_FOLDER.resolve("invalidStudentCoursePilot.json");
     private static final Path DUPLICATE_STUDENT_FILE = TEST_DATA_FOLDER.resolve("duplicateStudentCoursePilot.json");
+    private static final Path DUPLICATE_STUDENT_CONTACT_FILE =
+            TEST_DATA_FOLDER.resolve("duplicateStudentContactCoursePilot.json");
+    private static final Path STUDENT_WITHOUT_TUTORIAL_FILE =
+            TEST_DATA_FOLDER.resolve("studentWithoutTutorialCoursePilot.json");
 
     @Test
     public void toModelType_typicalStudentsFile_success() throws Exception {
@@ -41,6 +45,23 @@ public class JsonSerializableCoursePilotTest {
         JsonSerializableCoursePilot dataFromFile = JsonUtil.readJsonFile(DUPLICATE_STUDENT_FILE,
                 JsonSerializableCoursePilot.class).get();
         assertThrows(IllegalValueException.class, JsonSerializableCoursePilot.MESSAGE_DUPLICATE_STUDENT,
+                dataFromFile::toModelType);
+    }
+
+    @Test
+    public void toModelType_duplicateStudentContact_throwsIllegalValueException() throws Exception {
+        JsonSerializableCoursePilot dataFromFile = JsonUtil.readJsonFile(DUPLICATE_STUDENT_CONTACT_FILE,
+                JsonSerializableCoursePilot.class).get();
+        assertThrows(IllegalValueException.class, JsonSerializableCoursePilot.MESSAGE_DUPLICATE_STUDENT_CONTACT,
+                dataFromFile::toModelType);
+    }
+
+    @Test
+    public void toModelType_studentWithoutTutorial_throwsIllegalValueException() throws Exception {
+        JsonSerializableCoursePilot dataFromFile = JsonUtil.readJsonFile(STUDENT_WITHOUT_TUTORIAL_FILE,
+                JsonSerializableCoursePilot.class).get();
+        assertThrows(IllegalValueException.class,
+                JsonSerializableCoursePilot.MESSAGE_STUDENT_NOT_ASSIGNED_TO_TUTORIAL,
                 dataFromFile::toModelType);
     }
 

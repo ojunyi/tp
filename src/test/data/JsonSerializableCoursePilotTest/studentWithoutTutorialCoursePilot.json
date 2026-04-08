@@ -1,0 +1,10 @@
+{
+  "students" : [ {
+    "name" : "Alex Yeoh",
+    "phone" : "87438807",
+    "email" : "alexyeoh@example.com",
+    "matriculationNumber" : "A000001",
+    "tags" : [ "friends" ]
+  } ],
+  "tutorials" : [ ]
+}

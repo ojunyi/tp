@@ -1,0 +1,34 @@
+{
+  "students" : [ {
+    "name" : "Alex Yeoh",
+    "phone" : "87438807",
+    "email" : "alexyeoh@example.com",
+    "matriculationNumber" : "A000001",
+    "tags" : [ "friends" ]
+  }, {
+    "name" : "Alex Yeoh",
+    "phone" : "87438807",
+    "email" : "alexyeoh@example.com",
+    "matriculationNumber" : "A000002",
+    "tags" : [ "colleagues", "friends" ]
+  } ],
+  "tutorials" : [ {
+    "tutorialCode" : "CS2103T-W13",
+    "day" : "Wed",
+    "timeSlot" : "13:00-14:00",
+    "capacity" : 10,
+    "students" : [ {
+      "name" : "Alex Yeoh",
+      "phone" : "87438807",
+      "email" : "alexyeoh@example.com",
+      "matriculationNumber" : "A000001",
+      "tags" : [ "friends" ]
+    }, {
+      "name" : "Alex Yeoh",
+      "phone" : "87438807",
+      "email" : "alexyeoh@example.com",
+      "matriculationNumber" : "A000002",
+      "tags" : [ "colleagues", "friends" ]
+    } ]
+  } ]
+}

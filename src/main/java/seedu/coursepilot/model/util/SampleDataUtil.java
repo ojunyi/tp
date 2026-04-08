@@ -59,34 +59,32 @@ public class SampleDataUtil {
 
     public static ObservableList<Tutorial> getSampleTutorials() {
         return FXCollections.observableArrayList(
-                new Tutorial(new TutorialCode("T01"), new Day("Mon"),
+                new Tutorial(new TutorialCode("CS2103T-W13"), new Day("Mon"),
                         new TimeSlot("10:00-11:00"), new Capacity(20)),
-                new Tutorial(new TutorialCode("T02"), new Day("Wed"),
+                new Tutorial(new TutorialCode("CS2103T-W14"), new Day("Wed"),
                         new TimeSlot("12:00-13:00"), new Capacity(15)),
-                new Tutorial(new TutorialCode("T03"), new Day("Fri"),
+                new Tutorial(new TutorialCode("CS2103T-W15"), new Day("Fri"),
                         new TimeSlot("14:00-15:00"), new Capacity(10))
         );
     }
 
     public static ReadOnlyCoursePilot getSampleCoursePilot() {
-        CoursePilot sampleCp = new CoursePilot();
+        CoursePilot sampleAb = new CoursePilot();
         ObservableList<Tutorial> sampleTutorials = getSampleTutorials();
+        sampleTutorials.forEach(sampleAb::addTutorial);
 
-        for (Tutorial tutorial : sampleTutorials) {
-            sampleCp.addTutorial(tutorial);
+        addStudentsToTutorial(sampleAb, sampleTutorials.get(0), getSampleStudents1());
+        addStudentsToTutorial(sampleAb, sampleTutorials.get(1), getSampleStudents2());
+        addStudentsToTutorial(sampleAb, sampleTutorials.get(2), getSampleStudents3());
+
+        return sampleAb;
+    }
+
+    private static void addStudentsToTutorial(CoursePilot coursePilot, Tutorial tutorial, Student[] students) {
+        for (Student student : students) {
+            coursePilot.addStudent(student);
+            tutorial.addStudent(student);
         }
-
-        Student[][] allSampleBatches = {getSampleStudents1(), getSampleStudents2(), getSampleStudents3()};
-
-        for (int i = 0; i < allSampleBatches.length && i < sampleTutorials.size(); i++) {
-            Tutorial target = sampleTutorials.get(i);
-            for (Student student : allSampleBatches[i]) {
-                sampleCp.addStudent(student);
-                target.addStudent(student);
-            }
-        }
-
-        return sampleCp;
     }
 
     /**

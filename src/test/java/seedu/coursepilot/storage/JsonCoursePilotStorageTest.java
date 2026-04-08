@@ -18,6 +18,7 @@ import org.junit.jupiter.api.io.TempDir;
 import seedu.coursepilot.commons.exceptions.DataLoadingException;
 import seedu.coursepilot.model.CoursePilot;
 import seedu.coursepilot.model.ReadOnlyCoursePilot;
+import seedu.coursepilot.model.tutorial.Tutorial;
 
 public class JsonCoursePilotStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonCoursePilotStorageTest");
@@ -61,10 +62,21 @@ public class JsonCoursePilotStorageTest {
     }
 
     @Test
+    public void readCoursePilot_duplicateStudentContactCoursePilot_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readCoursePilot("duplicateStudentContactCoursePilot.json"));
+    }
+
+    @Test
+    public void readCoursePilot_studentWithoutTutorialCoursePilot_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readCoursePilot("studentWithoutTutorialCoursePilot.json"));
+    }
+
+    @Test
     public void readAndSaveCoursePilot_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempCoursePilot.json");
         CoursePilot original = getTypicalCoursePilot();
         JsonCoursePilotStorage jsonCoursePilotStorage = new JsonCoursePilotStorage(filePath);
+        Tutorial tutorial = original.getTutorialList().get(0);
 
         // Save in new file and read back
         jsonCoursePilotStorage.saveCoursePilot(original, filePath);
@@ -73,6 +85,8 @@ public class JsonCoursePilotStorageTest {
 
         // Modify data, overwrite exiting file, and read back
         original.addStudent(HOON);
+        tutorial.addStudent(HOON);
+        tutorial.removeStudent(ALICE);
         original.removeStudent(ALICE);
         jsonCoursePilotStorage.saveCoursePilot(original, filePath);
         readBack = jsonCoursePilotStorage.readCoursePilot(filePath).get();
@@ -80,6 +94,7 @@ public class JsonCoursePilotStorageTest {
 
         // Save and read without specifying file path
         original.addStudent(IDA);
+        tutorial.addStudent(IDA);
         jsonCoursePilotStorage.saveCoursePilot(original); // file path not specified
         readBack = jsonCoursePilotStorage.readCoursePilot().get(); // file path not specified
         assertEquals(original, new CoursePilot(readBack));
