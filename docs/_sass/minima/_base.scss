@@ -272,11 +272,15 @@ table {
 }
 
 @media print {
+  @page {
+    margin: 0.7in; /* reduce from default 1in */
+  }
   /**
   * Prevents page break from cutting through content when printing
   */
   body {
     display: block;
+    font-size: 13px;
   }
   /**
   * Replaces the top navigation menu with the project name when printing
