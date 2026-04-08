@@ -185,6 +185,32 @@ public class JsonSerializableCoursePilotTest {
     }
 
     @Test
+    public void toModelType_tutorialCapacityLessThanStudents_throwsIllegalValueException() {
+        Student studentOne = new StudentBuilder().withName("Cap One")
+                .withPhone("90006001")
+                .withEmail("cap1@example.com")
+                .withMatriculationNumber("A960001")
+                .build();
+        Student studentTwo = new StudentBuilder().withName("Cap Two")
+                .withPhone("90006002")
+                .withEmail("cap2@example.com")
+                .withMatriculationNumber("A960002")
+                .build();
+
+        // Build a JsonAdaptedTutorial directly with capacity < students via the @JsonCreator constructor
+        // (cannot construct via Tutorial.addStudent because it would throw on overflow).
+        JsonAdaptedTutorial overfullTutorial = new JsonAdaptedTutorial(
+                "CS2103T-W95", "Fri", "16:00-17:00", 1,
+                List.of(new JsonAdaptedStudent(studentOne), new JsonAdaptedStudent(studentTwo)));
+
+        JsonSerializableCoursePilot data = new JsonSerializableCoursePilot(
+                List.of(new JsonAdaptedStudent(studentOne), new JsonAdaptedStudent(studentTwo)),
+                List.of(overfullTutorial));
+
+        assertThrows(IllegalValueException.class, data::toModelType);
+    }
+
+    @Test
     public void toModelType_tutorialStudentDetailsMismatch_throwsIllegalValueException() {
         Student listedStudent = new StudentBuilder().withName("Stored Student")
                 .withPhone("90005001")
