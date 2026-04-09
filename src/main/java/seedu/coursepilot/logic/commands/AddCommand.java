@@ -62,6 +62,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
             "Another student with the same phone number or email"
             + " already exists in CoursePilot.";
+    public static final String MESSAGE_DUPLICATE_STUDENT_MATRIC =
+            "A different student with this matriculation number already exists.";
     public static final String MESSAGE_DUPLICATE_TUTORIAL =
             "This tutorial code already exists in CoursePilot";
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
@@ -117,6 +119,11 @@ public class AddCommand extends Command {
             Optional<Student> existingStudent = model.getCoursePilot().getStudentList().stream()
                     .filter(storedStudent -> storedStudent.isSameStudent(toAdd))
                     .findFirst();
+
+            if (existingStudent.isPresent() && !existingStudent.get().equals(toAdd)) {
+                throw new CommandException(MESSAGE_DUPLICATE_STUDENT_MATRIC);
+            }
+
             Student studentToAddToTutorial = existingStudent.orElse(toAdd);
 
             if (existingStudent.isEmpty() && model.getCoursePilot().getStudentList().stream()

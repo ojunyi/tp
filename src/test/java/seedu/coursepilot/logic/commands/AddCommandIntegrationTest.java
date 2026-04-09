@@ -64,7 +64,7 @@ public class AddCommandIntegrationTest {
         model.getCurrentOperatingTutorial().get().addStudent(validStudent);
 
         assertCommandFailure(new AddCommand(duplicateStudent), model,
-                AddCommand.MESSAGE_DUPLICATE_STUDENT);
+                AddCommand.MESSAGE_DUPLICATE_STUDENT_MATRIC);
     }
 
     @Test
