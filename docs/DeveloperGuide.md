@@ -513,7 +513,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. Tutor requests to delete a tutorial by specifying its index in the displayed tutorial list.
 2. CoursePilot removes the tutorial from the system.
 3. CoursePilot removes the tutorial from all students enrolled in it.
-4. CoursePilot removes any student from the global system who is no longer enrolled in any remaining tutorial.
+4. CoursePilot removes any student from the global list who is no longer enrolled in any remaining tutorial.
 5. CoursePilot updates the display and shows a confirmation message.
 
    Use case ends.
@@ -527,7 +527,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The tutorial removed is the current operating tutorial.
     * 2a1. CoursePilot clears the Operating Tutorial selection.
-    * 2a2. CoursePilot resets the student list display to show all students globally.
+    * 2a2. CoursePilot resets the student list display to show all students in the global student list.
 
       Use case resumes at step 3.
 
@@ -578,7 +578,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 * 3a. No tutorial is currently selected.
-    * 3a1. CoursePilot searches across all students in the global system instead.
+    * 3a1. CoursePilot searches across all students in the global list instead.
     * 3a2. CoursePilot filters and displays students in the global student list whose names match any of the keywords.
 
       Use case resumes from step 4.
@@ -622,13 +622,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Student Contact**: A stored entry in CoursePilot containing a student's information
 * **Tutorial Slot**: A tutorial object defined by a code, timeslot, day, and capacity, created and managed by a tutor in CoursePilot
 * **Tutorial Code**: The identifying name of that tutorial e.g. CS2103T-W13
-* **Current Operating Tutorial**: The tutorial currently selected via the `select` command, which student-level commands operate on
+* **Current Operating Tutorial**: The tutorial currently selected via the `select` command, which student-level commands operate on. If none is selected, the student list shown will be the global student list.
 * **Matric Number**: A unique student identifier following the format Axxxxxx.
 * **Type**: A flag (`-student` or `-tutorial`) that specifies which entity type a command operates on
 * **Prefix**: A field identifier starting with `/` used to specify parameters in commands (e.g. /name, /email)
-* **Index**: A temporary 1-based position number shown in a displayed list, used to reference a specific student or tutorial in commands.
+* **Index**: A temporary 1-based position number shown in a displayed list, used to reference a specific student or tutorial in commands. If an index is invalid, it is out-of-bounds of the size of the list of the current operating tutorial if one is selected or the global student list otherwise.
 * **MSS**: Main Success Scenario; the most straightforward interaction for a given use case, assuming nothing goes wrong.
-* **Global Student List**: The complete list of all students stored in CoursePilot across all tutorials.
+* **Global Student List/Global List**: The complete list of all students stored in CoursePilot across all tutorials.
 
 --------------------------------------------------------------------------------------------------------------------
 
