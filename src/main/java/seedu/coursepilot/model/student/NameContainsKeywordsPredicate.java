@@ -21,6 +21,6 @@ public class NameContainsKeywordsPredicate extends StudentFieldPredicate {
     public boolean test(Student student) {
         return keywords.stream()
                 .anyMatch(keyword ->
-                        StringUtil.containsWordIgnoreCase(student.getName().fullName, keyword));
+                        StringUtil.containsWordIgnoreCase(student.getName().toString(), keyword));
     }
 }

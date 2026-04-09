@@ -195,7 +195,7 @@ Examples:
 
 Edits an existing student's details.
 
-Format: `edit INDEX [/name NAME] [/phone PHONE] [/email EMAIL] [/matric MATRICNUMBER] [/tag TAG]…​`
+Format: `edit INDEX [/name NAME] [/phone PHONE_NUMBER] [/email EMAIL] [/matric MATRICNUMBER] [/tag TAG]…​`
 
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the **currently displayed student list**. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -219,7 +219,7 @@ Finds and lists students in the currently selected tutorial who match the given 
 
 Format: `find KEYWORD [MORE_KEYWORDS]…` or `find /phone KEYWORD` or `find /email KEYWORD` or `find /matric KEYWORD`
 
-* **Name search (default)**: `find KEYWORD [MORE_KEYWORDS]` — returns students whose name contains any of the keywords as a substring. Case-insensitive.
+* **Name search (default)**: `find KEYWORD [MORE_KEYWORDS]` — returns students whose name contains any of the keywords as whole words. Case-insensitive.
 * **Phone search**: `find /phone KEYWORD` — returns students whose phone number **starts with** any of the given keywords.
 * **Email search**: `find /email KEYWORD` — returns students whose email address **contains** any of the given keywords. Case-insensitive.
 * **Matric search**: `find /matric KEYWORD` — returns students whose matric number **starts with** any of the given keywords. Case-insensitive.
@@ -340,8 +340,8 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 **A**: Install CoursePilot on the other computer and overwrite the empty data file it creates with the `coursepilot.json` file from your previous installation.
 
 **Q**: What happens if I forget to select a tutorial before using write operations like `add -student` or `delete -student`?<br>
-**A**: CoursePilot will display an error message: "No current operating tutorial selected. Use select first." Use the `select` command to choose a tutorial before retrying.
-* Running `clear` will also reset the current operating tutorial selection. You will need to use `select` again after clearing if you wish to perform student-level operations.
+**A**: CoursePilot will display an error message: "No tutorial selected. Please select a tutorial to operate on first." Use the `select` command to choose a tutorial before retrying.
+
 **Q**: Can I add a student without selecting a tutorial first?<br>
 **A**: No. Students must be added to a tutorial using `add -student` while a tutorial is selected. Use `select TUTORIAL_CODE` first, then `add -student`. This ensures every student is organised under a tutorial from the moment they are added.
 
@@ -349,7 +349,7 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 **A**: If the student is enrolled in other tutorials, they remain in the system. If the deleted tutorial was their only one, they are removed from the global student list as well.
 
 **Q**: Does deleting a tutorial delete its students?<br>
-**A**: No. Deleting a tutorial removes the tutorial itself, but all students who were in that tutorial remain in the global student list.
+**A**: Students who are in other tutorials remain in the system. Students who were only in the deleted tutorial are removed from the global student list.
 
 **Q**: What should I do if I enter an invalid command?<br>
 **A**: CoursePilot will display an error message indicating what went wrong. Use the `help` command to view the correct command format.

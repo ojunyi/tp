@@ -9,7 +9,8 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* This project is adapted from the se-edu AddressBook Level 3 codebase and documentation style: <https://github.com/se-edu/addressbook-level3>.
+* UI architecture and testing conventions also reference se-edu guides: <https://se-education.org/guides/>.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes `Main` and `MainApp`) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -58,7 +59,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `*Manager` class (e.g., `LogicManager`, `ModelManager`) which follows the corresponding API `interface` mentioned in the previous point.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -68,13 +69,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in `Ui.java`.
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the `MainWindow` is specified in `MainWindow.fxml`.
 
 The `UI` component,
 
@@ -85,7 +86,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : `Logic.java`
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -115,16 +116,18 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : `Model.java`
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
 
 The `Model` component,
 
-* stores CoursePilot data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object) and all `Tutorial` objects (which are contained in a `UniqueTutorialList` object).
+* stores CoursePilot data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object).
+* stores tutorial data i.e., all `Tutorial` objects (which are contained in a `UniqueTutorialList` object).
 * stores the currently 'selected' `Student` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+* stores the currently filtered tutorial list as an unmodifiable `ObservableList<Tutorial>` for UI binding and tutorial operations.
+* stores a `UserPrefs` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `CoursePilot`, which `Student` references. This allows `CoursePilot` to only require one `Tag` object per unique tag, instead of each `Student` needing their own `Tag` objects.<br>
@@ -136,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : `Storage.java`
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -219,11 +222,11 @@ Step 1. The user launches the application for the first time. The `VersionedCour
 
 ![UndoRedoState0](images/UndoRedoState0.png)
 
-Step 2. The user executes `delete 5` command to delete the 5th student in the CoursePilot. The `delete` command calls `Model#commitCoursePilot()`, causing the modified state of the CoursePilot after the `delete 5` command executes to be saved in the `coursePilotStateList`, and the `currentStatePointer` is shifted to the newly inserted CoursePilot state.
+Step 2. The user executes `delete -student 5` command to delete the 5th student in the currently selected tutorial. The `delete` command calls `Model#commitCoursePilot()`, causing the modified state of the CoursePilot after the `delete -student 5` command executes to be saved in the `coursePilotStateList`, and the `currentStatePointer` is shifted to the newly inserted CoursePilot state.
 
 ![UndoRedoState1](images/UndoRedoState1.png)
 
-Step 3. The user executes `add n/David …​` to add a new student. The `add` command also calls `Model#commitCoursePilot()`, causing another modified CoursePilot state to be saved into the `coursePilotStateList`.
+Step 3. The user executes `add -student /name David Tan /phone 90001234 /email david@example.com /matric A123450` to add a new student. The `add` command also calls `Model#commitCoursePilot()`, causing another modified CoursePilot state to be saved into the `coursePilotStateList`.
 
 ![UndoRedoState2](images/UndoRedoState2.png)
 
@@ -262,7 +265,7 @@ Step 5. The user then decides to execute the command `list`. Commands that do no
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 
-Step 6. The user executes `clear`, which calls `Model#commitCoursePilot()`. Since the `currentStatePointer` is not pointing at the end of the `coursePilotStateList`, all CoursePilot states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitCoursePilot()`. Since the `currentStatePointer` is not pointing at the end of the `coursePilotStateList`, all CoursePilot states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the previous `add -student ...` command. This is the behavior that most modern desktop applications follow.
 
 ![UndoRedoState5](images/UndoRedoState5.png)
 
@@ -283,11 +286,13 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the student being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
+Additional aspects and alternatives can be documented as the feature moves from proposed to implemented status.
 
 ### \[Proposed\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
+Data archiving is intended to support semester rollover while preserving historical records.
+One possible approach is to introduce an `archive` command that moves inactive tutorials and their students into a separate archive data file while keeping the active file lean.
+Implementation details are intentionally deferred until the feature scope is finalized.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -553,7 +558,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+  1. Double-click the jar file Expected: Shows the GUI with a set of sample students. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -562,31 +567,45 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. Additional exploratory checks:
+
+  1. Launch with missing `config.json` and verify defaults are recreated.
+
+  1. Launch after moving the app folder and verify data path handling remains valid.
 
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
 
-   1. Prerequisites: List all students using the `list` command. Multiple students in the list.
+  1. Prerequisites: Select a tutorial and using the `select` command. Multiple students in the list.
 
-   1. Prerequisites: A tutorial has been selected via `list -tutorial INDEX` so that students are displayed.
+  1. Test case: `delete -student 1`<br>
+      Expected: First student is deleted from the list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete -student 1`<br>
-      Expected: First student is removed from the current tutorial. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete -student 0`<br>
+  1. Test case: `delete -student 0`<br>
       Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete 1`, `delete -student x`, `...` (where x is larger than the list size)<br>
+  1. Other incorrect delete commands to try: `delete -student`, `delete -student x`, `delete -student ...` (where index is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Additional exploratory checks:
+
+  1. Delete a student who appears in multiple tutorials and verify the student remains in the global list.
+
+  1. Delete a student who appears only in the selected tutorial and verify the student is removed from the global list.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+  1. Rename `data/coursepilot.json` to simulate a missing file, then launch the app.<br>
+    Expected: App starts with sample data and recreates the data file after the next data-changing command.
 
-1. _{ more test cases …​ }_
+  1. Corrupt `data/coursepilot.json` (e.g., remove a closing brace), then launch the app.<br>
+    Expected: App starts with an empty CoursePilot and logs a data loading warning.
+
+1. Additional exploratory checks:
+
+  1. Perform a valid add/edit/delete command and verify `data/coursepilot.json` is updated.
+
+  1. Make `data/coursepilot.json` read-only and verify save failure is surfaced to the user.

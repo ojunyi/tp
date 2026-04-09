@@ -1,5 +1,6 @@
 package seedu.coursepilot.model.student;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
@@ -72,6 +73,22 @@ public class Student {
 
         return otherStudent != null
                 && otherStudent.getMatriculationNumber().equals(getMatriculationNumber());
+    }
+
+    /**
+     * Returns true if {@code other} has the same phone number as this student.
+     */
+    public boolean hasSamePhone(Student other) {
+        requireNonNull(other);
+        return getPhone().equals(other.getPhone());
+    }
+
+    /**
+     * Returns true if {@code other} has the same email as this student.
+     */
+    public boolean hasSameEmail(Student other) {
+        requireNonNull(other);
+        return getEmail().equals(other.getEmail());
     }
 
     /**

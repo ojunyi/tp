@@ -25,6 +25,7 @@ import seedu.coursepilot.model.Model;
 import seedu.coursepilot.model.ModelManager;
 import seedu.coursepilot.model.UserPrefs;
 import seedu.coursepilot.model.student.Student;
+import seedu.coursepilot.model.tutorial.Tutorial;
 import seedu.coursepilot.testutil.EditStudentDescriptorBuilder;
 import seedu.coursepilot.testutil.StudentBuilder;
 
@@ -169,6 +170,31 @@ public class EditCommandTest {
                 new EditStudentDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_matricChanged_updatesTutorialStudentReference() {
+        Student studentToEdit = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
+        String oldMatric = studentToEdit.getMatriculationNumber().toString();
+        String newMatric = "A100000";
+
+        Student editedStudent = new StudentBuilder(studentToEdit).withMatriculationNumber(newMatric).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_STUDENT,
+            new EditStudentDescriptorBuilder().withMatriculationNumber(newMatric).build());
+
+        String expectedMessage = String.format(
+            EditCommand.MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent));
+
+        Model expectedModel = new ModelManager(new CoursePilot(model.getCoursePilot()), new UserPrefs());
+        expectedModel.setStudent(studentToEdit, editedStudent);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+
+        Tutorial tutorial = model.getFilteredTutorialList().get(0);
+        assertFalse(tutorial.getStudents().stream()
+            .anyMatch(student -> student.getMatriculationNumber().toString().equals(oldMatric)));
+        assertTrue(tutorial.getStudents().stream()
+            .anyMatch(student -> student.getMatriculationNumber().toString().equals(newMatric)));
     }
 
     @Test

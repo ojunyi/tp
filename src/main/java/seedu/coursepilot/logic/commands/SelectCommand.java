@@ -49,12 +49,9 @@ public class SelectCommand extends Command {
             return new CommandResult(MESSAGE_CLEAR_TUTORIAL);
         }
 
-        Tutorial tutorial = model.getTutorialByCode(tutorialKeyword).orElse(null);
-
-        if (tutorial == null) {
-            throw new CommandException(
-                    String.format(MESSAGE_TUTORIAL_NOT_FOUND, tutorialKeyword));
-        }
+        Tutorial tutorial = model.getTutorialByCode(tutorialKeyword)
+                .orElseThrow(() -> new CommandException(
+                        String.format(MESSAGE_TUTORIAL_NOT_FOUND, tutorialKeyword)));
 
         model.setCurrentOperatingTutorial(tutorial);
         model.updateFilteredStudentList(tutorial::hasStudent);

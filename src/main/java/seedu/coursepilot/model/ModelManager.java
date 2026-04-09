@@ -90,6 +90,9 @@ public class ModelManager implements Model {
     @Override
     public void setCoursePilot(ReadOnlyCoursePilot coursePilot) {
         this.coursePilot.resetData(coursePilot);
+        clearCurrentOperatingTutorial();
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+        updateFilteredTutorialList(PREDICATE_SHOW_ALL_TUTORIALS);
     }
 
     @Override

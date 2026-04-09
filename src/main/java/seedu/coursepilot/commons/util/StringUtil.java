@@ -42,25 +42,25 @@ public class StringUtil {
      * Returns true if {@code sentence} contains {@code substring} as a substring.
      *   Ignores case.
      *   <br>examples:<pre>
-     *       containsPartWordIgnoreCase("ABc def", "abc") == true
-     *       containsPartWordIgnoreCase("ABc def", "DEF") == true
-     *       containsPartWordIgnoreCase("ABc def", "AB") == true //substring match
+     *       containsPartWordIgnoreCase("ABcdef", "abc") == true
+     *       containsPartWordIgnoreCase("ABcdef", "DEF") == true
+     *       containsPartWordIgnoreCase("ABcdef", "AB") == true //substring match
      *       </pre>
-     * @param sentence cannot be null, cannot be empty, must be a single word
+     * @param word cannot be null, cannot be empty, must be a single word
      * @param substring cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsPartWordIgnoreCase(String sentence, String substring) {
-        requireNonNull(sentence);
+    public static boolean containsPartWordIgnoreCase(String word, String substring) {
+        requireNonNull(word);
         requireNonNull(substring);
 
-        String preppedSentence = sentence.trim();
+        String preppedWord = word.trim();
         String preppedSubstring = substring.trim();
-        checkArgument(!preppedSentence.isEmpty(), "Sentence parameter cannot be empty");
-        checkArgument(preppedSentence.split("\\s+").length == 1, "Sentence parameter should be a single word");
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
         checkArgument(!preppedSubstring.isEmpty(), "Substring parameter cannot be empty");
         checkArgument(preppedSubstring.split("\\s+").length == 1, "Substring parameter should be a single word");
 
-        return preppedSentence.toLowerCase().contains(preppedSubstring.toLowerCase());
+        return preppedWord.toLowerCase().contains(preppedSubstring.toLowerCase());
     }
 
     /**

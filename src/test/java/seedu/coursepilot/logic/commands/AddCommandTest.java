@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.coursepilot.testutil.Assert.assertThrows;
 import static seedu.coursepilot.testutil.TypicalStudents.ALICE;
+import static seedu.coursepilot.testutil.TypicalStudents.BENSON;
 import static seedu.coursepilot.testutil.TypicalStudents.BOB;
 
 import java.nio.file.Path;
@@ -23,8 +24,10 @@ import seedu.coursepilot.logic.Messages;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.CoursePilot;
 import seedu.coursepilot.model.Model;
+import seedu.coursepilot.model.ModelManager;
 import seedu.coursepilot.model.ReadOnlyCoursePilot;
 import seedu.coursepilot.model.ReadOnlyUserPrefs;
+import seedu.coursepilot.model.UserPrefs;
 import seedu.coursepilot.model.student.Student;
 import seedu.coursepilot.model.tutorial.Capacity;
 import seedu.coursepilot.model.tutorial.Day;
@@ -32,6 +35,7 @@ import seedu.coursepilot.model.tutorial.TimeSlot;
 import seedu.coursepilot.model.tutorial.Tutorial;
 import seedu.coursepilot.model.tutorial.TutorialCode;
 import seedu.coursepilot.testutil.StudentBuilder;
+import seedu.coursepilot.testutil.TypicalStudents;
 
 public class AddCommandTest {
 
@@ -99,6 +103,20 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Student alice = new StudentBuilder(ALICE).build();
+        Student bobWithAliceEmail = new StudentBuilder(BOB).withEmail(ALICE.getEmail().toString()).build();
+        AddCommand addCommand = new AddCommand(bobWithAliceEmail);
+        ModelStubWithStudent modelStub = new ModelStubWithStudent(alice);
+        Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
+                new TimeSlot("13:00-14:00"), new Capacity(20));
+        modelStub.setCurrentOperatingTutorial(tutorial);
+
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_DUPLICATE_CONTACT_DETAIL, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
     public void execute_tutorialAtCapacity_throwsCommandExceptionAndStudentNotAddedToGlobalList() {
         ModelStubAcceptingStudentAdded modelStub = new ModelStubAcceptingStudentAdded();
         Student existingStudent = new StudentBuilder(ALICE).build();
@@ -111,6 +129,76 @@ public class AddCommandTest {
         assertThrows(CommandException.class,
                 AddCommand.MESSAGE_TUTORIAL_FULL, () -> new AddCommand(studentToAdd).execute(modelStub));
         assertTrue(modelStub.studentsAdded.isEmpty());
+    }
+
+    @Test
+    public void execute_existingStudentWithDifferentPayload_addsCanonicalStudentToTutorial() throws Exception {
+        Model model = new ModelManager(TypicalStudents.getTypicalCoursePilot(), new UserPrefs());
+        Tutorial tutorial = new Tutorial(new TutorialCode("CS2103T-W99"), new Day("Thu"),
+                new TimeSlot("16:00-17:00"), new Capacity(10));
+        model.addTutorial(tutorial);
+        model.setCurrentOperatingTutorial(tutorial);
+
+        Student modifiedAlicePayload = new StudentBuilder(ALICE)
+                .withPhone("90009999")
+                .withEmail("alice.modified@example.com")
+                .build();
+
+        AddCommand addCommand = new AddCommand(modifiedAlicePayload);
+        CommandResult result = addCommand.execute(model);
+
+        Student canonicalAlice = model.getCoursePilot().getStudentList().stream()
+                .filter(student -> student.isSameStudent(ALICE))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_STUDENT, Messages.format(canonicalAlice)),
+                result.getFeedbackToUser());
+        assertTrue(tutorial.hasStudent(canonicalAlice));
+        assertFalse(tutorial.getStudents().contains(modifiedAlicePayload));
+        assertEquals(TypicalStudents.getTypicalStudents().size(), model.getCoursePilot().getStudentList().size());
+    }
+
+    @Test
+    public void execute_existingStudentWithConflictingPayloadContact_addsCanonicalStudentToTutorial() throws Exception {
+        Model model = new ModelManager(TypicalStudents.getTypicalCoursePilot(), new UserPrefs());
+        Tutorial tutorial = new Tutorial(new TutorialCode("CS2103T-W98"), new Day("Fri"),
+                new TimeSlot("17:00-18:00"), new Capacity(10));
+        model.addTutorial(tutorial);
+        model.setCurrentOperatingTutorial(tutorial);
+
+        Student conflictingAlicePayload = new StudentBuilder(ALICE)
+                .withPhone(BENSON.getPhone().value)
+                .withEmail(BENSON.getEmail().value)
+                .build();
+
+        CommandResult result = new AddCommand(conflictingAlicePayload).execute(model);
+
+        Student canonicalAlice = model.getCoursePilot().getStudentList().stream()
+                .filter(student -> student.isSameStudent(ALICE))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_STUDENT, Messages.format(canonicalAlice)),
+                result.getFeedbackToUser());
+        assertTrue(tutorial.hasStudent(canonicalAlice));
+        assertFalse(tutorial.getStudents().contains(conflictingAlicePayload));
+        assertEquals(TypicalStudents.getTypicalStudents().size(), model.getCoursePilot().getStudentList().size());
+    }
+
+    @Test
+    public void execute_existingStudentAlreadyInCurrentTutorial_throwsCommandException() {
+        Model model = new ModelManager(TypicalStudents.getTypicalCoursePilot(), new UserPrefs());
+        Tutorial currentTutorial = model.getFilteredTutorialList().get(0);
+        model.setCurrentOperatingTutorial(currentTutorial);
+
+        Student modifiedAlicePayload = new StudentBuilder(ALICE)
+                .withPhone("90009999")
+                .withEmail("alice.modified@example.com")
+                .build();
+
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_DUPLICATE_STUDENT, () -> new AddCommand(modifiedAlicePayload).execute(model));
     }
 
     @Test

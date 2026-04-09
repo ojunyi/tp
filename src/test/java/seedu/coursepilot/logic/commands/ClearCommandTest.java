@@ -1,5 +1,6 @@
 package seedu.coursepilot.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.coursepilot.testutil.TypicalStudents.getTypicalCoursePilot;
 
@@ -27,6 +28,16 @@ public class ClearCommandTest {
         expectedModel.setCoursePilot(new CoursePilot());
 
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_withSelectedTutorial_selectionCleared() {
+        Model model = new ModelManager(getTypicalCoursePilot(), new UserPrefs());
+        model.setCurrentOperatingTutorial(model.getFilteredTutorialList().get(0));
+
+        new ClearCommand().execute(model);
+
+        assertTrue(model.getCurrentOperatingTutorial().isEmpty());
     }
 
 }

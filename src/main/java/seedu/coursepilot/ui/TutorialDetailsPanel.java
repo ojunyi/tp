@@ -1,5 +1,7 @@
 package seedu.coursepilot.ui;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -35,23 +37,32 @@ public class TutorialDetailsPanel extends UiPart<Region> {
      */
     public TutorialDetailsPanel(ObservableList<Tutorial> tutorials) {
         super(FXML);
-        dayColumn.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDay()));
-        timeSlotColumn.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTimeSlot()));
-        capacityColumn.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getCapacity()));
+        setupColumns();
+        setupTableView(tutorials);
+    }
 
+    private void setupColumns() {
+        dayColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getDay()));
+        timeSlotColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getTimeSlot()));
+        capacityColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getCapacity()));
+    }
+
+    private void setupTableView(ObservableList<Tutorial> tutorials) {
         tutorialDetailsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tutorialDetailsTable.setItems(tutorials);
         tutorialDetailsTable.setSelectionModel(new NoOpTableSelectionModel<>(tutorialDetailsTable));
-        tutorialDetailsTable.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            KeyCode key = event.getCode();
-            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.PAGE_UP
+        tutorialDetailsTable.addEventFilter(KeyEvent.KEY_PRESSED, this::consumeNavigationKeys);
+    }
+
+    private void consumeNavigationKeys(KeyEvent event) {
+        KeyCode key = event.getCode();
+        if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.PAGE_UP
                 || key == KeyCode.PAGE_DOWN || key == KeyCode.HOME || key == KeyCode.END) {
-                event.consume();
-            }
-        });
+            event.consume();
+        }
     }
 
     /**

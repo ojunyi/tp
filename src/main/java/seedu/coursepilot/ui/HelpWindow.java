@@ -18,17 +18,21 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-w13-4.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
 
-    public static final String COMMAND_SUMMARY = String.join("\n",
-            "  select TUTORIAL_CODE        Set the current operating tutorial",
-            "  select NONE                 Unselect current operating tutorial",
-            "  list -tutorial              List all tutorial details",
-            "  list -student               List students in the current operating tutorial",
+    public static final String COMMAND_REFERENCE = String.join("\n",
+            "GETTING STARTED",
+            "  select CS2103T-W12          Set the current working tutorial",
+            "  list -tutorial              List all tutorials",
+            "  list -student               List students in the selected tutorial",
+            "",
+            "MANAGING TUTORIALS",
             "  add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAP",
             "  add -student /name NAME /phone PHONE /email EMAIL /matric MATRIC [/tag TAG]...",
             "  edit INDEX [/name NAME] [/phone PHONE] [/email EMAIL] [/matric MATRIC] [/tag TAG]...",
             "  delete -tutorial INDEX      Delete tutorial at INDEX in the list",
             "  delete -student INDEX       Delete student at INDEX from the tutorial",
-            "  find KEYWORD                Search by name (case-insensitive, substring match)",
+            "",
+            "FINDING STUDENTS",
+            "  find KEYWORD                Search by name (case-insensitive, whole-word match)",
             "  find /phone KEYWORD         Search by phone number prefix",
             "  find /email KEYWORD         Search by email (case-insensitive)",
             "  find /matric KEYWORD        Search by matric number prefix",
@@ -61,7 +65,7 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
-        commandReference.setText(COMMAND_SUMMARY);
+        commandReference.setText(COMMAND_REFERENCE);
     }
 
     /**
