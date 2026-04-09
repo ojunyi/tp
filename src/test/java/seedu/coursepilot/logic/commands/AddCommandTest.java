@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.coursepilot.testutil.Assert.assertThrows;
 import static seedu.coursepilot.testutil.TypicalStudents.ALICE;
-import static seedu.coursepilot.testutil.TypicalStudents.BENSON;
 import static seedu.coursepilot.testutil.TypicalStudents.BOB;
 
 import java.nio.file.Path;
@@ -70,7 +69,8 @@ public class AddCommandTest {
         tutorial.addStudent(validStudent);
         modelStub.setCurrentOperatingTutorial(tutorial);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_STUDENT_MATRIC, () -> addCommand.execute(modelStub));
+        assertThrows(
+            CommandException.class, AddCommand.MESSAGE_DUPLICATE_STUDENT_MATRIC, () -> addCommand.execute(modelStub));
     }
 
     @Test
@@ -85,7 +85,8 @@ public class AddCommandTest {
         tutorial.addStudent(alice);
         modelStub.setCurrentOperatingTutorial(tutorial);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_STUDENT_MATRIC, () -> addCommand.execute(modelStub));
+        assertThrows(
+            CommandException.class, AddCommand.MESSAGE_DUPLICATE_STUDENT_MATRIC, () -> addCommand.execute(modelStub));
     }
 
     @Test
