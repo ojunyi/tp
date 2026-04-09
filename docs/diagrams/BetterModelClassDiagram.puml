@@ -5,12 +5,14 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 CoursePilot *-right-> "1" UniqueStudentList
+CoursePilot *-right-> "1" UniqueTutorialList
 CoursePilot *-right-> "1" UniqueTagList
 UniqueTagList -[hidden]down- UniqueStudentList
 UniqueTagList -[hidden]down- UniqueStudentList
 
 UniqueTagList -right-> "*" Tag
 UniqueStudentList -right-> Student
+UniqueTutorialList -right-> Tutorial
 
 Student -up-> "*" Tag
 
@@ -18,4 +20,10 @@ Student *--> Name
 Student *--> Phone
 Student *--> Email
 Student *--> Address
+
+Tutorial *--> TutorialCode
+Tutorial *--> TimeSlot
+Tutorial *--> Day
+Tutorial *--> Capacity
+Tutorial *--> Student
 @enduml
