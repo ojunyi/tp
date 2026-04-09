@@ -6,22 +6,22 @@ skinparam classBackgroundColor STORAGE_COLOR
 
 package Storage as StoragePackage {
 
-package "UserPrefs Storage" #F4F6F6{
-Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
-Class JsonUserPrefsStorage
-}
+    package "UserPrefs Storage" #F4F6F6 {
+        Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
+        Class JsonUserPrefsStorage
+    }
 
-Class "<<interface>>\nStorage" as Storage
-Class StorageManager
+    Class "<<interface>>\nStorage" as Storage
+    Class StorageManager
 
-package "CoursePilot Storage" #F4F6F6{
-Class "<<interface>>\nCoursePilotStorage" as CoursePilotStorage
-Class JsonCoursePilotStorage
-Class JsonSerializableCoursePilot
-Class JsonAdaptedStudent
-Class JsonAdaptedTag
-}
-
+    package "CoursePilot Storage" #F4F6F6 {
+        Class "<<interface>>\nCoursePilotStorage" as CoursePilotStorage
+        Class JsonCoursePilotStorage
+        Class JsonSerializableCoursePilot
+        Class JsonAdaptedStudent
+        Class JsonAdaptedTag
+        Class JsonAdaptedTutorial
+    }
 }
 
 Class HiddenOutside #FFFFFF
@@ -37,7 +37,10 @@ Storage -right-|> CoursePilotStorage
 JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonCoursePilotStorage .up.|> CoursePilotStorage
 JsonCoursePilotStorage ..> JsonSerializableCoursePilot
+
 JsonSerializableCoursePilot --> "*" JsonAdaptedStudent
+JsonSerializableCoursePilot --> "*" JsonAdaptedTutorial
+JsonAdaptedTutorial --> "*" JsonAdaptedStudent
 JsonAdaptedStudent --> "*" JsonAdaptedTag
 
 @enduml

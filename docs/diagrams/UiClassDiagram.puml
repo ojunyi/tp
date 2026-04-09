@@ -59,7 +59,9 @@ CommandBox ..> CommandAutoCompleter
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
-StudentListPanel -[hidden]left- HelpWindow
+StudentListPanel -[hidden]left- TutorialCodeListPanel
+TutorialCodeListPanel -[hidden]left- TutorialDetailsPanel
+TutorialDetailsPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter

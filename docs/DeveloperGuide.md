@@ -73,7 +73,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g. `CommandBox`, `ResultDisplay`, `StudentListPanel`, `TutorialCodeListPanel`, `TutorialDetailsPanel`, `StatusBarFooter` etc.. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-W13-4/tp/tree/master/src/main/java/seedu/coursepilot/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-W13-4/tp/tree/master/src/main/resources/view/MainWindow.fxml).
 
@@ -83,6 +83,8 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Student` object residing in the `Model`.
+* displays tutorial information across two panels, `TutorialCodeListPanel` shows the list of tutorial codes, and `TutorialDetailsPanel` shows the corresponding day, time slot, and capacity details.
+* displays each student's enrolled tutorials via `StudentCard`, which cross references the tutorial list to show tutorial tags on each student entry.
 
 ### Logic component
 
@@ -126,6 +128,7 @@ The `Model` component,
 * stores CoursePilot data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object).
 * stores tutorial data i.e., all `Tutorial` objects (which are contained in a `UniqueTutorialList` object).
 * stores the currently 'selected' `Student` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the currently selected `Tutorial` as the **current operating tutorial**, exposed as a JavaFX `ObjectProperty<Tutorial>` so the UI can reactively update when the selection changes.
 * stores the currently filtered tutorial list as an unmodifiable `ObservableList<Tutorial>` for UI binding and tutorial operations.
 * stores a `UserPrefs` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -189,6 +192,7 @@ The suggestion states are:
 
 Users interact with suggestions via:
 - **Tab** — applies the currently highlighted suggestion
+- **Enter** — applies the currently highlighted suggestion
 - **Click** — applies the clicked suggestion
 - **Escape** — dismisses the suggestion menu
 
@@ -569,7 +573,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Tutor provides no `Prefix` flag.
     * 2a1. CoursePilot defaults to filtering students by name.
-    
+
       Use case resumes from step 3.
 
 * 2b. Tutor provides an invalid prefix.

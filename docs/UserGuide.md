@@ -27,9 +27,9 @@ For those who can type fast, **CoursePilot** transforms student management into 
    java -jar coursepilot.jar
    ```
    > **Note:** Double-clicking the `.jar` file may not work on some systems. If nothing happens when you double-click, use the command above in a terminal instead.
- 
+
    A GUI similar to the one below should appear within a few seconds. The app will contain some sample tutorials and students to help you get started.
- 
+
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -50,7 +50,7 @@ For those who can type fast, **CoursePilot** transforms student management into 
 1. Refer to the [Features](#features) below for details of each command.
 
 **Tip:** If you are new, start by using `list -tutorial` followed by `select` before attempting student-related commands.
-This ensures commands like `add -student` and `list -student` work as expected.  
+This ensures commands like `add -student` and `list -student` work as expected.
 Following this workflow can help avoid common errors.
 
 ## Features

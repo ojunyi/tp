@@ -64,6 +64,11 @@ Tutorial *--> TimeSlot
 Tutorial *--> Capacity
 Tutorial --> "*" Student
 
+Tag -[hidden]right-> TimeSlot
+Tag -[hidden]right-> TutorialCode
+Tag -[hidden]right-> Day
+Tag -[hidden]right-> Capacity
+
 ModelManager --> "~* filtered" Tutorial
 ModelManager --> "~* filtered" Student
 @enduml

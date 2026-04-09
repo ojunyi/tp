@@ -23,23 +23,20 @@ activate CoursePilotParser
 create DeleteCommandParser
 CoursePilotParser -> DeleteCommandParser
 activate DeleteCommandParser
-
 DeleteCommandParser --> CoursePilotParser
 deactivate DeleteCommandParser
 
-CoursePilotParser -> DeleteCommandParser : parse("1")
+CoursePilotParser -> DeleteCommandParser : parse("-student 1")
 activate DeleteCommandParser
 
 create DeleteCommand
 DeleteCommandParser -> DeleteCommand
 activate DeleteCommand
-
-DeleteCommand --> DeleteCommandParser :
+DeleteCommand --> DeleteCommandParser
 deactivate DeleteCommand
 
 DeleteCommandParser --> CoursePilotParser : d
 deactivate DeleteCommandParser
-'Hidden arrow to position the destroy marker below the end of the activation bar.
 DeleteCommandParser -[hidden]-> CoursePilotParser
 destroy DeleteCommandParser
 
@@ -49,22 +46,27 @@ deactivate CoursePilotParser
 LogicManager -> DeleteCommand : execute(m)
 activate DeleteCommand
 
-DeleteCommand -> Model : deleteStudent(1)
+DeleteCommand -> Model : removeStudentFromCurrentTutorial(1)
 activate Model
-
 Model --> DeleteCommand
 deactivate Model
+
+alt student not in other tutorials
+    DeleteCommand -> Model : deleteStudent(studentToDelete)
+    activate Model
+    Model --> DeleteCommand
+    deactivate Model
+end
 
 create CommandResult
 DeleteCommand -> CommandResult
 activate CommandResult
-
 CommandResult --> DeleteCommand
 deactivate CommandResult
 
 DeleteCommand --> LogicManager : r
 deactivate DeleteCommand
 
-[<--LogicManager
+[<-- LogicManager
 deactivate LogicManager
 @enduml

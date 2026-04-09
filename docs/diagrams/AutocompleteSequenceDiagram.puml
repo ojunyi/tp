@@ -14,32 +14,48 @@ box Logic LOGIC_COLOR_T1
 participant ":CommandAutoCompleter" as AutoCompleter LOGIC_COLOR
 end box
 
-User -> CommandBox : types text
-activate CommandBox
+User -> CommandBox : types "add "
+activate CommandBox UI_COLOR
 
-CommandBox -> AutoCompleter : getSuggestions(text)
-activate AutoCompleter
-
-ref over AutoCompleter
-  Compute Suggestions
-  For Command
-  (sub-activity diagram)
-end ref
-
-AutoCompleter --> CommandBox : suggestions
+CommandBox -> AutoCompleter : getSuggestions("add ")
+activate AutoCompleter LOGIC_COLOR
+AutoCompleter --> CommandBox : ["-student", "-tutorial"]
 deactivate AutoCompleter
 
 CommandBox -> ListView : setItems(suggestions)
+activate ListView UI_COLOR
+ListView --> CommandBox
+deactivate ListView
+
 CommandBox -> Popup : show(window, x, y)
+activate Popup UI_COLOR
+Popup --> User : display dropdown
+deactivate Popup
 
 deactivate CommandBox
 
 User -> CommandBox : presses Tab
-activate CommandBox
+activate CommandBox UI_COLOR
 
-CommandBox -> CommandBox : applySuggestion(suggestion)
-activate CommandBox
+CommandBox -> CommandBox : applySuggestion("-student")
+activate CommandBox UI_COLOR
+CommandBox --> CommandBox
 deactivate CommandBox
+
+CommandBox -> AutoCompleter : getSuggestions("add -student ")
+activate AutoCompleter LOGIC_COLOR
+AutoCompleter --> CommandBox : ["/name", "/phone", "/email", "/matric", "/tag"]
+deactivate AutoCompleter
+
+CommandBox -> ListView : setItems(suggestions)
+activate ListView UI_COLOR
+ListView --> CommandBox
+deactivate ListView
+
+CommandBox -> Popup : show(window, x, y)
+activate Popup UI_COLOR
+Popup --> User : display dropdown
+deactivate Popup
 
 deactivate CommandBox
 

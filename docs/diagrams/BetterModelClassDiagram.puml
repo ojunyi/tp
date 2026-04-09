@@ -19,7 +19,7 @@ Student -up-> "*" Tag
 Student *--> Name
 Student *--> Phone
 Student *--> Email
-Student *--> Address
+Student *--> MatricNumber
 
 Tutorial *--> TutorialCode
 Tutorial *--> TimeSlot

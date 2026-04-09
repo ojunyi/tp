@@ -4,19 +4,27 @@
 start
 :User types text in CommandBox;
 
-if () then ([text empty])
-    :List all command words;
+if () then ([text is empty])
+    :Hide suggestions;
+    stop
 else ([else])
     if () then ([no space in text])
-        :Filter command words\nby typed prefix;
+        :Filter COMMAND_WORDS\nby prefix;
     else ([else])
-        if () then ([first token is\na valid command word])
-            :<<sub-activity>>\nCompute suggestions\nfor command;
+        if () then ([valid command word])
+            :Get suggestions for command;
+            note right: Fork: See AutocompleteCommandActivityDiagram
         else ([else])
+            :Returns empty list;
         endif
     endif
 endif
 
+if () then ([suggestions list is empty])
+    :Hide suggestion;
+else ([else])
+    :Set items in suggestionListView;
+    :Display suggestions in Popup;
+endif
 stop
-
 @enduml
