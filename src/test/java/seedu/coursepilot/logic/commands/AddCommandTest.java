@@ -99,6 +99,21 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_tutorialAtCapacity_throwsCommandExceptionAndStudentNotAddedToGlobalList() {
+        ModelStubAcceptingStudentAdded modelStub = new ModelStubAcceptingStudentAdded();
+        Student existingStudent = new StudentBuilder(ALICE).build();
+        Student studentToAdd = new StudentBuilder(BOB).build();
+        Tutorial tutorial = new Tutorial(new TutorialCode("T01"), new Day("Mon"),
+                new TimeSlot("13:00-14:00"), new Capacity(1));
+        tutorial.addStudent(existingStudent);
+        modelStub.setCurrentOperatingTutorial(tutorial);
+
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_TUTORIAL_FULL, () -> new AddCommand(studentToAdd).execute(modelStub));
+        assertTrue(modelStub.studentsAdded.isEmpty());
+    }
+
+    @Test
     public void equals() {
         Student alice = new StudentBuilder().withName("Alice").build();
         Student bob = new StudentBuilder().withName("Bob").build();

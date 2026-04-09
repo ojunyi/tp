@@ -1,5 +1,7 @@
 package seedu.coursepilot.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.coursepilot.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.coursepilot.testutil.TypicalStudents.getTypicalCoursePilot;
@@ -63,6 +65,36 @@ public class AddCommandIntegrationTest {
 
         assertCommandFailure(new AddCommand(duplicateStudent), model,
                 AddCommand.MESSAGE_DUPLICATE_STUDENT);
+    }
+
+    @Test
+    public void execute_tutorialAtCapacity_throwsCommandExceptionAndStateUnchanged() {
+        Tutorial fullTutorial = new Tutorial(new TutorialCode("CS2103T-FULL"), new Day("Thu"),
+                new TimeSlot("14:00-15:00"), new Capacity(1));
+        model.addTutorial(fullTutorial);
+        model.setCurrentOperatingTutorial(fullTutorial);
+
+        Student existingStudent = new StudentBuilder().withName("Existing Student")
+                .withPhone("90000001")
+                .withEmail("existing@example.com")
+                .withMatriculationNumber("A123450")
+                .build();
+        model.addStudent(existingStudent);
+        fullTutorial.addStudent(existingStudent);
+
+        Student rejectedStudent = new StudentBuilder().withName("Rejected Student")
+                .withPhone("90000002")
+                .withEmail("rejected@example.com")
+                .withMatriculationNumber("A123451")
+                .build();
+
+        int globalStudentCountBefore = model.getCoursePilot().getStudentList().size();
+
+        assertCommandFailure(new AddCommand(rejectedStudent), model,
+                AddCommand.MESSAGE_TUTORIAL_FULL);
+        assertEquals(globalStudentCountBefore, model.getCoursePilot().getStudentList().size());
+        assertFalse(model.hasStudent(rejectedStudent));
+        assertFalse(fullTutorial.hasStudent(rejectedStudent));
     }
 
 }

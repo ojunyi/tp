@@ -18,38 +18,27 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-w13-4.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
 
-    public static final String COMMAND_REFERENCE = String.join("\n",
-            "GETTING STARTED",
-            "  select CS2103T-W12          Set the current working tutorial",
-            "  list -tutorial              List all tutorials (clears selection)",
-            "  list -student               List students in the selected tutorial",
-            "",
-            "MANAGING TUTORIALS",
+    public static final String COMMAND_SUMMARY = String.join("\n",
+            "  select TUTORIAL_CODE        Set the current operating tutorial",
+            "  select NONE                 Unselect current operating tutorial",
+            "  list -tutorial              List all tutorial details",
+            "  list -student               List students in the current operating tutorial",
             "  add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAP",
-            "    e.g. add -tutorial /code CS2103T-W12 /day Wed /timeslot 10am-11am /capacity 10",
-            "  delete -tutorial INDEX      Delete tutorial at INDEX in the list",
-            "",
-            "MANAGING STUDENTS (requires a tutorial to be selected first)",
             "  add -student /name NAME /phone PHONE /email EMAIL /matric MATRIC [/tag TAG]...",
-            "    e.g. add -student /name John Doe /phone 98765432 /email johnd@example.com /matric A000000",
             "  edit INDEX [/name NAME] [/phone PHONE] [/email EMAIL] [/matric MATRIC] [/tag TAG]...",
-            "    e.g. edit 1 /phone 91234567 /email johndoe@example.com",
+            "  delete -tutorial INDEX      Delete tutorial at INDEX in the list",
             "  delete -student INDEX       Delete student at INDEX from the tutorial",
-            "",
-            "FINDING STUDENTS (requires a tutorial to be selected first)",
             "  find KEYWORD                Search by name (case-insensitive, substring match)",
             "  find /phone KEYWORD         Search by phone number prefix",
             "  find /email KEYWORD         Search by email (case-insensitive)",
             "  find /matric KEYWORD        Search by matric number prefix",
-            "",
-            "OTHER COMMANDS",
             "  clear                       Delete all students and tutorials",
             "  help                        Show this help window",
             "  exit                        Exit the application",
             "",
             "TIPS",
             "  - Parameters can be in any order",
-            "  - Use Tab to accept autocomplete suggestions, Esc to dismiss"
+            "  - Use TAB or ENTER to accept autocomplete suggestions, ESC to dismiss"
     );
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
@@ -72,7 +61,7 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
-        commandReference.setText(COMMAND_REFERENCE);
+        commandReference.setText(COMMAND_SUMMARY);
     }
 
     /**

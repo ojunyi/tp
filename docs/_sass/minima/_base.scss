@@ -272,6 +272,9 @@ table {
 }
 
 @media print {
+  @page {
+    margin: 0.6in;
+  }
   /**
   * Prevents page break from cutting through content when printing
   */
