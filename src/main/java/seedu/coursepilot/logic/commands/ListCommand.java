@@ -1,6 +1,8 @@
 package seedu.coursepilot.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.coursepilot.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
+import static seedu.coursepilot.model.Model.PREDICATE_SHOW_ALL_TUTORIALS;
 
 import seedu.coursepilot.model.Model;
 
@@ -56,11 +58,12 @@ public class ListCommand extends Command {
         requireNonNull(model);
 
         if (listTarget == ListTarget.TUTORIAL) {
+            model.updateFilteredTutorialList(PREDICATE_SHOW_ALL_TUTORIALS);
             return new CommandResult(MESSAGE_SUCCESS_TUTORIAL);
         }
 
         if (model.getCurrentOperatingTutorial().isEmpty()) {
-            model.updateFilteredStudentList(student -> true);
+            model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_STUDENTS);
         }
 

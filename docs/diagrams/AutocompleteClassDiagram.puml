@@ -11,6 +11,7 @@ package UI <<Rectangle>> UI_COLOR_T1 {
         -updateSuggestions(): void
         -applySuggestion(): void
     }
+
 }
 
 package Logic <<Rectangle>> LOGIC_COLOR_T1 {

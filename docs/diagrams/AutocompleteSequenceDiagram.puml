@@ -55,6 +55,6 @@ Popup --> User : display dropdown
 deactivate Popup
 
 deactivate CommandBox
-deactivate CommandBox
 
+deactivate CommandBox
 @enduml

@@ -115,13 +115,25 @@ public class DeleteCommandTest {
 
         // different student -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+
+        // same index, different type -> returns false
+        DeleteCommand deleteFirstTutorial = new DeleteCommand(INDEX_FIRST_STUDENT, "tutorial");
+        assertFalse(deleteFirstCommand.equals(deleteFirstTutorial));
+    }
+
+    @Test
+    public void hashCode_sameValues_sameHash() {
+        DeleteCommand a = new DeleteCommand(INDEX_FIRST_STUDENT, "student");
+        DeleteCommand b = new DeleteCommand(INDEX_FIRST_STUDENT, "student");
+        assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
     public void toStringMethod() {
         Index targetIndex = Index.fromOneBased(1);
         DeleteCommand deleteCommand = new DeleteCommand(targetIndex, "student");
-        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+        String expected = DeleteCommand.class.getCanonicalName()
+                + "{targetIndex=" + targetIndex + ", type=student}";
         assertEquals(expected, deleteCommand.toString());
     }
 }

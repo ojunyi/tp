@@ -5,31 +5,31 @@ title Get suggestions for command
 
 start
 
-if () then ([add])
-    if () then ([flag typed])
-        if () then ([typing a "/" token])
+if () then ([add command])
+    if () then ([type flags selected])
+        if () then ([type a "/" prefix token])
             :Suggest matching unused\nprefixes for the flag type;
         else ([else])
-            :No suggestions;
+            :Returns empty list;
         endif
     else ([else])
         :Suggest type flags\n(-student / -tutorial);
     endif
 else ([else])
-    if () then ([delete / list])
+    if () then ([delete or list command])
         :Suggest type flags;
     else ([else])
-        if () then ([find])
+        if () then ([find command])
             :Suggest find flags;
         else ([else])
-            if () then ([edit])
-                if () then ([typing a "/" token])
+            if () then ([edit command])
+                if () then ([type a "/" prefix token])
                     :Suggest matching unused\nedit prefixes;
                 else ([else])
-                    :No suggestions;
+                    :Returns empty list;
                 endif
             else ([else])
-                :No suggestions;
+                :Returns empty list;
             endif
         endif
     endif

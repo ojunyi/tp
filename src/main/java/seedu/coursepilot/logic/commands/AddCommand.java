@@ -11,6 +11,9 @@ import static seedu.coursepilot.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.coursepilot.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.coursepilot.logic.parser.CliSyntax.PREFIX_TUTORIALCODE;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import seedu.coursepilot.commons.util.ToStringBuilder;
 import seedu.coursepilot.logic.Messages;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
@@ -111,12 +114,19 @@ public class AddCommand extends Command {
             Tutorial currentOperatingTutorial = model.getCurrentOperatingTutorial()
                     .orElseThrow(() -> new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL));
 
-            if (model.getCoursePilot().getStudentList().stream()
-                    .anyMatch(existingStudent -> hasDuplicateContactDetails(existingStudent, toAdd))) {
+            Optional<Student> existingStudent = model.getCoursePilot().getStudentList().stream()
+                    .filter(storedStudent -> storedStudent.isSameStudent(toAdd))
+                    .findFirst();
+            Student studentToAddToTutorial = existingStudent.orElse(toAdd);
+
+            if (existingStudent.isEmpty() && model.getCoursePilot().getStudentList().stream()
+                    .anyMatch(storedStudent -> !storedStudent.isSameStudent(toAdd)
+                        && (storedStudent.getPhone().equals(toAdd.getPhone())
+                            || storedStudent.getEmail().equals(toAdd.getEmail())))) {
                 throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
             }
 
-            if (currentOperatingTutorial.hasStudent(toAdd)) {
+            if (currentOperatingTutorial.hasStudent(studentToAddToTutorial)) {
                 throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
             }
 
@@ -124,13 +134,14 @@ public class AddCommand extends Command {
                 throw new CommandException(MESSAGE_TUTORIAL_FULL);
             }
 
-            if (!model.hasStudent(toAdd)) {
+            if (existingStudent.isEmpty()) {
                 model.addStudent(toAdd);
             }
 
-            currentOperatingTutorial.addStudent(toAdd);
+            currentOperatingTutorial.addStudent(studentToAddToTutorial);
             model.updateFilteredStudentList(currentOperatingTutorial::hasStudent);
-            return new CommandResult(String.format(MESSAGE_SUCCESS_STUDENT, Messages.format(toAdd)));
+            return new CommandResult(
+                    String.format(MESSAGE_SUCCESS_STUDENT, Messages.format(studentToAddToTutorial)));
         }
         if (addTarget == AddTarget.TUTORIAL) {
             if (model.hasTutorial(tutorialToAdd)) {
@@ -140,12 +151,6 @@ public class AddCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS_TUTORIAL, Messages.format(tutorialToAdd)));
         }
         throw new CommandException("Unexpected error, add command was not done on student or tutorial");
-    }
-
-    private boolean hasDuplicateContactDetails(Student existingStudent, Student toAdd) {
-        return !existingStudent.isSameStudent(toAdd)
-                && (existingStudent.hasSamePhone(toAdd)
-                        || existingStudent.hasSameEmail(toAdd));
     }
 
     @Override
@@ -160,13 +165,18 @@ public class AddCommand extends Command {
         }
 
         AddCommand otherAddCommand = (AddCommand) other;
-        if (this.addTarget == AddTarget.STUDENT) {
-            return toAdd.equals(otherAddCommand.toAdd);
-        } else if (this.addTarget == AddTarget.TUTORIAL) {
-            return tutorialToAdd.equals(otherAddCommand.tutorialToAdd);
-        } else {
+        if (this.addTarget != otherAddCommand.addTarget) {
             return false;
         }
+        if (this.addTarget == AddTarget.STUDENT) {
+            return Objects.equals(toAdd, otherAddCommand.toAdd);
+        }
+        return Objects.equals(tutorialToAdd, otherAddCommand.tutorialToAdd);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(addTarget, toAdd, tutorialToAdd);
     }
 
     @Override

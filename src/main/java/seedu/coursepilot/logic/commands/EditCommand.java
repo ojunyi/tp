@@ -110,8 +110,8 @@ public class EditCommand extends Command {
                 model.getCoursePilot().getStudentList(), studentToEdit, editedStudent)) {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
         }
-        String newMatric = editedStudent.getMatriculationNumber().toString();
-        model.getFilteredTutorialList().forEach(t -> t.editStudent(newMatric, editedStudent));
+        String oldMatric = studentToEdit.getMatriculationNumber().toString();
+        model.getCoursePilot().getTutorialList().forEach(t -> t.editStudent(oldMatric, editedStudent));
         model.setStudent(studentToEdit, editedStudent);
         if (model.getCurrentOperatingTutorial().isEmpty()) {
             model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);

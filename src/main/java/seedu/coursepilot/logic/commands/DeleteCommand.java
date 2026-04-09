@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import seedu.coursepilot.commons.core.index.Index;
@@ -129,13 +130,20 @@ public class DeleteCommand extends Command {
         }
 
         DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return targetIndex.equals(otherDeleteCommand.targetIndex);
+        return targetIndex.equals(otherDeleteCommand.targetIndex)
+                && Objects.equals(type, otherDeleteCommand.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(targetIndex, type);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("targetIndex", targetIndex)
+                .add("type", type)
                 .toString();
     }
 }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.coursepilot.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,10 +69,12 @@ public class Tutorial {
     }
 
     /**
-     * Returns the list of students in this tutorial.
+     * Returns an unmodifiable view of the students in this tutorial.
+     * Mutations must go through {@link #addStudent}, {@link #removeStudent}, or {@link #editStudent}
+     * so that capacity and identity invariants are preserved.
      */
     public List<Student> getStudents() {
-        return students;
+        return Collections.unmodifiableList(students);
     }
 
     /**
