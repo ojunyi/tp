@@ -18,9 +18,10 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-w13-4.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
 
-    public static final String COMMAND_REFERENCE = String.join("\n",
+    public static final String COMMAND_SUMMARY = String.join("\n",
             "GETTING STARTED",
-            "  select CS2103T-W12          Set the current working tutorial",
+            "  select TUTORIAL_CODE        Set the current working tutorial",
+            "  select NONE                 Unselect current operating tutorial",
             "  list -tutorial              List all tutorials",
             "  list -student               List students in the selected tutorial",
             "",
@@ -65,7 +66,7 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
-        commandReference.setText(COMMAND_REFERENCE);
+        commandReference.setText(COMMAND_SUMMARY);
     }
 
     /**
