@@ -16,6 +16,7 @@ import seedu.coursepilot.model.tutorial.Tutorial;
  */
 public class StudentListPanel extends UiPart<Region> {
     private static final String FXML = "StudentListPanel.fxml";
+    private static final int DISPLAY_INDEX_OFFSET = 1;
     private final Logger logger = LogsCenter.getLogger(StudentListPanel.class);
 
     @FXML
@@ -46,7 +47,8 @@ public class StudentListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new StudentCard(student, getIndex() + 1, tutorialList).getRoot());
+                StudentCard card = new StudentCard(student, getIndex() + DISPLAY_INDEX_OFFSET, tutorialList);
+                setGraphic(card.getRoot());
             }
         }
     }

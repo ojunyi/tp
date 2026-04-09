@@ -86,13 +86,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.TAB) {
-            if (suggestionPopup.isShowing()) {
-                String selected = suggestionListView.getSelectionModel().getSelectedItem();
-                if (selected != null) {
-                    applySuggestion(selected);
-                }
-            }
-            event.consume();
+            handleTabKey(event);
             return;
         }
 
@@ -220,6 +214,16 @@ public class CommandBox extends UiPart<Region> {
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
         }
+    }
+
+    private void handleTabKey(KeyEvent event) {
+        if (suggestionPopup.isShowing()) {
+            String selected = suggestionListView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                applySuggestion(selected);
+            }
+        }
+        event.consume();
     }
 
     /**

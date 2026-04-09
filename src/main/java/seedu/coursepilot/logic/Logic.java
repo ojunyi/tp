@@ -39,10 +39,14 @@ public interface Logic {
     /** Returns an unmodifiable view of the tutorial list. */
     ObservableList<Tutorial> getFilteredTutorialList();
 
-    /** Returns the current operating tutorial, if any. */
+    /**
+     * Returns the current operating tutorial, if any.
+     */
     Optional<Tutorial> getCurrentOperatingTutorial();
 
-    /** Returns the current operating tutorial, for JavaFX UI */
+    /**
+     * Returns the current operating tutorial, for JavaFX UI.
+     */
     ObjectProperty<Tutorial> getCurrentOperatingTutorialProperty();
 
     /**

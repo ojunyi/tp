@@ -112,9 +112,7 @@ public class AddCommand extends Command {
                     .orElseThrow(() -> new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL));
 
             if (model.getCoursePilot().getStudentList().stream()
-                    .anyMatch(existingStudent -> !existingStudent.isSameStudent(toAdd)
-                            && (existingStudent.getPhone().equals(toAdd.getPhone())
-                                    || existingStudent.getEmail().equals(toAdd.getEmail())))) {
+                    .anyMatch(existingStudent -> hasDuplicateContactDetails(existingStudent, toAdd))) {
                 throw new CommandException(MESSAGE_DUPLICATE_CONTACT_DETAIL);
             }
 
@@ -142,6 +140,12 @@ public class AddCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS_TUTORIAL, Messages.format(tutorialToAdd)));
         }
         throw new CommandException("Unexpected error, add command was not done on student or tutorial");
+    }
+
+    private boolean hasDuplicateContactDetails(Student existingStudent, Student toAdd) {
+        return !existingStudent.isSameStudent(toAdd)
+                && (existingStudent.hasSamePhone(toAdd)
+                        || existingStudent.hasSameEmail(toAdd));
     }
 
     @Override

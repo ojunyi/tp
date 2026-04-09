@@ -41,6 +41,7 @@ public class NoOpListSelectionModel<T> extends MultipleSelectionModel<T> {
     /** Does nothing. Selection is intentionally disabled. */
     @Override
     public void selectLast() {}
+
     /** Does nothing. Selection is intentionally disabled. */
     @Override
     public void clearAndSelect(int index) {}

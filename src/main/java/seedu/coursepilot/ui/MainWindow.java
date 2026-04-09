@@ -32,6 +32,7 @@ import seedu.coursepilot.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final double EXIT_DELAY_SECONDS = 1;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -135,22 +136,6 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Sets the visibility of the student list panel.
-     */
-    private void setStudentListPanelVisible(boolean visible) {
-        this.studentListPanel.getRoot().setVisible(visible);
-        this.studentListPanel.getRoot().setManaged(visible);
-    }
-
-    /**
-     * Sets the visibility of the tutorial details panel.
-     */
-    private void setTutorialDetailsPanelVisible(boolean visible) {
-        this.tutorialDetailsPanel.getRoot().setVisible(visible);
-        this.tutorialDetailsPanel.getRoot().setManaged(visible);
-    }
-
-    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
@@ -160,11 +145,9 @@ public class MainWindow extends UiPart<Stage> {
         tutorialListPanelPlaceholder.getChildren().add(tutorialCodeListPanel.getRoot());
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList(), logic.getFilteredTutorialList());
-        setStudentListPanelVisible(true);
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
 
         tutorialDetailsPanel = new TutorialDetailsPanel(logic.getFilteredTutorialList());
-        setTutorialDetailsPanelVisible(true);
         tutorialDetailsPanelPlaceholder.getChildren().add(tutorialDetailsPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -228,7 +211,7 @@ public class MainWindow extends UiPart<Stage> {
         ScrollBar scrollBar2 = getVerticalScrollBar(table2);
 
         if (scrollBar1 == null || scrollBar2 == null) {
-            logger.warning("Could not find scroll bars to sync");
+            logger.warning("Could not find scroll bars to sync; table scrolling will not be synchronised");
             return;
         }
 
@@ -295,7 +278,7 @@ public class MainWindow extends UiPart<Stage> {
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        PauseTransition delay = new PauseTransition(Duration.seconds(EXIT_DELAY_SECONDS));
         delay.setOnFinished(event -> primaryStage.hide());
         delay.play();
     }

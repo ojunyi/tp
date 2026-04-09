@@ -463,6 +463,11 @@
     -fx-text-fill: white;
 }
 
+.tutorial-selected {
+    -fx-background-color: #3a7bd5;
+    -fx-font-weight: bold;
+}
+
 #tutorialDetailsTable .table-cell {
     -fx-font-size: 14px;
     -fx-padding: 5 6 5 6;

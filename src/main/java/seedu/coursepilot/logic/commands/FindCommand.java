@@ -93,11 +93,9 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert predicate != null;
 
         if (model.getCurrentOperatingTutorial().isEmpty()) {
             model.updateFilteredStudentList(predicate);
-            assert model.getFilteredStudentList() != null;
             return new CommandResult(
                 String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
                         model.getFilteredStudentList().size()));
@@ -105,7 +103,6 @@ public class FindCommand extends Command {
 
         model.updateFilteredStudentList(
             student -> predicate.test(student) && model.isStudentInCurrentTutorial(student));
-        assert model.getFilteredStudentList() != null;
         return new CommandResult(
                 String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW, model.getFilteredStudentList().size()));
     }
