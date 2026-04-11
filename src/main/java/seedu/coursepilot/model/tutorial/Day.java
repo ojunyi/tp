@@ -10,8 +10,7 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 public class Day {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Days should be the first three letters of valid day names, with the only first letter being capitalised"
-            + " (e.g. Mon, Tue, etc.) ";
+            "Days should be the first three letters of valid day names (e.g. Mon, mon, Tue, etc.)";
 
     /*
      * Day must not be empty and should be the first three letters of valid day names,
@@ -32,7 +31,7 @@ public class Day {
         requireNonNull(day);
         String trimmedDay = day.trim();
         checkArgument(isValidDay(trimmedDay), MESSAGE_CONSTRAINTS);
-        value = trimmedDay;
+        value = trimmedDay.substring(0, 1).toUpperCase() + trimmedDay.substring(1).toLowerCase();
     }
 
     /**
@@ -40,7 +39,7 @@ public class Day {
      */
     public static boolean isValidDay(String test) {
         for (String s : days) {
-            if (s.equals(test)) {
+            if (s.equalsIgnoreCase(test)) {
                 return true;
             }
         }
