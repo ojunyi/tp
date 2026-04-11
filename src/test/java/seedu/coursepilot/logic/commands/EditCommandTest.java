@@ -15,6 +15,7 @@ import static seedu.coursepilot.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 import static seedu.coursepilot.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
 import static seedu.coursepilot.testutil.TypicalStudents.getTypicalCoursePilot;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.coursepilot.commons.core.index.Index;
@@ -34,7 +35,28 @@ import seedu.coursepilot.testutil.StudentBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalCoursePilot(), new UserPrefs());
+    private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(getTypicalCoursePilot(), new UserPrefs());
+        selectFirstTutorial(model);
+    }
+
+    private static void selectFirstTutorial(Model m) {
+        Tutorial t = m.getFilteredTutorialList().get(0);
+        m.setCurrentOperatingTutorial(t);
+        m.updateFilteredStudentList(t::hasStudent);
+    }
+
+    /** Mirrors what {@link EditCommand#execute(Model)} mutates so expectedModel can match. */
+    private static void simulateEdit(Model m, Student original, Student edited) {
+        String oldMatric = original.getMatriculationNumber().toString();
+        m.getCoursePilot().getTutorialList().forEach(t -> t.editStudent(oldMatric, edited));
+        m.setStudent(original, edited);
+        Tutorial selected = m.getCurrentOperatingTutorial().get();
+        m.updateFilteredStudentList(selected::hasStudent);
+    }
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -46,7 +68,8 @@ public class EditCommandTest {
             EditCommand.MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent));
 
         Model expectedModel = new ModelManager(new CoursePilot(model.getCoursePilot()), new UserPrefs());
-        expectedModel.setStudent(model.getFilteredStudentList().get(0), editedStudent);
+        selectFirstTutorial(expectedModel);
+        simulateEdit(expectedModel, model.getFilteredStudentList().get(0), editedStudent);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -68,7 +91,8 @@ public class EditCommandTest {
             EditCommand.MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent));
 
         Model expectedModel = new ModelManager(new CoursePilot(model.getCoursePilot()), new UserPrefs());
-        expectedModel.setStudent(lastStudent, editedStudent);
+        selectFirstTutorial(expectedModel);
+        simulateEdit(expectedModel, lastStudent, editedStudent);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -82,6 +106,7 @@ public class EditCommandTest {
             EditCommand.MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent));
 
         Model expectedModel = new ModelManager(new CoursePilot(model.getCoursePilot()), new UserPrefs());
+        selectFirstTutorial(expectedModel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -99,7 +124,8 @@ public class EditCommandTest {
             EditCommand.MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent));
 
         Model expectedModel = new ModelManager(new CoursePilot(model.getCoursePilot()), new UserPrefs());
-        expectedModel.setStudent(model.getFilteredStudentList().get(0), editedStudent);
+        selectFirstTutorial(expectedModel);
+        simulateEdit(expectedModel, model.getFilteredStudentList().get(0), editedStudent);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -186,7 +212,8 @@ public class EditCommandTest {
             EditCommand.MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent));
 
         Model expectedModel = new ModelManager(new CoursePilot(model.getCoursePilot()), new UserPrefs());
-        expectedModel.setStudent(studentToEdit, editedStudent);
+        selectFirstTutorial(expectedModel);
+        simulateEdit(expectedModel, studentToEdit, editedStudent);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
 
@@ -195,6 +222,14 @@ public class EditCommandTest {
             .anyMatch(student -> student.getMatriculationNumber().toString().equals(oldMatric)));
         assertTrue(tutorial.getStudents().stream()
             .anyMatch(student -> student.getMatriculationNumber().toString().equals(newMatric)));
+    }
+
+    @Test
+    public void execute_noCurrentOperatingTutorial_throwsCommandException() {
+        Model bareModel = new ModelManager(getTypicalCoursePilot(), new UserPrefs());
+        EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_STUDENT, descriptor);
+        assertCommandFailure(editCommand, bareModel, EditCommand.MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
     }
 
     @Test

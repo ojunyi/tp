@@ -56,6 +56,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_CONTACT_DETAIL =
             "Another student with the same phone number or email"
             + " already exists in CoursePilot.";
+    public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
+            "No tutorial selected. Please select a tutorial to operate on first.";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;
@@ -86,6 +88,11 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getCurrentOperatingTutorial().isEmpty()) {
+            throw new CommandException(MESSAGE_NO_CURRENT_OPERATING_TUTORIAL);
+        }
+
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
