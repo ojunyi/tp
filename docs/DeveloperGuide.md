@@ -380,7 +380,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  Tutor requests for help.
-2.  CoursePilot provides help information to the Tutor.
+2.  CoursePilot provides help information to assist the Tutor.
 
     Use case ends.
 
@@ -464,6 +464,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 **Use case: UC05 - Edit a student**
+
+**Preconditions**: Tutor has selected a tutorial.
 
 **MSS**
 
