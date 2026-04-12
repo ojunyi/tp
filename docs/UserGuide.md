@@ -179,7 +179,7 @@ Format: `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY
 
 **Field Constraints:**
 * **Code**: Must contain only alphanumeric characters, hyphens, and underscores. Cannot be blank. Maximum 20 characters long.
-* **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-sensitive, first letter capitalised).
+* **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-insensitive).
 * **TimeSlot**: Must follow the format `XX:XX-XX:XX` where `X` is a digit (e.g., `13:00-14:00`). The start time must be before end time. Time is in 24-hour format.
 * **Capacity**: Must be a positive whole number starting from 1 to 1000.
 
