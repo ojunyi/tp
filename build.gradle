@@ -70,7 +70,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'coursepilot.jar'
+    archiveFileName = 'CoursePilot.jar'
 }
 
 defaultTasks 'clean', 'test'
