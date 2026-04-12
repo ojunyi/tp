@@ -18,28 +18,22 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
 
     public DeleteCommand parse(String args) throws ParseException {
-        try {
-            String trimmedArgs = args.trim();
-            if (trimmedArgs.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-            }
-            String[] splitArgs = trimmedArgs.split("\\s+", 2);
-            String firstArg = splitArgs[0];
-            String remainingArgs = splitArgs.length > 1 ? splitArgs[1].trim() : "";
-            if ("-student".equals(firstArg)) {
-                Index index = ParserUtil.parseIndex(remainingArgs);
-                // delete student to be done here (deletes from main list and all tutorials)
-                return new DeleteCommand(index, "student");
-            } else if ("-tutorial".equals(firstArg)) {
-                Index index = ParserUtil.parseIndex(remainingArgs);
-                return new DeleteCommand(index, "tutorial");
-            } else {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-            }
-        } catch (ParseException pe) {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+        String[] splitArgs = trimmedArgs.split("\\s+", 2);
+        String firstArg = splitArgs[0];
+        String remainingArgs = splitArgs.length > 1 ? splitArgs[1].trim() : "";
+        if ("-student".equals(firstArg)) {
+            Index index = ParserUtil.parseIndex(remainingArgs);
+            return new DeleteCommand(index, "student");
+        } else if ("-tutorial".equals(firstArg)) {
+            Index index = ParserUtil.parseIndex(remainingArgs);
+            return new DeleteCommand(index, "tutorial");
+        } else {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
 
