@@ -8,7 +8,6 @@ import java.util.Arrays;
 import seedu.coursepilot.logic.commands.FindCommand;
 import seedu.coursepilot.logic.parser.exceptions.ParseException;
 import seedu.coursepilot.model.student.EmailContainsKeywordsPredicate;
-import seedu.coursepilot.model.student.MatricNumber;
 import seedu.coursepilot.model.student.MatricNumberStartsWithKeywordsPredicate;
 import seedu.coursepilot.model.student.Name;
 import seedu.coursepilot.model.student.NameContainsKeywordsPredicate;
