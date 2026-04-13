@@ -49,8 +49,8 @@ For those who can type fast, **CoursePilot** transforms student management into 
 
 1. Refer to the [Features](#features) below for details of each command.
 
-**Tip:** If you are new, start by using `list -tutorial` followed by `select` before attempting student-related commands.
-This ensures commands like `add -student` and `list -student` work as expected.
+**Tip:** If you are new, start by using `select` before attempting student-related commands.
+This ensures commands like `add -student` and `delete -student` work as expected.
 Following this workflow can help avoid common errors.
 
 ## Features
@@ -165,7 +165,7 @@ Format: `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRIC
 Examples:
 * `add -student /name John Doe /phone 98765432 /email johnd@example.com /matric A000000`
 * `add -student /name Betsy Crowe /tag friend /email betsycrowe@example.com /matric A000001 /phone 1234567 /tag student`
-* `select CS2103T-W13` followed by `add -student /name David Li /phone 91031282 /email lidavid@example.com /matric A000003`
+* `add -student /name David Li /phone 91031282 /email lidavid@example.com /matric A000003`
 
 ![AddCommandStudent](images/AddCommandStudent.png)
 
@@ -197,12 +197,13 @@ Edits an existing student's details.
 
 Format: `edit INDEX [/name NAME] [/phone PHONE_NUMBER] [/email EMAIL] [/matric MATRICNUMBER] [/tag TAG]…​`
 
+* Requires a tutorial to be selected first.
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the **currently displayed student list**. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the student will be **replaced entirely** (not added to).
 * You can remove all the student's tags by typing `/tag` without specifying any tag after it.
-* The edit applies globally — it updates the student's details everywhere in the system.
+* The edit applies globally - it updates the student's details everywhere in the system.
 
 Examples:
 * `edit 1 /phone 91234567 /email johndoe@example.com` : Edits the phone number and email address of the 1st student.
@@ -217,12 +218,12 @@ Examples:
 
 Finds and lists students in the currently selected tutorial who match the given search criteria.
 
-Format: `find KEYWORD [MORE_KEYWORDS]…` or `find /phone KEYWORD` or `find /email KEYWORD` or `find /matric KEYWORD`
+Format: `find KEYWORD [MORE_KEYWORDS]…` or `find /phone KEYWORD [MORE_KEYWORDS]…` or `find /email KEYWORD [MORE_KEYWORDS]…` or `find /matric KEYWORD [MORE_KEYWORDS]…`
 
 * **Name search (default)**: `find KEYWORD [MORE_KEYWORDS]` — returns students whose name contains any of the keywords as whole words. Case-insensitive.
-* **Phone search**: `find /phone KEYWORD` — returns students whose phone number **starts with** any of the given keywords.
-* **Email search**: `find /email KEYWORD` — returns students whose email address **contains** any of the given keywords. Case-insensitive.
-* **Matric search**: `find /matric KEYWORD` — returns students whose matric number **starts with** any of the given keywords. Case-insensitive.
+* **Phone search**: `find /phone KEYWORD [MORE_KEYWORDS]…` — returns students whose phone number **starts with** any of the given keywords.
+* **Email search**: `find /email KEYWORD [MORE_KEYWORDS]…` — returns students whose email address **contains** any of the given keywords. Case-insensitive.
+* **Matric search**: `find /matric KEYWORD [MORE_KEYWORDS]…` — returns students whose matric number **starts with** any of the given keywords. Case-insensitive.
 * When multiple keywords are provided, students matching **at least one** keyword are returned.
 * If a tutorial has been selected, only students enrolled in the **current operating tutorial** are searched.
 * If no tutorial is selected, the search is performed across all students in the system.
