@@ -12,8 +12,8 @@ import java.time.LocalTime;
 public class TimeSlot {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Time slots should be of the format XX:XX-XX:XX where X is a integer and following 24-hour format."
-            + "\n Start time should also be before end time. No spaces in between."
+            "Time slots should be of the format HH:mm-HH:mm (24-hour clock) without spaces.\n"
+            + "Time must be between 00:00 and 23:59, and the start time must be before the end time.\n"
             + " E.g '10:00-11:00', '14:00-15:00', etc.";
 
     /*
