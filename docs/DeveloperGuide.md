@@ -349,6 +349,9 @@ Team size: 5
 8. **Allow `delete -tutorial` to accept a tutorial code in addition to an index.**
    Currently, `delete -tutorial` only accepts a positive integer index corresponding to the tutorial's position in the displayed tutorial list (e.g., `delete -tutorial 1`). This requires the tutor to first run `list -tutorial` to find the index of the tutorial they wish to delete, which is an extra step. We plan to extend `delete -tutorial` to also accept a tutorial code directly (e.g., `delete -tutorial CS2103T-W13`), so that tutors who know the tutorial code can delete it without needing to look up its index first. If the argument is a positive integer, CoursePilot will treat it as an index as before; otherwise, it will treat it as a tutorial code and search for a matching tutorial. If no matching tutorial is found, CoursePilot will display an error message indicating that no tutorial with the given code exists.
 
+9. **Add a multi-criteria search command (mfind) to filter students by multiple fields and tags.**
+   Currently, the find command is limited to searching by a single attribute at a time, which makes it difficult to locate specific subgroups of students. We plan to introduce a multi-criteria search command with the format `mfind [/name NAME] [/phone PHONE] [/eemail EMAIL] [/matric MATRIC] [/tag TAG [MORE_TAGS]...]` (e.g., `mfind /nname John /tag Year2`). The command will return students who satisfy all specified flags (AND-logic between fields), while supporting multiple keywords within the tag flag (OR-logic between tags). Like the `find` command, it will operate on the current tutorial if one is selected, or the global list if not. This provides tutors with a powerful tool for granular data retrieval, such as identifying specific scholarship students across different name groups or cohorts.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Appendix: Effort
