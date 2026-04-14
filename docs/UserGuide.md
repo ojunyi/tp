@@ -159,7 +159,7 @@ Format: `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRIC
 * **Name**: Must contain only alphabetic characters and spaces. Cannot be blank. Maximum 100 characters long.
 * **Phone**: Must contain only digits and be at least 3 digits long to a maximum of 15 digits long.
 * **Email**: Must follow standard email format (e.g., `student@u.nus.edu`). Maximum 100 characters long.
-* **Matric Number**: Must follow the format `Axxxxxx` where `x` is a digit (e.g., `A000000`, `A123456`). Must be exactly 7 characters: the letter `A` followed by 6 digits.
+* **Matric Number**: Can be any non-blank value. CoursePilot does not enforce a fixed format because the target audience includes tutors working with different matriculation number schemes.
 * **Tag**: Optional. Each tag must be a single alphanumeric word (no spaces or special characters). Maximum 30 characters long.
 
 Examples:
@@ -365,7 +365,7 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 ## Known limitations
 
 1. **Duplicate phone numbers is not supported** in CoursePilot as we do not support country code prefixes. This means that if two students from different countries share the same number but have different country codes, one of them cannot be added. The suggested work around is to add the country code at the front, but CoursePilot will not help you differentiate between country codes and phone number.
-2. **Matric number validation is intentionally flexible** as CoursePilot accepts matric numbers in the format of "A" followed by 6 digits (e.g. A123456) with no checksum validation. Since CoursePilot is designed for personal use, we trust tutors to be responsible for the accuracy of their own data and thus allow this flexibility.
+2. **Matric number format is not validated** beyond requiring a non-blank value. Since CoursePilot is intended for all tutors, we cannot assume a single matric number format applies across every teaching context.
 3. **Tags do not support numbers or spaces** as tag names must be a single word containing only letters. This keeps tags concise and scannable at a glance, and multi-word descriptions are better captured in other fields such as the student's name.
 4. **Searching by tag is not currently supported** and the `find` command only allows search by name, phone, email and matric number.
 5. **Email validation is intentionally lenient** and accepts unconventional formats such as `11@11`. Since CoursePilot is designed for personal use, we trust tutors to enter accurate information without needing strict formatting rules that may inadvertently reject valid institutional email formats.

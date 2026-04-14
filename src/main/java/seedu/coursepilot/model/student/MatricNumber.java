@@ -10,19 +10,20 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
 public class MatricNumber {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Matric Number should be in the form of Axxxxxx, where x is any digit";
+            "Matric number can take any value, and it should not be blank";
 
     /*
-     * The first character of the matric number must be 'A', followed by 6 digits.
+     * The first character of the matric number must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "A\\d{6}";
+    public static final String VALIDATION_REGEX = "[^\\s].*";
 
     public final String matricNumber;
 
     /**
      * Constructs a {@code MatricNumber}.
      *
-     * @param matricNumber A valid matriculation number.
+     * @param matricNumber A non-blank matriculation number.
      */
     public MatricNumber(String matricNumber) {
         requireNonNull(matricNumber);
@@ -55,12 +56,12 @@ public class MatricNumber {
         }
 
         MatricNumber otherMatric = (MatricNumber) other;
-        return matricNumber.equals(otherMatric.matricNumber);
+        return matricNumber.equalsIgnoreCase(otherMatric.matricNumber);
     }
 
     @Override
     public int hashCode() {
-        return matricNumber.hashCode();
+        return matricNumber.toLowerCase().hashCode();
     }
 
 }

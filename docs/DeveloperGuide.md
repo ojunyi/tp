@@ -628,7 +628,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Tutorial Slot**: A tutorial object defined by a code, timeslot, day, and capacity, created and managed by a tutor in CoursePilot
 * **Tutorial Code**: The identifying name of that tutorial e.g. CS2103T-W13
 * **Current Operating Tutorial**: The tutorial currently selected via the `select` command, which student-level commands operate on. If none is selected, the student list shown will be the global student list.
-* **Matric Number**: A unique student identifier following the format Axxxxxx.
+* **Matric Number**: A unique student identifier. CoursePilot does not enforce a fixed matric number format beyond requiring a non-blank value.
 * **Type**: A flag (`-student` or `-tutorial`) that specifies which entity type a command operates on
 * **Prefix**: A field identifier starting with `/` used to specify parameters in commands (e.g. /name, /email)
 * **Index**: A temporary 1-based position number shown in a displayed list, used to reference a specific student or tutorial in commands. If an index is invalid, it is out-of-bounds of the size of the list of the current operating tutorial if one is selected or the global student list otherwise.
