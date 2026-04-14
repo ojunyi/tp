@@ -10,7 +10,7 @@ For those who can type fast, **CoursePilot** transforms student management into 
 * Table of Contents
 {:toc}
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Quick start
 
@@ -53,6 +53,8 @@ For those who can type fast, **CoursePilot** transforms student management into 
 This ensures commands like `add -student` and `delete -student` work as expected.
 Following this workflow can help avoid common errors.
 
+<div style="page-break-after: always;"></div>
+
 ## Understanding the UI
 
 ![Ui](images/UiAnnotated.png)
@@ -65,6 +67,8 @@ CoursePilot's UI is divided into three linked panels at the top, followed by the
 * **Display Box**: Shows the resulting message of each command entered into the **Command Box**.
 * **Command Box**: This is where you enter commands.
 * **Current Operating Tutorial**: Shown at the bottom right corner, this indicates the currently selected tutorial.
+
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -99,7 +103,7 @@ Many commands require you to first **select a tutorial** using the `select` comm
 
 </div>
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ### Viewing help : `help`
 
@@ -110,7 +114,7 @@ Format: `help`
 * A pop-up window with a link to the User Guide will appear.
 ![HelpCommand](images/HelpCommand.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Selecting a tutorial : `select`
 
@@ -132,6 +136,8 @@ Examples:
 
 ![SelectCommand](images/SelectCommand.png)
 
+<div style="page-break-after: always;"></div>
+
 ### Listing tutorials or students : `list`
 
 Lists either the details of all available tutorials or all students in the currently selected tutorial.
@@ -152,7 +158,7 @@ Examples:
 
 ![ListCommand](images/ListCommand.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Adding a student or tutorial : `add`
 
@@ -202,7 +208,7 @@ Examples:
 
 ![AddCommandTutorial](images/AddCommandTutorial.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Editing a student : `edit`
 
@@ -225,7 +231,7 @@ Examples:
 
 ![EditCommand](images/EditCommand.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Locating students : `find`
 
@@ -250,7 +256,7 @@ Examples:
 
 ![FindCommand](images/FindCommand.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Deleting a student or tutorial : `delete`
 
@@ -287,7 +293,7 @@ Examples:
 
 ![DeleteCommandTutorial](images/DeleteCommandTutorial.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Clearing all entries : `clear`
 
@@ -303,7 +309,7 @@ This command permanently deletes all students and all tutorials. This action can
 
 ![ClearCommand](images/ClearCommand.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Exiting the program : `exit`
 
@@ -313,7 +319,7 @@ Format: `exit`
 
 ![ExitCommand](images/ExitCommand.png)
 
----
+<div style="page-break-after: always;"></div>
 
 ### Command Autocomplete
 
@@ -348,6 +354,8 @@ If your changes to the data file make its format invalid, CoursePilot will disca
 Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invalid data is introduced. Only edit the data file if you are confident in your ability to maintain valid JSON structure and data constraints.
 </div>
 
+<div style="page-break-after: always;"></div>
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer?<br>
@@ -376,6 +384,8 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
+<div style="page-break-after: always;"></div>
+
 ## Known limitations
 
 1. **Matric number validation is left intentionally flexible** to support university tutors and teaching assistants globally. CoursePilot accepts any format - whether numeric, alphanumeric, or containing symbols - as long as the field is not empty. As a tool designed for personal data management, we prioritize versatility, trusting users to maintain the accuracy of their student records across different institutional standards. To justify this position, research into student IDs worldwide identified various formats, such as `A0123456X` (Singapore), `987654321` (USA) and `2024-567-89` (Canada). 
@@ -388,6 +398,8 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 8. **Tutorial timeslots does not allow crossing over to the next day** as in our reserach into typical lesson timings worldwide, there does not exists any tutorial lesson that takes place in local date time over the period of two or more days. But there is a work around in case such a niche case occurs. You can create multiple tutorial slots, appending `-1` or `-2` and so on to indicate that the tutorials are linked. Then make sure the time of those tutorial slots link up with one another.
 9. **`list -tutorial` does not produce a visible change** in most cases, as CoursePilot currently does not support filtering the tutorial list. The tutorial panel always shows all tutorials. The command is best used to reset the student list back to the full global view after a `find` or `list -student` operation.
 10. **Searching by tag is not currently supported** and the `find` command only allows search by name, phone, email and matric number.
+
+<div style="page-break-after: always;"></div>
 
 ## Command summary
 
