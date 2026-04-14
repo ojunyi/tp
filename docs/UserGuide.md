@@ -180,7 +180,7 @@ Format: `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY
 **Field Constraints:**
 * **Code**: Must contain only alphanumeric characters, hyphens, and underscores. Cannot be blank. Maximum 20 characters long.
 * **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-insensitive).
-* **TimeSlot**: Must follow the format `XX:XX-XX:XX` where `X` is a digit (e.g., `13:00-14:00`). The start time must be before end time. Time is in 24-hour format.
+* **TimeSlot**: Must follow the format `HH:mm-HH:mm` where `H` is the hour number, and `m` is the minute number (e.g., `13:00-14:00`) ranging only from `00:00 to 23:59`. The start time must be before the end time, and both must **occur within the same calendar day**. Time is in 24-hour format.
 * **Capacity**: Must be a positive whole number starting from 1 to 1000.
 
 Examples:
@@ -365,15 +365,16 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 
 ## Known limitations
 
-1. **Duplicate phone numbers is not supported** in CoursePilot as we do not support country code prefixes. This means that if two students from different countries share the same number but have different country codes, one of them cannot be added. The suggested work around is to add the country code at the front, but CoursePilot will not help you differentiate between country codes and phone number.
-2. **Matric number format is not validated** beyond requiring a non-blank value. Since CoursePilot is intended for all tutors, we cannot assume a single matric number format applies across every teaching context. Furthermore, since CoursePilot is designed for each tutors personal usage, we trust tutors to be responsible for the accuracy of their own data and thus allow this flexibility.
-3. **Tags must not contain spaces** to ensure they remain concise and scannable. While alphanumeric characters (e.g., `AY2526`, `Year2` or `Y3`) are supported, spaces and special characters are not permitted.
-4. **Searching by tag is not currently supported** and the `find` command only allows search by name, phone, email and matric number.
-5. **Email validation is intentionally lenient** and accepts unconventional formats such as `11@11`. Since CoursePilot is designed for personal use, we trust tutors to enter accurate information without needing strict formatting rules that may inadvertently reject valid institutional email formats.
+1. **Matric number validation is left intentionally flexible** to support university tutors and teaching assistants globally. CoursePilot accepts any format - whether numeric, alphanumeric, or containing symbols - as long as the field is not empty. As a tool designed for personal data management, we prioritize versatility, trusting users to maintain the accuracy of their student records across different institutional standards. To justify this position, research into student IDs worldwide identified various formats, such as `A0123456X` (Singapore), `987654321` (USA) and `2024-567-89` (Canada). 
+2. **Duplicate phone numbers is not supported** in CoursePilot as we do not support country code prefixes. This means that if two students from different countries share the same number but have different country codes, one of them cannot be added. The suggested work around is to add the country code at the front, but CoursePilot will not help you differentiate between country codes and phone number which still may cause some confusion.
+3. **Email validation is intentionally lenient** and accepts unconventional formats such as `11@11`. Since CoursePilot is designed for personal use, we trust tutors to enter accurate information without needing strict formatting rules that may inadvertently reject valid institutional email formats.
+4. **Tags must not contain spaces** to ensure they remain concise and scannable. While alphanumeric characters (e.g., `AY2526`, `Year2` or `Y3`) are supported, spaces and special characters are not permitted.
+5. **Phone number and email address are required fields when adding a student** as CoursePilot is designed to serve as a contact book for tutors, making these fields central to its purpose. A student entry without contact details would defeat the core value of the application.
 6. **Tutorial days must be entered as a 3-letter abbreviation** (e.g.,`Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat` or `Sun`). The input is case-insensitive. We do not allow inputs such as `Monday` or `Tuesday`. This standardised format ensures consistency across all tutorial entries and keeps the display clean and uniform.
-7. **Tutorial timeslot must follow the HH:MM-HH:MM format** and must be entered in 24-hour time (e.g. `13:00-14:00`). This strict format ensures unambiguous parsing and consistent display across all tutorials.
-8. **`list -tutorial` does not do anything visually** as CoursePilot does not have any commands that filter the tutorial list, meaning it will always show all tutorials. It is best used to simply refresh the tutorial details.
-9. **Phone number and email address are required fields when adding a student** as CoursePilot is designed to serve as a contact book for tutors, making these fields central to its purpose. A student entry without contact details would defeat the core value of the application.
+7. **Tutorial timeslot** must follow the format `HH:mm-HH:mm` where `H` is the hour number, and `m` is the minute number (e.g., `13:00-14:00`) ranging only from `00:00 to 23:59`. The start time must be before the end time, and both must **occur within the same calendar day**. Time is in 24-hour format.
+8. **Tutorial timeslots does not allow crossing over to the next day** as in our reserach into typical lesson timings worldwide, there does not exists any tutorial lesson that takes place in local date time over the period of two or more days. But there is a work around in case such a niche case occurs. You can create multiple tutorial slots, appending `-1` or `-2` and so on to indicate that the tutorials are linked. Then make sure the time of those tutorial slots link up with one another.
+9. **`list -tutorial` does not do anything visually** as CoursePilot does not have any commands that filter the tutorial list, meaning it will always show all tutorials. It is best used to simply refresh the tutorial details.
+10. **Searching by tag is not currently supported** and the `find` command only allows search by name, phone, email and matric number.
 
 ## Command summary
 
