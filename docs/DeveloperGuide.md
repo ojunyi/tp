@@ -173,6 +173,9 @@ The class diagram below shows the key classes involved:
 
 `CommandBox` holds a reference to `CommandAutoCompleter` and a `Popup` with a `ListView` for displaying suggestions. Whenever the text in the command box changes, `CommandBox` calls `CommandAutoCompleter#getSuggestions()` and renders the results in the popup dropdown.
 
+<div markdown="span" class="alert alert-info">:information_source: Note: The access modifiers for the Class Diagram as shown instead as coloured boxes. This is a limiation of  PlantUML.
+</div>
+
 The following sequence diagram illustrates the interaction when a user types `add ` and then selects a suggestion:
 
 <img src="images/AutocompleteSequenceDiagram.png" width="700"/>
@@ -337,6 +340,15 @@ Team size: 5
    - **Duplicate email address**: "Another student with the email address [EMAIL] already exists in CoursePilot." (e.g., "Another student with the email address john@example.com already exists in CoursePilot.")
    - **Student already in tutorial and exists globally**: "This student is already enrolled in the current operating tutorial [TUTORIAL_CODE]." (e.g., "This student is already enrolled in the current operating tutorial CS2103T-W13.")
    These changes ensure that tutors can immediately identify and correct the specific issue without needing to manually inspect their student or tutorial data.
+
+6. **Add dynamic data-aware autocomplete suggestions for tutorial codes and student matric numbers.**
+   Currently, the autocomplete feature only suggests static command words, flags, and prefixes. It does not suggest actual data stored in CoursePilot. Tutors have reported difficulty typing long tutorial codes (e.g., `CS2103T-W13`) accurately from memory. We plan to extend `CommandAutoCompleter` to suggest existing tutorial codes when the user is typing the argument for `select` (e.g., typing `select CS2` would suggest `CS2103T-W13`, `CS2103T-W12`, etc.), and to suggest existing matric numbers when the user is typing the argument for `find /matric` (e.g., typing `find /matric A01` would suggest matching matric numbers from the current operating tutorial or global list). These suggestions will be sourced directly from the model at the time of typing and will update dynamically as the user types.
+
+7. **Allow `select` to accept an index instead of a tutorial code.**
+   Currently, `select` requires the tutor to type the full tutorial code (e.g., `select CS2103T-W13`), which can be error-prone for long codes. We plan to allow `select` to also accept a positive integer index corresponding to the tutorial's position in the displayed tutorial list (e.g., `select 1` would select the first tutorial shown). If the argument is a positive integer, CoursePilot will treat it as an index; otherwise, it will treat it as a tutorial code as before. This makes `select` faster to use, especially after running `list -tutorial` to view the tutorial list, and is consistent with how `delete -tutorial` accepts an index.
+
+8. **Allow `delete -tutorial` to accept a tutorial code in addition to an index.**
+   Currently, `delete -tutorial` only accepts a positive integer index corresponding to the tutorial's position in the displayed tutorial list (e.g., `delete -tutorial 1`). This requires the tutor to first run `list -tutorial` to find the index of the tutorial they wish to delete, which is an extra step. We plan to extend `delete -tutorial` to also accept a tutorial code directly (e.g., `delete -tutorial CS2103T-W13`), so that tutors who know the tutorial code can delete it without needing to look up its index first. If the argument is a positive integer, CoursePilot will treat it as an index as before; otherwise, it will treat it as a tutorial code and search for a matching tutorial. If no matching tutorial is found, CoursePilot will display an error message indicating that no tutorial with the given code exists.
 
 --------------------------------------------------------------------------------------------------------------------
 

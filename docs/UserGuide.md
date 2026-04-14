@@ -366,11 +366,13 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 
 **Q**: When should I use `select none`?<br>
 **A**: Use `select none` when you want to stop working within a specific tutorial without selecting a new one. This clears the current operating tutorial. Note that `add -student`, `delete -student` and `edit` require a tutorial to be selected and will show an error if used after `select none`. It is useful when you want to use `list -student` or `find` to search across all students in the system.
+<div style="page-break-after: always;"></div>
 
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **On Linux systems (including WSL)**, the vertical scroll bars of the Tutorial Code List and Tutorial Details Panel may fail to synchronize. This is a known JavaFX rendering limitation on certain Linux environments where scroll bar components are not fully initialized at startup. When this occurs, CoursePilot will log a warning message internally. There is no remedy at this time - the panels will still display all tutorial information correctly, but scrolling one panel will not scroll the other in sync. This does not affect any other functionality.
 
 <div style="page-break-after: always;"></div>
 
