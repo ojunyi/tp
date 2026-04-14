@@ -52,7 +52,6 @@ For those who can type fast, **CoursePilot** transforms student management into 
 **Tip:** If you are new, start by using `select` before attempting student-related commands.
 This ensures commands like `add -student` and `delete -student` work as expected.
 Following this workflow can help avoid common errors.
-
 <div style="page-break-after: always;"></div>
 
 ## Understanding the UI
@@ -67,7 +66,6 @@ CoursePilot's UI is divided into three linked panels at the top, followed by the
 * **Display Box**: Shows the resulting message of each command entered into the **Command Box**.
 * **Command Box**: This is where you enter commands.
 * **Current Operating Tutorial**: Shown at the bottom right corner, this indicates the currently selected tutorial.
-
 <div style="page-break-after: always;"></div>
 
 ## Features
@@ -102,7 +100,6 @@ CoursePilot's UI is divided into three linked panels at the top, followed by the
 Many commands require you to first **select a tutorial** using the `select` command. The selected tutorial becomes your **current operating tutorial**. Commands that operate on students — `add -student`, `delete -student`, `list -student`, and `find` — all act within this tutorial. Use `select TUTORIAL_CODE` to set it. Use `select none` to clear it.
 
 </div>
-
 <div style="page-break-after: always;"></div>
 
 ### Viewing help : `help`
@@ -113,7 +110,6 @@ Format: `help`
 
 * A pop-up window with a link to the User Guide will appear.
 ![HelpCommand](images/HelpCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Selecting a tutorial : `select`
@@ -135,7 +131,6 @@ Examples:
 * `select INVALID` : No tutorial found with code: `INVALID`
 
 ![SelectCommand](images/SelectCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Listing tutorials or students : `list`
@@ -157,7 +152,6 @@ Examples:
 * `select CS2103T-W13` followed by `find dave` then `list -student` : Displays all students in the CS2103T-W13 tutorial.
 
 ![ListCommand](images/ListCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Adding a student or tutorial : `add`
@@ -180,6 +174,7 @@ Format: `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRIC
 * **Email**: Must follow standard email format (e.g., `student@u.nus.edu`). Maximum 100 characters long.
 * **Matric Number**: Can be any non-blank value. CoursePilot does not enforce a fixed format because the target audience includes tutors working with different matriculation number schemes.
 * **Tag**: Optional. Each tag must be a single alphanumeric word (no spaces or special characters). Maximum 30 characters long.
+<div style="page-break-after: always;"></div>
 
 Examples:
 * `add -student /name John Doe /phone 98765432 /email johnd@example.com /matric A000000`
@@ -201,13 +196,13 @@ Format: `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY
 * **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-insensitive).
 * **TimeSlot**: Must follow the format `HH:mm-HH:mm` where `H` is the hour number, and `m` is the minute number (e.g., `13:00-14:00`) ranging only from `00:00 to 23:59`. The start time must be before the end time, and both must **occur within the same calendar day**. Time is in 24-hour format. A new tutorial's timeslot cannot overlap with any existing tutorial's timeslot on the same day (e.g., if `CS2103T-W12` runs `10:00-11:00` on `Wed`, adding another tutorial on `Wed` with timeslot `10:30-11:30` will be rejected).
 * **Capacity**: Must be a positive whole number starting from 1 to 1000.
+<div style="page-break-after: always;"></div>
 
 Examples:
 * `add -tutorial /code CS2103T-T01 /day Thu /timeslot 10:00-11:00 /capacity 30`
 * `add -tutorial /code CS2103T-W16 /day Thu /timeslot 14:00-15:00 /capacity 15`
 
 ![AddCommandTutorial](images/AddCommandTutorial.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Editing a student : `edit`
@@ -230,7 +225,6 @@ Examples:
 * `edit 3 /name David Li Hao Jun` : Edits the name of the 3rd student and leaves all existing tags untouched.
 
 ![EditCommand](images/EditCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Locating students : `find`
@@ -255,7 +249,6 @@ Examples:
 * `find /phone 992` : Finds students whose phone number starts with `992`.
 
 ![FindCommand](images/FindCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Deleting a student or tutorial : `delete`
@@ -277,6 +270,7 @@ Examples:
 * `delete -student 2` : Deletes the 2nd student in the current tutorial.
 
 ![DeleteCommandStudent](images/DeleteCommandStudent.png)
+<div style="page-break-after: always;"></div>
 
 #### Deleting a tutorial: `delete -tutorial`
 
@@ -292,7 +286,6 @@ Examples:
 * `delete -tutorial 2` : Deletes the 2nd tutorial in the list.
 
 ![DeleteCommandTutorial](images/DeleteCommandTutorial.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Clearing all entries : `clear`
@@ -308,7 +301,6 @@ This command permanently deletes all students and all tutorials. This action can
 </div>
 
 ![ClearCommand](images/ClearCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Exiting the program : `exit`
@@ -318,7 +310,6 @@ Exits the program.
 Format: `exit`
 
 ![ExitCommand](images/ExitCommand.png)
-
 <div style="page-break-after: always;"></div>
 
 ### Command Autocomplete
@@ -353,7 +344,6 @@ Advanced users can directly edit the data file to make bulk changes. The data fi
 If your changes to the data file make its format invalid, CoursePilot will discard all data and start with an empty data file on the next run. Ensure you make a backup before editing and thoroughly validate the JSON format after making changes.<br>
 Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invalid data is introduced. Only edit the data file if you are confident in your ability to maintain valid JSON structure and data constraints.
 </div>
-
 <div style="page-break-after: always;"></div>
 
 ## FAQ
