@@ -2,35 +2,34 @@
 !include style.puml
 skinparam ArrowFontStyle plain
 
-package UI <<Rectangle>> UI_COLOR_T1 {
-    class CommandBox UI_COLOR {
-        -autoCompleter: CommandAutoCompleter
-        -suggestionPopup: Popup
-        -suggestionListView: ListView<String>
-        -handleKeyPressed(): void
-        -updateSuggestions(): void
-        -applySuggestion(): void
-    }
 
+class CommandBox UI_COLOR {
+    =-autoCompleter: CommandAutoCompleter
+    =-suggestionPopup: Popup
+    =-suggestionListView: ListView<String>
+    =-handleKeyPressed(): void
+    =-updateSuggestions(): void
+    =-applySuggestion(): void
 }
 
-package Logic <<Rectangle>> LOGIC_COLOR_T1 {
-    class CommandAutoCompleter LOGIC_COLOR {
-        -{static} COMMAND_WORDS: List<String>
-        -{static} TYPE_FLAGS: List<String>
-        -{static} FIND_FLAGS: List<String>
-        -{static} STUDENT_PREFIXES: List<String>
-        -{static} TUTORIAL_PREFIXES: List<String>
-        -{static} EDIT_PREFIXES: List<String>
-        +getSuggestions(text: String): List<String>
-        -getSuggestionsForCommand(): List<String>
-        -getAddSuggestions(): List<String>
-        -getEditSuggestions(): List<String>
-        -getFlagSuggestions(): List<String>
-        -getUnusedPrefixes(): List<String>
-        -filterByPrefix(): List<String>
-    }
+
+
+class CommandAutoCompleter LOGIC_COLOR {
+    =-{static} COMMAND_WORDS: List<String>
+    =-{static} TYPE_FLAGS: List<String>
+    =-{static} FIND_FLAGS: List<String>
+    =-{static} STUDENT_PREFIXES: List<String>
+    =-{static} TUTORIAL_PREFIXES: List<String>
+    =-{static} EDIT_PREFIXES: List<String>
+    =+getSuggestions(text: String): List<String>
+    =-getSuggestionsForCommand(): List<String>
+    =-getAddSuggestions(): List<String>
+    =-getEditSuggestions(): List<String>
+    =-getFlagSuggestions(): List<String>
+    =-getUnusedPrefixes(): List<String>
+    =-filterByPrefix(): List<String>
 }
+
 
 show CommandBox members
 show CommandAutoCompleter members
