@@ -334,8 +334,6 @@ CoursePilot automatically saves all data after any command that modifies data. T
 
 The data is saved in a JSON file located at `[JAR file location]/data/coursepilot.json`.
 
----
-
 ### Editing the data file
 
 Advanced users can directly edit the data file to make bulk changes. The data file is stored as `[JAR file location]/data/coursepilot.json` in JSON format.
