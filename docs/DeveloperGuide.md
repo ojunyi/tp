@@ -611,12 +611,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  Should not depend on any remote server.
 5.  Should not require a Database Management System (DBMS).
 6.  Should return search results within 2 second for 1000 stored students and 100 tutorial slots.
-7.  All commands should execute and display results within 2 seconds for typical data sizes.
+7.  All commands should execute and display results within 2 seconds when the system stores up to 1000 students and 100 tutorial slots.
 8.  Should launch and be ready to accept commands within 3 seconds under typical conditions.
 9.  Data should be stored locally in a human-editable file format (e.g., JSON).
 10. Should not lose any stored data when the application is closed normally via the `exit` commmand, and should persist data between sessions.
 11. Existing data should remain intact even if a command fails due to invalid input.
-12.  The GUI should work well for standard screen resolutions of 1920x1080 and higher at 100% and 125% scaling, and should be usable at 1280x720 and higher at 150% scaling.
+12.  At 1920x1080 and higher (100% and 125% scaling), and at 1280x720 and higher (150% scaling), the GUI should show all primary UI panels without overlapping components or truncated text, and all interactive controls should remain accessible without horizontal scrolling.
 
 ### Glossary
 
@@ -628,7 +628,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Tutorial Slot**: A tutorial object defined by a code, timeslot, day, and capacity, created and managed by a tutor in CoursePilot
 * **Tutorial Code**: The identifying name of that tutorial e.g. CS2103T-W13
 * **Current Operating Tutorial**: The tutorial currently selected via the `select` command, which student-level commands operate on. If none is selected, the student list shown will be the global student list.
-* **Matric Number**: A unique student identifier following the format Axxxxxx.
+* **Matric Number**: A unique student identifier. CoursePilot does not enforce a fixed matric number format beyond requiring a non-blank value.
 * **Type**: A flag (`-student` or `-tutorial`) that specifies which entity type a command operates on
 * **Prefix**: A field identifier starting with `/` used to specify parameters in commands (e.g. /name, /email)
 * **Index**: A temporary 1-based position number shown in a displayed list, used to reference a specific student or tutorial in commands. If an index is invalid, it is out-of-bounds of the size of the list of the current operating tutorial if one is selected or the global student list otherwise.

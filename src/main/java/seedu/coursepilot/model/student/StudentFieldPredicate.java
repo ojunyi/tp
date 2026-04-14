@@ -23,6 +23,10 @@ public abstract class StudentFieldPredicate implements Predicate<Student> {
         this.keywords = keywords;
     }
 
+    public String getSearchDescription() {
+        return " Keywords: " + keywords;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

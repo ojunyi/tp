@@ -18,6 +18,11 @@ public class NameContainsKeywordsPredicate extends StudentFieldPredicate {
     }
 
     @Override
+    public String getSearchDescription() {
+        return "Find name that matches exactly: " + keywords;
+    }
+
+    @Override
     public boolean test(Student student) {
         return keywords.stream()
                 .anyMatch(keyword ->

@@ -17,6 +17,11 @@ public class PhoneStartsWithKeywordsPredicate extends StudentFieldPredicate {
     }
 
     @Override
+    public String getSearchDescription() {
+        return "Find phone starting with: " + keywords;
+    }
+
+    @Override
     public boolean test(Student student) {
         return keywords.stream()
                 .anyMatch(keyword ->
