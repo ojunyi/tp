@@ -61,13 +61,13 @@ public class DeleteCommand extends Command {
             }
 
             Tutorial currentTutorial = currentTutorialOpt.get();
-            List<Student> tutorialStudents = currentTutorial.getStudents();
+            List<Student> displayedStudents = model.getFilteredStudentList();
 
-            if (targetIndex.getZeroBased() >= tutorialStudents.size()) {
+            if (targetIndex.getZeroBased() >= displayedStudents.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
             }
 
-            Student studentToDelete = tutorialStudents.get(targetIndex.getZeroBased());
+            Student studentToDelete = displayedStudents.get(targetIndex.getZeroBased());
 
             if (!currentTutorial.hasStudent(studentToDelete)) {
                 throw new CommandException(MESSAGE_STUDENT_NOT_IN_TUTORIAL);

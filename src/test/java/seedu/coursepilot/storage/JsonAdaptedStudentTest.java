@@ -18,7 +18,7 @@ import seedu.coursepilot.model.student.Name;
 import seedu.coursepilot.model.student.Phone;
 
 public class JsonAdaptedStudentTest {
-    private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_NAME = "///";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_MATRIC = " ";
     private static final String INVALID_EMAIL = "example.com";

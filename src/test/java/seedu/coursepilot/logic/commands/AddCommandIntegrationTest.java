@@ -68,6 +68,48 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
+    public void execute_addOverlappingTutorial_throwsCommandException() {
+        Tutorial existing = model.getCurrentOperatingTutorial().get();
+        // Same day + strictly overlapping window -> must be rejected.
+        Tutorial overlapping = new Tutorial(new TutorialCode("CS2103T-CLASH"),
+                new Day(existing.getDay()),
+                new TimeSlot(overlappingTimeSlot(existing.getTimeSlot())),
+                new Capacity(10));
+        String expected = String.format(AddCommand.MESSAGE_TUTORIAL_OVERLAP, existing.getTutorialCode());
+        assertCommandFailure(new AddCommand(overlapping), model, expected);
+    }
+
+    @Test
+    public void execute_addBackToBackTutorial_success() {
+        Tutorial existing = model.getCurrentOperatingTutorial().get();
+        // Touching boundary but not overlapping (end == start) -> allowed.
+        Tutorial backToBack = new Tutorial(new TutorialCode("CS2103T-BTB"),
+                new Day(existing.getDay()),
+                new TimeSlot(backToBackTimeSlot(existing.getTimeSlot())),
+                new Capacity(10));
+        Model expectedModel = new ModelManager(model.getCoursePilot(), new UserPrefs());
+        expectedModel.setCurrentOperatingTutorial(expectedModel.getFilteredTutorialList().get(0));
+        expectedModel.addTutorial(backToBack);
+        assertCommandSuccess(new AddCommand(backToBack), model,
+                String.format(AddCommand.MESSAGE_SUCCESS_TUTORIAL, Messages.format(backToBack)),
+                expectedModel);
+    }
+
+    private static String overlappingTimeSlot(String existing) {
+        // "13:00-14:00" -> "13:30-14:30"
+        String[] parts = existing.split("-");
+        int startHour = Integer.parseInt(parts[0].substring(0, 2));
+        return String.format("%02d:30-%02d:30", startHour, startHour + 1);
+    }
+
+    private static String backToBackTimeSlot(String existing) {
+        // "13:00-14:00" -> "14:00-15:00"
+        String[] parts = existing.split("-");
+        int endHour = Integer.parseInt(parts[1].substring(0, 2));
+        return String.format("%02d:00-%02d:00", endHour, endHour + 1);
+    }
+
+    @Test
     public void execute_tutorialAtCapacity_throwsCommandExceptionAndStateUnchanged() {
         Tutorial fullTutorial = new Tutorial(new TutorialCode("CS2103T-FULL"), new Day("Thu"),
                 new TimeSlot("14:00-15:00"), new Capacity(1));

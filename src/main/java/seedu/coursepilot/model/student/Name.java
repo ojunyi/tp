@@ -8,18 +8,14 @@ import static seedu.coursepilot.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
-
-    public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphabetic characters and spaces, "
-            + "should not be blank, and should be between 1 and 100 characters long";
-
     public static final int MAX_NAME_LENGTH = 100;
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[a-zA-Z][a-zA-Z ]*";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Names should contain at least one alphabetic character, may include spaces and symbols, "
+            + "should not be blank, and should be between 1 and 100 characters long";
+
+    private static final String LETTER_REGEX = ".*[a-zA-Z].*";
+    private static final String VALID_CHARACTERS_REGEX = "[^\\p{Cntrl}]+";
 
     public final String fullName;
 
@@ -38,7 +34,11 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX) && test.length() <= MAX_NAME_LENGTH;
+        requireNonNull(test);
+        return !test.isBlank()
+                && test.length() <= MAX_NAME_LENGTH
+                && test.matches(VALID_CHARACTERS_REGEX)
+                && test.matches(LETTER_REGEX);
     }
 
 

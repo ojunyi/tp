@@ -18,6 +18,11 @@ public class EmailContainsKeywordsPredicate extends StudentFieldPredicate {
     }
 
     @Override
+    public String getSearchDescription() {
+        return "Find email containing: " + keywords;
+    }
+
+    @Override
     public boolean test(Student student) {
         return keywords.stream()
                 .anyMatch(keyword ->

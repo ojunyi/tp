@@ -146,6 +146,18 @@ public class Tutorial {
     }
 
     /**
+     * Returns true if this tutorial overlaps with {@code other} (same day, overlapping time range).
+     * A tutorial never overlaps with itself.
+     */
+    public boolean overlapsWith(Tutorial other) {
+        requireNonNull(other);
+        if (isSameTutorial(other)) {
+            return false;
+        }
+        return this.day.equals(other.day) && this.timeSlot.overlapsWith(other.timeSlot);
+    }
+
+    /**
      * Returns true if both tutorials have the same fields.
      */
     @Override

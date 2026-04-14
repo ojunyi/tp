@@ -27,15 +27,13 @@ public class NameTest {
         // invalid name
         assertFalse(Name.isValidName("")); // empty string
         assertFalse(Name.isValidName(" ")); // spaces only
-        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
-        assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName("^")); // symbols only
+        assertFalse(Name.isValidName("12345")); // numbers only
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
-        assertFalse(Name.isValidName("12345")); // numbers only
-        assertFalse(Name.isValidName("peter the 2nd")); // contains numbers
+        assertTrue(Name.isValidName("R@chel Walker")); // symbol in name
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
-        assertFalse(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // contains numbers
     }
 
     @Test

@@ -38,7 +38,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/gaoze24.png" width="200px">
 
 [[github](https://github.com/gaoze24)]
-[[portfolio](team/gaoze24.md)]
+
+* Role: Developer
 
 ### Zhang Qixiang
 

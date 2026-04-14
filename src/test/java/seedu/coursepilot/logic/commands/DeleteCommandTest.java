@@ -96,6 +96,42 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void executeAfterFindFilter_validIndex_success() throws CommandException {
+        Tutorial tutorial = model.getFilteredTutorialList().get(0);
+        model.setCurrentOperatingTutorial(tutorial);
+
+        // Simulate `find` narrowing the displayed student list to only "Daniel Meier".
+        Student expectedTarget = tutorial.getStudents().stream()
+                .filter(s -> s.getName().fullName.equals("Daniel Meier"))
+                .findFirst()
+                .orElseThrow();
+        model.updateFilteredStudentList(s -> s.equals(expectedTarget));
+        assertEquals(1, model.getFilteredStudentList().size());
+
+        // User sees one student at displayed index 1 and expects that exact student to be deleted.
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_STUDENT, "student");
+        CommandResult result = deleteCommand.execute(model);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_STUDENT_SUCCESS,
+                Messages.format(expectedTarget));
+        assertEquals(expectedMessage, result.getFeedbackToUser());
+        assertFalse(tutorial.hasStudent(expectedTarget));
+    }
+
+    @Test
+    public void executeAfterFindFilter_outOfRange_throwsException() {
+        Tutorial tutorial = model.getFilteredTutorialList().get(0);
+        model.setCurrentOperatingTutorial(tutorial);
+
+        // Filter down to a single student; index 2 must be rejected against the filtered list size.
+        Student onlyMatch = tutorial.getStudents().get(0);
+        model.updateFilteredStudentList(s -> s.equals(onlyMatch));
+
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_SECOND_STUDENT, "student");
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+    }
+
+    @Test
     public void equals() {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_STUDENT, "student");
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_STUDENT, "student");

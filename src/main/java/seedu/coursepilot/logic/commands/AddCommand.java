@@ -36,7 +36,7 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + " PHONE "
             + PREFIX_EMAIL + " EMAIL "
             + PREFIX_MATRICNUMBER + " MATRICNUMBER "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + COMMAND_WORD + " -student "
             + PREFIX_NAME + " John Doe "
             + PREFIX_PHONE + " 98765432 "
@@ -66,6 +66,9 @@ public class AddCommand extends Command {
             "A different student with this matriculation number already exists.";
     public static final String MESSAGE_DUPLICATE_TUTORIAL =
             "This tutorial code already exists in CoursePilot";
+    public static final String MESSAGE_TUTORIAL_OVERLAP =
+            "This tutorial overlaps with an existing tutorial: %1$s."
+            + " A tutor cannot run two tutorials at the same time.";
     public static final String MESSAGE_NO_CURRENT_OPERATING_TUTORIAL =
             "No tutorial selected. Please select a tutorial to operate on first.";
     public static final String MESSAGE_TUTORIAL_FULL =
@@ -153,6 +156,13 @@ public class AddCommand extends Command {
         if (addTarget == AddTarget.TUTORIAL) {
             if (model.hasTutorial(tutorialToAdd)) {
                 throw new CommandException(MESSAGE_DUPLICATE_TUTORIAL);
+            }
+            Optional<Tutorial> conflict = model.getCoursePilot().getTutorialList().stream()
+                    .filter(tutorialToAdd::overlapsWith)
+                    .findFirst();
+            if (conflict.isPresent()) {
+                throw new CommandException(
+                        String.format(MESSAGE_TUTORIAL_OVERLAP, conflict.get().getTutorialCode()));
             }
             model.addTutorial(tutorialToAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS_TUTORIAL, Messages.format(tutorialToAdd)));

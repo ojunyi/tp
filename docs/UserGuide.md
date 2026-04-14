@@ -28,7 +28,7 @@ For those who can type fast, **CoursePilot** transforms student management into 
    ```
    > **Note:** Double-clicking the `.jar` file may not work on some systems. If nothing happens when you double-click, use the command above in a terminal instead.
 
-   A GUI similar to the one below should appear within a few seconds. The app will contain some sample tutorials and students to help you get started.
+   A GUI similar to the one below should appear within a few seconds. The data that you see on your CoursePilot will not match this one exactly. The app will contain some sample tutorials and students to help you get started.
 
    ![Ui](images/Ui.png)
 
@@ -49,8 +49,8 @@ For those who can type fast, **CoursePilot** transforms student management into 
 
 1. Refer to the [Features](#features) below for details of each command.
 
-**Tip:** If you are new, start by using `list -tutorial` followed by `select` before attempting student-related commands.
-This ensures commands like `add -student` and `list -student` work as expected.
+**Tip:** If you are new, start by using `select` before attempting student-related commands.
+This ensures commands like `add -student` and `delete -student` work as expected.
 Following this workflow can help avoid common errors.
 
 ## Understanding the UI
@@ -165,20 +165,20 @@ Format: `add -student /name NAME /phone PHONE_NUMBER /email EMAIL /matric MATRIC
 * Requires a tutorial to be selected first.
 * The fields (`/name`, `/phone`, `/email`, `/matric`) are mandatory.
 * A student can have any number of tags (including 0).
-* If the student does not yet exist in the system, they are also added to the global student list. If they already exist (matched by name or matric number), they are linked to the selected tutorial without creating a duplicate.
+* If the student does not yet exist in the system, they are also added to the global student list. If they already exist (matched by matric number), they are linked to the selected tutorial without creating a duplicate.
 * A student cannot be added to the same tutorial twice.
 
 **Field Constraints:**
-* **Name**: Must contain only alphabetic characters and spaces. Cannot be blank. Maximum 100 characters long.
+* **Name**: Must contain at least one alphabetic character. Spaces and symbols such as commas, hyphens, forward slashes, and `@` are allowed. Cannot be blank. Maximum 100 characters long.
 * **Phone**: Must contain only digits and be at least 3 digits long to a maximum of 15 digits long.
 * **Email**: Must follow standard email format (e.g., `student@u.nus.edu`). Maximum 100 characters long.
-* **Matric Number**: Must follow the format `Axxxxxx` where `x` is a digit (e.g., `A000000`, `A123456`). Must be exactly 7 characters: the letter `A` followed by 6 digits.
+* **Matric Number**: Can be any non-blank value. CoursePilot does not enforce a fixed format because the target audience includes tutors working with different matriculation number schemes.
 * **Tag**: Optional. Each tag must be a single alphanumeric word (no spaces or special characters). Maximum 30 characters long.
 
 Examples:
 * `add -student /name John Doe /phone 98765432 /email johnd@example.com /matric A000000`
 * `add -student /name Betsy Crowe /tag friend /email betsycrowe@example.com /matric A000001 /phone 1234567 /tag student`
-* `select CS2103T-W13` followed by `add -student /name David Li /phone 91031282 /email lidavid@example.com /matric A000003`
+* `add -student /name David Li /phone 91031282 /email lidavid@example.com /matric A000003`
 
 ![AddCommandStudent](images/AddCommandStudent.png)
 
@@ -192,8 +192,8 @@ Format: `add -tutorial /code CODE /day DAY /timeslot TIMESLOT /capacity CAPACITY
 
 **Field Constraints:**
 * **Code**: Must contain only alphanumeric characters, hyphens, and underscores. Cannot be blank. Maximum 20 characters long.
-* **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-sensitive, first letter capitalised).
-* **TimeSlot**: Must follow the format `XX:XX-XX:XX` where `X` is a digit (e.g., `13:00-14:00`). The start time must be before end time. Time is in 24-hour format.
+* **Day**: Must be one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun (case-insensitive).
+* **TimeSlot**: Must follow the format `HH:mm-HH:mm` where `H` is the hour number, and `m` is the minute number (e.g., `13:00-14:00`) ranging only from `00:00 to 23:59`. The start time must be before the end time, and both must **occur within the same calendar day**. Time is in 24-hour format.
 * **Capacity**: Must be a positive whole number starting from 1 to 1000.
 
 Examples:
@@ -210,12 +210,13 @@ Edits an existing student's details.
 
 Format: `edit INDEX [/name NAME] [/phone PHONE_NUMBER] [/email EMAIL] [/matric MATRICNUMBER] [/tag TAG]…​`
 
+* Requires a tutorial to be selected first.
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the **currently displayed student list**. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the student will be **replaced entirely** (not added to).
 * You can remove all the student's tags by typing `/tag` without specifying any tag after it.
-* The edit applies globally — it updates the student's details everywhere in the system.
+* The edit applies globally - it updates the student's details everywhere in the system.
 
 Examples:
 * `edit 1 /phone 91234567 /email johndoe@example.com` : Edits the phone number and email address of the 1st student.
@@ -230,12 +231,12 @@ Examples:
 
 Finds and lists students in the currently selected tutorial who match the given search criteria.
 
-Format: `find KEYWORD [MORE_KEYWORDS]…` or `find /phone KEYWORD` or `find /email KEYWORD` or `find /matric KEYWORD`
+Format: `find KEYWORD [MORE_KEYWORDS]…` or `find /phone KEYWORD [MORE_KEYWORDS]…` or `find /email KEYWORD [MORE_KEYWORDS]…` or `find /matric KEYWORD [MORE_KEYWORDS]…`
 
 * **Name search (default)**: `find KEYWORD [MORE_KEYWORDS]` — returns students whose name contains any of the keywords as whole words. Case-insensitive.
-* **Phone search**: `find /phone KEYWORD` — returns students whose phone number **starts with** any of the given keywords.
-* **Email search**: `find /email KEYWORD` — returns students whose email address **contains** any of the given keywords. Case-insensitive.
-* **Matric search**: `find /matric KEYWORD` — returns students whose matric number **starts with** any of the given keywords. Case-insensitive.
+* **Phone search**: `find /phone KEYWORD [MORE_KEYWORDS]…` — returns students whose phone number **starts with** any of the given keywords.
+* **Email search**: `find /email KEYWORD [MORE_KEYWORDS]…` — returns students whose email address **contains** any of the given keywords. Case-insensitive.
+* **Matric search**: `find /matric KEYWORD [MORE_KEYWORDS]…` — returns students whose matric number **starts with** any of the given keywords. Case-insensitive.
 * When multiple keywords are provided, students matching **at least one** keyword are returned.
 * If a tutorial has been selected, only students enrolled in the **current operating tutorial** are searched.
 * If no tutorial is selected, the search is performed across all students in the system.
@@ -377,14 +378,16 @@ Furthermore, manual edits can cause CoursePilot to behave unexpectedly if invali
 
 ## Known limitations
 
-1. **Duplicate phone numbers is not supported** in CoursePilot as we do not support country code prefixes. This means that if two students from different countries share the same number but have different country codes, one of them cannot be added. The suggested work around is to add the country code at the front, but CoursePilot will not help you differentiate between country codes and phone number.
-2. **Matric number validation is intentionally flexible** as CoursePilot accepts matric numbers in the format of "A" followed by 6 digits (e.g. A123456) with no checksum validation. Since CoursePilot is designed for personal use, we trust tutors to be responsible for the accuracy of their own data and thus allow this flexibility.
-3. **Tags do not support numbers or spaces** as tag names must be a single word containing only letters. This keeps tags concise and scannable at a glance, and multi-word descriptions are better captured in other fields such as the student's name.
-4. **Searching by tag is not currently supported** and the `find` command only allows search by name, phone, email and matric number.
-5. **Email validation is intentionally lenient** and accepts unconventional formats such as `11@11`. Since CoursePilot is designed for personal use, we trust tutors to enter accurate information without needing strict formatting rules that may inadvertently reject valid institutional email formats.
-6. **Tutorial timeslot must follow the HH:MM-HH:MM format** and must be entered in 24-hour time (e.g. `13:00-14:00`). This strict format ensures unambiguous parsing and consistent display across all tutorials.
-7. **`list -tutorial` does not do anything visually** as CoursePilot does not have any commands that filter the tutorial list, meaning it will always show all tutorials. It is best used to simply refresh the tutorial details.
-8. **Phone number and email address are required fields when adding a student** as CoursePilot is designed to serve as a contact book for tutors, making these fields central to its purpose. A student entry without contact details would defeat the core value of the application.
+1. **Matric number validation is left intentionally flexible** to support university tutors and teaching assistants globally. CoursePilot accepts any format - whether numeric, alphanumeric, or containing symbols - as long as the field is not empty. As a tool designed for personal data management, we prioritize versatility, trusting users to maintain the accuracy of their student records across different institutional standards. To justify this position, research into student IDs worldwide identified various formats, such as `A0123456X` (Singapore), `987654321` (USA) and `2024-567-89` (Canada). 
+2. **Duplicate phone numbers is not supported** in CoursePilot as we do not support country code prefixes. This means that if two students from different countries share the same number but have different country codes, one of them cannot be added. The suggested work around is to add the country code at the front, but CoursePilot will not help you differentiate between country codes and phone number which still may cause some confusion.
+3. **Email validation is intentionally lenient** and accepts unconventional formats such as `11@11`. Since CoursePilot is designed for personal use, we trust tutors to enter accurate information without needing strict formatting rules that may inadvertently reject valid institutional email formats.
+4. **Tags must not contain spaces** to ensure they remain concise and scannable. While alphanumeric characters (e.g., `AY2526`, `Year2` or `Y3`) are supported, spaces and special characters are not permitted.
+5. **Phone number and email address are required fields when adding a student** as CoursePilot is designed to serve as a contact book for tutors, making these fields central to its purpose. A student entry without contact details would defeat the core value of the application.
+6. **Tutorial days must be entered as a 3-letter abbreviation** (e.g.,`Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat` or `Sun`). The input is case-insensitive. We do not allow inputs such as `Monday` or `Tuesday`. This standardised format ensures consistency across all tutorial entries and keeps the display clean and uniform.
+7. **Tutorial timeslot** must follow the format `HH:mm-HH:mm` where `H` is the hour number, and `m` is the minute number (e.g., `13:00-14:00`) ranging only from `00:00 to 23:59`. The start time must be before the end time, and both must **occur within the same calendar day**. Time is in 24-hour format.
+8. **Tutorial timeslots does not allow crossing over to the next day** as in our reserach into typical lesson timings worldwide, there does not exists any tutorial lesson that takes place in local date time over the period of two or more days. But there is a work around in case such a niche case occurs. You can create multiple tutorial slots, appending `-1` or `-2` and so on to indicate that the tutorials are linked. Then make sure the time of those tutorial slots link up with one another.
+9. **`list -tutorial` does not do anything visually** as CoursePilot does not have any commands that filter the tutorial list, meaning it will always show all tutorials. It is best used to simply refresh the tutorial details.
+10. **Searching by tag is not currently supported** and the `find` command only allows search by name, phone, email and matric number.
 
 ## Command summary
 

@@ -3,14 +3,13 @@ package seedu.coursepilot.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import seedu.coursepilot.commons.util.ToStringBuilder;
 import seedu.coursepilot.logic.Messages;
 import seedu.coursepilot.logic.commands.exceptions.CommandException;
 import seedu.coursepilot.model.Model;
-import seedu.coursepilot.model.student.Student;
+import seedu.coursepilot.model.student.StudentFieldPredicate;
 
 /**
  * Finds and lists all students in coursepilot whose name contains any of the argument keywords.
@@ -80,12 +79,12 @@ public class FindCommand extends Command {
             + Flag.validFlagsString() + "\n"
             + "Example: " + COMMAND_WORD + " /email @u.nus.edu @gmail";
 
-    private final Predicate<Student> predicate;
+    private final StudentFieldPredicate predicate;
 
     /**
      * Creates a FindCommand that filters students using the given {@code predicate}.
      */
-    public FindCommand(Predicate<Student> predicate) {
+    public FindCommand(StudentFieldPredicate predicate) {
         requireNonNull(predicate);
         this.predicate = predicate;
     }
@@ -98,13 +97,14 @@ public class FindCommand extends Command {
             model.updateFilteredStudentList(predicate);
             return new CommandResult(
                 String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
-                        model.getFilteredStudentList().size()));
+                        model.getFilteredStudentList().size()) + "\n" + predicate.getSearchDescription());
         }
 
         model.updateFilteredStudentList(
             student -> predicate.test(student) && model.isStudentInCurrentTutorial(student));
         return new CommandResult(
-                String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW, model.getFilteredStudentList().size()));
+                String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
+                        model.getFilteredStudentList().size()) + "\n" + predicate.getSearchDescription());
     }
 
     @Override

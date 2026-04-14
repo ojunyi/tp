@@ -12,8 +12,8 @@ import java.time.LocalTime;
 public class TimeSlot {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Time slots should be of the format XX:XX-XX:XX where X is a integer and following 24-hour format."
-            + "\n Start time should also be before end time. No spaces in between."
+            "Time slots should be of the format HH:mm-HH:mm (24-hour clock) without spaces.\n"
+            + "Time must be between 00:00 and 23:59, and the start time must be before the end time.\n"
             + " E.g '10:00-11:00', '14:00-15:00', etc.";
 
     /*
@@ -47,6 +47,30 @@ public class TimeSlot {
         LocalTime start = LocalTime.parse(parts[0]);
         LocalTime end = LocalTime.parse(parts[1]);
         return start.isBefore(end);
+    }
+
+    /**
+     * Returns the start time of this slot.
+     */
+    public LocalTime getStartTime() {
+        return LocalTime.parse(value.split("-")[0]);
+    }
+
+    /**
+     * Returns the end time of this slot.
+     */
+    public LocalTime getEndTime() {
+        return LocalTime.parse(value.split("-")[1]);
+    }
+
+    /**
+     * Returns true if this time slot overlaps with {@code other}.
+     * Slots that merely touch at a boundary (e.g. 10:00-11:00 and 11:00-12:00) do not overlap.
+     */
+    public boolean overlapsWith(TimeSlot other) {
+        requireNonNull(other);
+        return getStartTime().isBefore(other.getEndTime())
+                && other.getStartTime().isBefore(getEndTime());
     }
 
     @Override
