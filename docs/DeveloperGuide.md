@@ -19,6 +19,7 @@ title: Developer Guide
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -63,9 +64,10 @@ Each of the four main components (also shown in the diagram above),
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
-<img src="images/ComponentManagers.png" width="300" />
+<img src="images/ComponentManagers.png" width="270" />
 
 The sections below give more details of each component.
+<div style="page-break-after: always;"></div>
 
 ### UI component
 
@@ -169,12 +171,9 @@ The command autocomplete feature provides context-aware suggestions as the user 
 
 The class diagram below shows the key classes involved:
 
-<img src="images/AutocompleteClassDiagram.png" width="700"/>
+<img src="images/AutocompleteClassDiagram.png" width="350"/>
 
 `CommandBox` holds a reference to `CommandAutoCompleter` and a `Popup` with a `ListView` for displaying suggestions. Whenever the text in the command box changes, `CommandBox` calls `CommandAutoCompleter#getSuggestions()` and renders the results in the popup dropdown.
-
-<div markdown="span" class="alert alert-info">:information_source: Note: The access modifiers for the Class Diagram as shown instead as coloured boxes. This is a limiation of  PlantUML.
-</div>
 
 The following sequence diagram illustrates the interaction when a user types `add ` and then selects a suggestion:
 
